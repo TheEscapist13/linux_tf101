@@ -295,12 +295,16 @@
 
 #include "gadget_chips.h"
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_MASS_STORAGE
 #include <linux/usb/android_composite.h>
 #include <linux/platform_device.h>
 
 #define FUNCTION_NAME		"usb_mass_storage"
 #endif
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /*------------------------------------------------------------------------*/
 
@@ -429,10 +433,13 @@ struct fsg_config {
 	u16 release;
 
 	char			can_stall;
+<<<<<<< HEAD
 
 #ifdef CONFIG_USB_ANDROID_MASS_STORAGE
 	struct platform_device *pdev;
 #endif
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 
@@ -2755,6 +2762,7 @@ static struct fsg_common *fsg_common_init(struct fsg_common *common,
 		curlun->ro = lcfg->cdrom || lcfg->ro;
 		curlun->removable = lcfg->removable;
 		curlun->dev.release = fsg_lun_release;
+<<<<<<< HEAD
 
 #ifdef CONFIG_USB_ANDROID_MASS_STORAGE
 		/* use "usb_mass_storage" platform device as parent */
@@ -2762,6 +2770,9 @@ static struct fsg_common *fsg_common_init(struct fsg_common *common,
 #else
 		curlun->dev.parent = &gadget->dev;
 #endif
+=======
+		curlun->dev.parent = &gadget->dev;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		/* curlun->dev.driver = &fsg_driver.driver; XXX */
 		dev_set_drvdata(&curlun->dev, &common->filesem);
 		dev_set_name(&curlun->dev,
@@ -3044,11 +3055,15 @@ static int fsg_bind_config(struct usb_composite_dev *cdev,
 	if (unlikely(!fsg))
 		return -ENOMEM;
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_MASS_STORAGE
 	fsg->function.name        = FUNCTION_NAME;
 #else
 	fsg->function.name        = FSG_DRIVER_DESC;
 #endif
+=======
+	fsg->function.name        = FSG_DRIVER_DESC;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	fsg->function.strings     = fsg_strings_array;
 	fsg->function.bind        = fsg_bind;
 	fsg->function.unbind      = fsg_unbind;
@@ -3172,6 +3187,7 @@ fsg_common_from_params(struct fsg_common *common,
 	return fsg_common_init(common, cdev, &cfg);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_MASS_STORAGE
 
 static struct fsg_config fsg_cfg;
@@ -3232,3 +3248,5 @@ static int __init init(void)
 
 #endif /* CONFIG_USB_ANDROID_MASS_STORAGE */
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

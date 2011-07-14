@@ -736,7 +736,10 @@ extern void show_free_areas(void);
 
 int shmem_lock(struct file *file, int lock, struct user_struct *user);
 struct file *shmem_file_setup(const char *name, loff_t size, unsigned long flags);
+<<<<<<< HEAD
 void shmem_set_file(struct vm_area_struct *vma, struct file *file);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int shmem_zero_setup(struct vm_area_struct *);
 
 #ifndef CONFIG_MMU

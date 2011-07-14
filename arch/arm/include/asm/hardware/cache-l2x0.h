@@ -53,6 +53,7 @@
 #define L2X0_LINE_DATA			0xF10
 #define L2X0_LINE_TAG			0xF30
 #define L2X0_DEBUG_CTRL			0xF40
+<<<<<<< HEAD
 #define L2X0_PREFETCH_OFFSET		0xF60
 #define L2X0_PWR_CTRL			0xF80
 
@@ -61,6 +62,11 @@ extern void __init l2x0_init(void __iomem *base, __u32 aux_val, __u32 aux_mask);
 extern void l2x0_shutdown(void);
 extern void l2x0_restart(void);
 extern bool l2x0_disabled;
+=======
+
+#ifndef __ASSEMBLY__
+extern void __init l2x0_init(void __iomem *base, __u32 aux_val, __u32 aux_mask);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif
 
 #endif

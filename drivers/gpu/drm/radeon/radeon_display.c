@@ -629,6 +629,13 @@ static void radeon_compute_pll_legacy(struct radeon_pll *pll,
 	*frac_fb_div_p = best_frac_feedback_div;
 	*ref_div_p = best_ref_div;
 	*post_div_p = best_post_div;
+<<<<<<< HEAD
+=======
+	DRM_DEBUG_KMS("%d %d, pll dividers - fb: %d.%d ref: %d, post %d\n",
+		      freq, best_freq / 1000, best_feedback_div, best_frac_feedback_div,
+		      best_ref_div, best_post_div);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 static bool

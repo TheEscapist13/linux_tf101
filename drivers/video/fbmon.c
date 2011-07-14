@@ -271,6 +271,7 @@ static int edid_checksum(unsigned char *edid)
 	if (csum == 0x00 && all_null) {
 		/* checksum passed, everything's good */
 		err = 1;
+<<<<<<< HEAD
 	} else {
 		/* 1-byte-shift workaround.
 		 * It's possible to get a wrong edid with 1-byte-shift pattern
@@ -287,6 +288,8 @@ static int edid_checksum(unsigned char *edid)
 			edid[j] = edid[j+1];
 		edid[127] = 0x100 - (csum - unnecessary);
 		err = 1;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	return err;
@@ -300,10 +303,15 @@ static int edid_check_header(unsigned char *edid)
 		fix_edid(edid, fix);
 
 	for (i = 0; i < 8; i++) {
+<<<<<<< HEAD
 		if (edid[i] != edid_v1_header[i]) {
 			printk("edid[%d]= 0x%x != 0x%x\n", i, edid[i], edid_v1_header[i]);
 			err = 0;
 		}
+=======
+		if (edid[i] != edid_v1_header[i])
+			err = 0;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	return err;
@@ -932,10 +940,15 @@ void fb_edid_to_monspecs(unsigned char *edid, struct fb_monspecs *specs)
 	unsigned char *block;
 	int i, found = 0;
 
+<<<<<<< HEAD
 	if (edid == NULL) {
 		printk("edid is NULL\n");
 		return;
 	}
+=======
+	if (edid == NULL)
+		return;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (!(edid_checksum(edid)))
 		return;
@@ -993,6 +1006,7 @@ void fb_edid_to_monspecs(unsigned char *edid, struct fb_monspecs *specs)
 	DPRINTK("========================================\n");
 }
 
+<<<<<<< HEAD
 void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
 {
 	unsigned char *block;
@@ -1086,6 +1100,8 @@ void fb_edid_add_monspecs(unsigned char *edid, struct fb_monspecs *specs)
 	specs->modedb_len = specs->modedb_len + num;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * VESA Generalized Timing Formula (GTF)
  */

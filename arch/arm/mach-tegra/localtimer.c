@@ -21,5 +21,9 @@
 void __cpuinit local_timer_setup(struct clock_event_device *evt)
 {
 	evt->irq = IRQ_LOCALTIMER;
+<<<<<<< HEAD
 	twd_timer_setup_scalable(evt, 2500000, 4);
+=======
+	twd_timer_setup(evt);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }

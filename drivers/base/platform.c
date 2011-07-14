@@ -648,10 +648,15 @@ static int platform_legacy_suspend(struct device *dev, pm_message_t mesg)
 	struct platform_device *pdev = to_platform_device(dev);
 	int ret = 0;
 
+<<<<<<< HEAD
 	if (dev->driver && pdrv->suspend){
 		printk("platform_legacy_suspend pdrv->suspend=%pF+\n",pdrv->suspend);
 		ret = pdrv->suspend(pdev, mesg);
 		}
+=======
+	if (dev->driver && pdrv->suspend)
+		ret = pdrv->suspend(pdev, mesg);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return ret;
 }
@@ -662,10 +667,15 @@ static int platform_legacy_resume(struct device *dev)
 	struct platform_device *pdev = to_platform_device(dev);
 	int ret = 0;
 
+<<<<<<< HEAD
 	if (dev->driver && pdrv->resume){
 		printk("platform_legacy_resume pdrv->resume=%pF+\n",pdrv->resume);
 		ret = pdrv->resume(pdev);
 		}
+=======
+	if (dev->driver && pdrv->resume)
+		ret = pdrv->resume(pdev);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return ret;
 }
@@ -707,10 +717,15 @@ int __weak platform_pm_suspend(struct device *dev)
 		return 0;
 
 	if (drv->pm) {
+<<<<<<< HEAD
 		if (drv->pm->suspend){
 			printk("drv->pm->suspend=%pF+\n",drv->pm->suspend);
 			ret = drv->pm->suspend(dev);
 			}
+=======
+		if (drv->pm->suspend)
+			ret = drv->pm->suspend(dev);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	} else {
 		ret = platform_legacy_suspend(dev, PMSG_SUSPEND);
 	}
@@ -727,11 +742,17 @@ int __weak platform_pm_suspend_noirq(struct device *dev)
 		return 0;
 
 	if (drv->pm) {
+<<<<<<< HEAD
 		if (drv->pm->suspend_noirq){
 			printk("drv->pm->suspend_noirq=%pF+\n",drv->pm->suspend_noirq);
 			ret = drv->pm->suspend_noirq(dev);
 	}
 	}
+=======
+		if (drv->pm->suspend_noirq)
+			ret = drv->pm->suspend_noirq(dev);
+	}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return ret;
 }
@@ -745,10 +766,15 @@ int __weak platform_pm_resume(struct device *dev)
 		return 0;
 
 	if (drv->pm) {
+<<<<<<< HEAD
 		if (drv->pm->resume){
 			printk("drv->pm->resume=%pF+\n",drv->pm->resume);
 			ret = drv->pm->resume(dev);
 		}
+=======
+		if (drv->pm->resume)
+			ret = drv->pm->resume(dev);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	} else {
 		ret = platform_legacy_resume(dev);
 	}
@@ -765,11 +791,17 @@ int __weak platform_pm_resume_noirq(struct device *dev)
 		return 0;
 
 	if (drv->pm) {
+<<<<<<< HEAD
 		if (drv->pm->resume_noirq){
 			printk("drv->pm->resume_noirq=%pF+\n",drv->pm->resume_noirq);
 			ret = drv->pm->resume_noirq(dev);
 	}
 	}
+=======
+		if (drv->pm->resume_noirq)
+			ret = drv->pm->resume_noirq(dev);
+	}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return ret;
 }

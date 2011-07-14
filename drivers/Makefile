@@ -63,7 +63,10 @@ obj-$(CONFIG_MAC)		+= macintosh/
 obj-$(CONFIG_ATA_OVER_ETH)	+= block/aoe/
 obj-$(CONFIG_PARIDE) 		+= block/paride/
 obj-$(CONFIG_TC)		+= tc/
+<<<<<<< HEAD
 obj-$(CONFIG_ASUSEC)		+= input/asusec/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 obj-$(CONFIG_UWB)		+= uwb/
 obj-$(CONFIG_USB_OTG_UTILS)	+= usb/otg/
 obj-$(CONFIG_USB)		+= usb/
@@ -96,7 +99,10 @@ obj-$(CONFIG_CPU_IDLE)		+= cpuidle/
 obj-$(CONFIG_MMC)		+= mmc/
 obj-$(CONFIG_MEMSTICK)		+= memstick/
 obj-$(CONFIG_NEW_LEDS)		+= leds/
+<<<<<<< HEAD
 obj-$(CONFIG_SWITCH)		+= switch/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 obj-$(CONFIG_INFINIBAND)	+= infiniband/
 obj-$(CONFIG_SGI_SN)		+= sn/
 obj-y				+= firmware/
@@ -117,4 +123,7 @@ obj-$(CONFIG_VLYNQ)		+= vlynq/
 obj-$(CONFIG_STAGING)		+= staging/
 obj-y				+= platform/
 obj-y				+= ieee802154/
+<<<<<<< HEAD
 obj-$(CONFIG_RIL)		+= ril/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

@@ -96,7 +96,10 @@
 #include <linux/crc32.h>
 #include <linux/math64.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/nls.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include "check.h"
 #include "efi.h"
 
@@ -105,7 +108,10 @@
  * the partition tables happens after init too.
  */
 static int force_gpt;
+<<<<<<< HEAD
 static u64 force_gpt_sector;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int __init
 force_gpt_fn(char *str)
 {
@@ -114,6 +120,7 @@ force_gpt_fn(char *str)
 }
 __setup("gpt", force_gpt_fn);
 
+<<<<<<< HEAD
 static int __init force_gpt_sector_fn(char *str)
 {
 	force_gpt_sector = simple_strtoull(str, NULL, 0);
@@ -121,6 +128,8 @@ static int __init force_gpt_sector_fn(char *str)
 }
 __setup("gpt_sector=", force_gpt_sector_fn);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /**
  * efi_crc32() - EFI version of crc32 function
@@ -549,9 +558,12 @@ static int find_valid_gpt(struct parsed_partitions *state, gpt_header **gpt,
         if (!good_agpt && force_gpt)
                 good_agpt = is_gpt_valid(state, lastlba, &agpt, &aptes);
 
+<<<<<<< HEAD
 	if (!good_agpt && force_gpt && force_gpt_sector)
 		good_agpt = is_gpt_valid(state, force_gpt_sector, &agpt, &aptes);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
         /* The obviously unsuccessful case */
         if (!good_pgpt && !good_agpt)
                 goto fail;
@@ -629,12 +641,16 @@ int efi_partition(struct parsed_partitions *state)
 		u64 start = le64_to_cpu(ptes[i].starting_lba);
 		u64 size = le64_to_cpu(ptes[i].ending_lba) -
 			   le64_to_cpu(ptes[i].starting_lba) + 1ULL;
+<<<<<<< HEAD
 		u8 name[sizeof(ptes->partition_name) / sizeof(efi_char16_t)];
 		int len;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		if (!is_pte_valid(&ptes[i], last_lba(state->bdev)))
 			continue;
 
+<<<<<<< HEAD
 		len = utf16s_to_utf8s(ptes[i].partition_name,
 				      sizeof(ptes[i].partition_name) /
 				      sizeof(efi_char16_t),
@@ -643,6 +659,9 @@ int efi_partition(struct parsed_partitions *state)
 
 		put_named_partition(state, i+1, start * ssz, size * ssz,
 				    name, len);
+=======
+		put_partition(state, i+1, start * ssz, size * ssz);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		/* If this is a RAID volume, tell md */
 		if (!efi_guidcmp(ptes[i].partition_type_guid,

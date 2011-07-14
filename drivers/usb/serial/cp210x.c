@@ -49,7 +49,10 @@ static int cp210x_tiocmset_port(struct usb_serial_port *port, struct file *,
 static void cp210x_break_ctl(struct tty_struct *, int);
 static int cp210x_startup(struct usb_serial *);
 static void cp210x_dtr_rts(struct usb_serial_port *p, int on);
+<<<<<<< HEAD
 static int cp210x_carrier_raised(struct usb_serial_port *p);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static int debug;
 
@@ -87,7 +90,10 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(0x10C4, 0x8115) }, /* Arygon NFC/Mifare Reader */
 	{ USB_DEVICE(0x10C4, 0x813D) }, /* Burnside Telecom Deskmobile */
 	{ USB_DEVICE(0x10C4, 0x813F) }, /* Tams Master Easy Control */
+<<<<<<< HEAD
 	{ USB_DEVICE(0x10C4, 0x8149) }, /* West Mountain Radio Computerized Battery Analyzer */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{ USB_DEVICE(0x10C4, 0x814A) }, /* West Mountain Radio RIGblaster P&P */
 	{ USB_DEVICE(0x10C4, 0x814B) }, /* West Mountain Radio RIGtalk */
 	{ USB_DEVICE(0x10C4, 0x8156) }, /* B&G H3000 link cable */
@@ -110,7 +116,13 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(0x10C4, 0x8341) }, /* Siemens MC35PU GPRS Modem */
 	{ USB_DEVICE(0x10C4, 0x8382) }, /* Cygnal Integrated Products, Inc. */
 	{ USB_DEVICE(0x10C4, 0x83A8) }, /* Amber Wireless AMB2560 */
+<<<<<<< HEAD
 	{ USB_DEVICE(0x10C4, 0x8411) }, /* Kyocera GPS Module */
+=======
+	{ USB_DEVICE(0x10C4, 0x83D8) }, /* DekTec DTA Plus VHF/UHF Booster/Attenuator */
+	{ USB_DEVICE(0x10C4, 0x8411) }, /* Kyocera GPS Module */
+	{ USB_DEVICE(0x10C4, 0x8418) }, /* IRZ Automation Teleport SG-10 GSM/GPRS Modem */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{ USB_DEVICE(0x10C4, 0x846E) }, /* BEI USB Sensor Interface (VCP) */
 	{ USB_DEVICE(0x10C4, 0x8477) }, /* Balluff RFID */
 	{ USB_DEVICE(0x10C4, 0xEA60) }, /* Silicon Labs factory default */
@@ -165,8 +177,12 @@ static struct usb_serial_driver cp210x_device = {
 	.tiocmget 		= cp210x_tiocmget,
 	.tiocmset		= cp210x_tiocmset,
 	.attach			= cp210x_startup,
+<<<<<<< HEAD
 	.dtr_rts		= cp210x_dtr_rts,
 	.carrier_raised		= cp210x_carrier_raised
+=======
+	.dtr_rts		= cp210x_dtr_rts
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 /* Config request types */
@@ -765,6 +781,7 @@ static int cp210x_tiocmget (struct tty_struct *tty, struct file *file)
 	return result;
 }
 
+<<<<<<< HEAD
 static int cp210x_carrier_raised(struct usb_serial_port *p)
 {
 	unsigned int control;
@@ -774,6 +791,8 @@ static int cp210x_carrier_raised(struct usb_serial_port *p)
 	return 0;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static void cp210x_break_ctl (struct tty_struct *tty, int break_state)
 {
 	struct usb_serial_port *port = tty->driver_data;

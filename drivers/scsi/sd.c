@@ -1153,6 +1153,15 @@ static unsigned int sd_completed_bytes(struct scsi_cmnd *scmd)
 	u64 end_lba = blk_rq_pos(scmd->request) + (scsi_bufflen(scmd) / 512);
 	u64 bad_lba;
 	int info_valid;
+<<<<<<< HEAD
+=======
+	/*
+	 * resid is optional but mostly filled in.  When it's unused,
+	 * its value is zero, so we assume the whole buffer transferred
+	 */
+	unsigned int transferred = scsi_bufflen(scmd) - scsi_get_resid(scmd);
+	unsigned int good_bytes;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (scmd->request->cmd_type != REQ_TYPE_FS)
 		return 0;
@@ -1186,7 +1195,12 @@ static unsigned int sd_completed_bytes(struct scsi_cmnd *scmd)
 	/* This computation should always be done in terms of
 	 * the resolution of the device's medium.
 	 */
+<<<<<<< HEAD
 	return (bad_lba - start_lba) * scmd->device->sector_size;
+=======
+	good_bytes = (bad_lba - start_lba) * scmd->device->sector_size;
+	return min(good_bytes, transferred);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 /**

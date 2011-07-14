@@ -76,6 +76,13 @@
 /* Wrapper for extended mode pgprot twiddling */
 #define _PAGE_EXT(x)		((unsigned long long)(x) << 32)
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_X2TLB
+#define _PAGE_PCC_MASK	0x00000000	/* No legacy PTEA support */
+#else
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* software: moves to PTEA.TC (Timing Control) */
 #define _PAGE_PCC_AREA5	0x00000000	/* use BSC registers for area5 */
 #define _PAGE_PCC_AREA6	0x80000000	/* use BSC registers for area6 */
@@ -89,7 +96,12 @@
 #define _PAGE_PCC_ATR8	0x60000000	/* Attribute Memory space, 8 bit bus */
 #define _PAGE_PCC_ATR16	0x60000001	/* Attribute Memory space, 6 bit bus */
 
+<<<<<<< HEAD
 #ifndef CONFIG_X2TLB
+=======
+#define _PAGE_PCC_MASK	0xe0000001
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* copy the ptea attributes */
 static inline unsigned long copy_ptea_attributes(unsigned long x)
 {

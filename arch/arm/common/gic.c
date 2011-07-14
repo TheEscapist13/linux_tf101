@@ -39,6 +39,7 @@ struct gic_chip_data {
 	unsigned int irq_offset;
 	void __iomem *dist_base;
 	void __iomem *cpu_base;
+<<<<<<< HEAD
 #ifdef CONFIG_PM
 	u32 saved_enable[DIV_ROUND_UP(1020, 32)];
 	u32 saved_conf[DIV_ROUND_UP(1020, 16)];
@@ -46,6 +47,8 @@ struct gic_chip_data {
 	u32 saved_target[DIV_ROUND_UP(1020, 4)];
 #endif
 	unsigned int max_irq;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 #ifndef MAX_GIC_NR
@@ -87,7 +90,11 @@ static inline unsigned int gic_irq(unsigned int irq)
  * our "acknowledge" routine disable the interrupt, then mark it as
  * complete.
  */
+<<<<<<< HEAD
 void gic_ack_irq(unsigned int irq)
+=======
+static void gic_ack_irq(unsigned int irq)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	u32 mask = 1 << (irq % 32);
 
@@ -97,7 +104,11 @@ void gic_ack_irq(unsigned int irq)
 	spin_unlock(&irq_controller_lock);
 }
 
+<<<<<<< HEAD
 void gic_mask_irq(unsigned int irq)
+=======
+static void gic_mask_irq(unsigned int irq)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	u32 mask = 1 << (irq % 32);
 
@@ -106,7 +117,11 @@ void gic_mask_irq(unsigned int irq)
 	spin_unlock(&irq_controller_lock);
 }
 
+<<<<<<< HEAD
 void gic_unmask_irq(unsigned int irq)
+=======
+static void gic_unmask_irq(unsigned int irq)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	u32 mask = 1 << (irq % 32);
 
@@ -115,7 +130,11 @@ void gic_unmask_irq(unsigned int irq)
 	spin_unlock(&irq_controller_lock);
 }
 
+<<<<<<< HEAD
 int gic_set_type(unsigned int irq, unsigned int type)
+=======
+static int gic_set_type(unsigned int irq, unsigned int type)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	void __iomem *base = gic_dist_base(irq);
 	unsigned int gicirq = gic_irq(irq);
@@ -161,7 +180,11 @@ int gic_set_type(unsigned int irq, unsigned int type)
 }
 
 #ifdef CONFIG_SMP
+<<<<<<< HEAD
 int gic_set_cpu(unsigned int irq, const struct cpumask *mask_val)
+=======
+static int gic_set_cpu(unsigned int irq, const struct cpumask *mask_val)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	void __iomem *reg = gic_dist_base(irq) + GIC_DIST_TARGET + (gic_irq(irq) & ~3);
 	unsigned int shift = (irq % 4) * 8;
@@ -228,6 +251,7 @@ void __init gic_cascade_irq(unsigned int gic_nr, unsigned int irq)
 	set_irq_chained_handler(irq, gic_handle_cascade_irq);
 }
 
+<<<<<<< HEAD
 static unsigned int _gic_dist_init(unsigned int gic_nr)
 {
 	unsigned int max_irq, i;
@@ -237,6 +261,23 @@ static unsigned int _gic_dist_init(unsigned int gic_nr)
 	cpumask |= cpumask << 8;
 	cpumask |= cpumask << 16;
 
+=======
+void __init gic_dist_init(unsigned int gic_nr, void __iomem *base,
+			  unsigned int irq_start)
+{
+	unsigned int max_irq, i;
+	u32 cpumask = 1 << smp_processor_id();
+
+	if (gic_nr >= MAX_GIC_NR)
+		BUG();
+
+	cpumask |= cpumask << 8;
+	cpumask |= cpumask << 16;
+
+	gic_data[gic_nr].dist_base = base;
+	gic_data[gic_nr].irq_offset = (irq_start - 1) & ~31;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	writel(0, base + GIC_DIST_CTRL);
 
 	/*
@@ -277,6 +318,7 @@ static unsigned int _gic_dist_init(unsigned int gic_nr)
 	for (i = 0; i < max_irq; i += 32)
 		writel(0xffffffff, base + GIC_DIST_ENABLE_CLEAR + i * 4 / 32);
 
+<<<<<<< HEAD
 	return max_irq;
 }
 
@@ -367,6 +409,8 @@ void __init gic_dist_init(unsigned int gic_nr, void __iomem *base,
 	max_irq = _gic_dist_init(gic_nr);
 	gic_data[gic_nr].max_irq = max_irq;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * Setup the Linux IRQ subsystem.
 	 */
@@ -380,6 +424,7 @@ void __init gic_dist_init(unsigned int gic_nr, void __iomem *base,
 	writel(1, base + GIC_DIST_CTRL);
 }
 
+<<<<<<< HEAD
 void gic_dist_exit(unsigned int gic_nr)
 {
 	if (gic_nr >= MAX_GIC_NR)
@@ -388,6 +433,8 @@ void gic_dist_exit(unsigned int gic_nr)
 	_gic_dist_exit(gic_nr);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 void __cpuinit gic_cpu_init(unsigned int gic_nr, void __iomem *base)
 {
 	if (gic_nr >= MAX_GIC_NR)
@@ -399,6 +446,7 @@ void __cpuinit gic_cpu_init(unsigned int gic_nr, void __iomem *base)
 	writel(1, base + GIC_CPU_CTRL);
 }
 
+<<<<<<< HEAD
 void gic_cpu_exit(unsigned int gic_nr)
 {
 	if (gic_nr >= MAX_GIC_NR)
@@ -407,6 +455,8 @@ void gic_cpu_exit(unsigned int gic_nr)
 	writel(0, gic_data[gic_nr].cpu_base + GIC_CPU_CTRL);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #ifdef CONFIG_SMP
 void gic_raise_softirq(const struct cpumask *mask, unsigned int irq)
 {

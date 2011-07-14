@@ -2256,7 +2256,10 @@ config FB_JZ4740
 
 source "drivers/video/omap/Kconfig"
 source "drivers/video/omap2/Kconfig"
+<<<<<<< HEAD
 source "drivers/video/tegra/Kconfig"
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 source "drivers/video/backlight/Kconfig"
 source "drivers/video/display/Kconfig"

@@ -24,8 +24,11 @@
 
 static void nfs_do_free_delegation(struct nfs_delegation *delegation)
 {
+<<<<<<< HEAD
 	if (delegation->cred)
 		put_rpccred(delegation->cred);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	kfree(delegation);
 }
 
@@ -38,6 +41,13 @@ static void nfs_free_delegation_callback(struct rcu_head *head)
 
 static void nfs_free_delegation(struct nfs_delegation *delegation)
 {
+<<<<<<< HEAD
+=======
+	if (delegation->cred) {
+		put_rpccred(delegation->cred);
+		delegation->cred = NULL;
+	}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	call_rcu(&delegation->rcu, nfs_free_delegation_callback);
 }
 

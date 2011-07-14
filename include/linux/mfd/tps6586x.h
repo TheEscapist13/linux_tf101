@@ -1,10 +1,13 @@
 #ifndef __LINUX_MFD_TPS6586X_H
 #define __LINUX_MFD_TPS6586X_H
 
+<<<<<<< HEAD
 #define SM0_PWM_BIT 0
 #define SM1_PWM_BIT 1
 #define SM2_PWM_BIT 2
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 enum {
 	TPS6586X_ID_SM_0,
 	TPS6586X_ID_SM_1,
@@ -22,6 +25,7 @@ enum {
 	TPS6586X_ID_LDO_RTC,
 };
 
+<<<<<<< HEAD
 enum {
 	TPS6586X_INT_PLDO_0,
 	TPS6586X_INT_PLDO_1,
@@ -70,12 +74,15 @@ enum {
 	TPS6586X_RTC_CL_SEL_12_5PF = 0x3,
 };
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct tps6586x_subdev_info {
 	int		id;
 	const char	*name;
 	void		*platform_data;
 };
 
+<<<<<<< HEAD
 struct tps6586x_epoch_start {
 	int year;
 	int month;
@@ -91,12 +98,17 @@ struct tps6586x_rtc_platform_data {
 	int cl_sel; /* internal XTAL capacitance, see TPS6586X_RTC_CL_SEL* */
 };
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct tps6586x_platform_data {
 	int num_subdevs;
 	struct tps6586x_subdev_info *subdevs;
 
 	int gpio_base;
+<<<<<<< HEAD
 	int irq_base;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 /*
@@ -111,6 +123,9 @@ extern int tps6586x_set_bits(struct device *dev, int reg, uint8_t bit_mask);
 extern int tps6586x_clr_bits(struct device *dev, int reg, uint8_t bit_mask);
 extern int tps6586x_update(struct device *dev, int reg, uint8_t val,
 			   uint8_t mask);
+<<<<<<< HEAD
 extern int tps6586x_power_off(void);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #endif /*__LINUX_MFD_TPS6586X_H */

@@ -420,6 +420,16 @@ static const struct dmi_system_id __initconst i8042_dmi_nomux_table[] = {
 			DMI_MATCH(DMI_PRODUCT_VERSION, "0100"),
 		},
 	},
+<<<<<<< HEAD
+=======
+	{
+		/* Dell Vostro V13 */
+		.matches = {
+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+			DMI_MATCH(DMI_PRODUCT_NAME, "Vostro V13"),
+		},
+	},
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{ }
 };
 
@@ -541,6 +551,20 @@ static const struct dmi_system_id __initconst i8042_dmi_laptop_table[] = {
 };
 #endif
 
+<<<<<<< HEAD
+=======
+static const struct dmi_system_id __initconst i8042_dmi_notimeout_table[] = {
+	{
+		/* Dell Vostro V13 */
+		.matches = {
+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+			DMI_MATCH(DMI_PRODUCT_NAME, "Vostro V13"),
+		},
+	},
+	{ }
+};
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * Some Wistron based laptops need us to explicitly enable the 'Dritek
  * keyboard extension' to make their extra keys start generating scancodes.
@@ -893,6 +917,12 @@ static int __init i8042_platform_init(void)
 	if (dmi_check_system(i8042_dmi_nomux_table))
 		i8042_nomux = true;
 
+<<<<<<< HEAD
+=======
+	if (dmi_check_system(i8042_dmi_notimeout_table))
+		i8042_notimeout = true;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (dmi_check_system(i8042_dmi_dritek_table))
 		i8042_dritek = true;
 #endif /* CONFIG_X86 */

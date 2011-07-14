@@ -299,6 +299,7 @@ void async_synchronize_cookie(async_cookie_t cookie)
 	async_synchronize_cookie_domain(cookie, &async_running);
 }
 EXPORT_SYMBOL_GPL(async_synchronize_cookie);
+<<<<<<< HEAD
 
 int async_synchronize_cookie_domain_timeout(async_cookie_t cookie,
 				     struct list_head *running,unsigned int timeout)
@@ -331,3 +332,5 @@ int async_synchronize_full_timeout(unsigned int timeout)
 	return ret;
 }
 EXPORT_SYMBOL_GPL(async_synchronize_full_timeout);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

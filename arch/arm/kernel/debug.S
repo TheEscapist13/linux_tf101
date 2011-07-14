@@ -22,7 +22,11 @@
 #if defined(CONFIG_DEBUG_ICEDCC)
 		@@ debug using ARM EmbeddedICE DCC channel
 
+<<<<<<< HEAD
 #if defined(CONFIG_CPU_V6) || defined(CONFIG_CPU_V7)
+=======
+#if defined(CONFIG_CPU_V6)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		.macro	addruart, rx, tmp
 		.endm

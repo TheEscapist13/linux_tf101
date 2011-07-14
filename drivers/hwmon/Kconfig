@@ -180,6 +180,7 @@ config SENSORS_ADT7411
 	  This driver can also be built as a module. If so, the module
 	  will be called adt7411.
 
+<<<<<<< HEAD
 config SENSORS_ADT7461
 	tristate "Analog Devices ADT7461"
 	depends on I2C && EXPERIMENTAL
@@ -190,6 +191,8 @@ config SENSORS_ADT7461
 	  This driver can also be built as a module. If so, the module
 	  will be called adt7461.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config SENSORS_ADT7462
 	tristate "Analog Devices ADT7462"
 	depends on I2C && EXPERIMENTAL
@@ -1183,6 +1186,7 @@ config SENSORS_MC13783_ADC
         help
           Support for the A/D converter on MC13783 PMIC.
 
+<<<<<<< HEAD
 config SENSORS_AL3000
 	tristate "Lite-On light sensor"
 	depends on I2C
@@ -1193,6 +1197,8 @@ config SENSORS_AL3000
 	  in lux.
 	  Data from sensor is accessible via sysfs.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 if ACPI
 
 comment "ACPI drivers"

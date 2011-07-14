@@ -403,7 +403,10 @@ link_check_failed:
 	return ret;
 
 link_prealloc_failed:
+<<<<<<< HEAD
 	up_write(&dest_keyring->sem);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	mutex_unlock(&user->cons_lock);
 	kleave(" = %d [prelink]", ret);
 	return ret;

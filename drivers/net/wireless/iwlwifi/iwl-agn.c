@@ -1234,6 +1234,12 @@ static void iwl_irq_tasklet_legacy(struct iwl_priv *priv)
 	/* only Re-enable if diabled by irq */
 	if (test_bit(STATUS_INT_ENABLED, &priv->status))
 		iwl_enable_interrupts(priv);
+<<<<<<< HEAD
+=======
+	/* Re-enable RF_KILL if it occurred */
+	else if (handled & CSR_INT_BIT_RF_KILL)
+		iwl_enable_rfkill_int(priv);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #ifdef CONFIG_IWLWIFI_DEBUG
 	if (iwl_get_debug_level(priv) & (IWL_DL_ISR)) {
@@ -1449,6 +1455,12 @@ static void iwl_irq_tasklet(struct iwl_priv *priv)
 	/* only Re-enable if diabled by irq */
 	if (test_bit(STATUS_INT_ENABLED, &priv->status))
 		iwl_enable_interrupts(priv);
+<<<<<<< HEAD
+=======
+	/* Re-enable RF_KILL if it occurred */
+	else if (handled & CSR_INT_BIT_RF_KILL)
+		iwl_enable_rfkill_int(priv);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 /* the threshold ratio of actual_ack_cnt to expected_ack_cnt in percent */
@@ -3260,9 +3272,16 @@ static void iwl_mac_stop(struct ieee80211_hw *hw)
 
 	flush_workqueue(priv->workqueue);
 
+<<<<<<< HEAD
 	/* enable interrupts again in order to receive rfkill changes */
 	iwl_write32(priv, CSR_INT, 0xFFFFFFFF);
 	iwl_enable_interrupts(priv);
+=======
+	/* User space software may expect getting rfkill changes
+	 * even if interface is down */
+	iwl_write32(priv, CSR_INT, 0xFFFFFFFF);
+	iwl_enable_rfkill_int(priv);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	IWL_DEBUG_MAC80211(priv, "leave\n");
 }
@@ -4103,14 +4122,22 @@ static int iwl_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	 * 8. Enable interrupts and read RFKILL state
 	 *********************************************/
 
+<<<<<<< HEAD
 	/* enable interrupts if needed: hw bug w/a */
+=======
+	/* enable rfkill interrupt: hw bug w/a */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	pci_read_config_word(priv->pci_dev, PCI_COMMAND, &pci_cmd);
 	if (pci_cmd & PCI_COMMAND_INTX_DISABLE) {
 		pci_cmd &= ~PCI_COMMAND_INTX_DISABLE;
 		pci_write_config_word(priv->pci_dev, PCI_COMMAND, pci_cmd);
 	}
 
+<<<<<<< HEAD
 	iwl_enable_interrupts(priv);
+=======
+	iwl_enable_rfkill_int(priv);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* If platform's RF_KILL switch is NOT set to KILL */
 	if (iwl_read32(priv, CSR_GP_CNTRL) & CSR_GP_CNTRL_REG_FLAG_HW_RF_KILL_SW)

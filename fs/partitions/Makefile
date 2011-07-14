@@ -18,4 +18,7 @@ obj-$(CONFIG_IBM_PARTITION) += ibm.o
 obj-$(CONFIG_EFI_PARTITION) += efi.o
 obj-$(CONFIG_KARMA_PARTITION) += karma.o
 obj-$(CONFIG_SYSV68_PARTITION) += sysv68.o
+<<<<<<< HEAD
 obj-$(CONFIG_CMDLINE_PARTITION) += cmdline.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

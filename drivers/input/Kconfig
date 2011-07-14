@@ -161,6 +161,7 @@ config INPUT_APMPOWER
 	  To compile this driver as a module, choose M here: the
 	  module will be called apm-power.
 
+<<<<<<< HEAD
 config INPUT_KEYRESET
 	tristate "Reset key"
 	depends on INPUT
@@ -170,6 +171,8 @@ config INPUT_KEYRESET
 	  To compile this driver as a module, choose M here: the
 	  module will be called keyreset.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config XEN_KBDDEV_FRONTEND
 	tristate "Xen virtual keyboard and mouse support"
 	depends on XEN_FBDEV_FRONTEND
@@ -179,6 +182,7 @@ config XEN_KBDDEV_FRONTEND
 	  This driver implements the front-end of the Xen virtual
 	  keyboard and mouse device driver.  It communicates with a back-end
 	  in another domain.
+<<<<<<< HEAD
 config SENSORS_CAP_LDS6126
 	tristate "Capacitive Sensor Driver LDS6126"
 	depends on I2C
@@ -197,6 +201,8 @@ config ASUSEC
 config DSP_FM34
         tristate "DSP FM34 driver"
         depends on I2C
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 comment "Input Device Drivers"
 

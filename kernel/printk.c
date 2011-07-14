@@ -57,10 +57,13 @@ void asmlinkage __attribute__((weak)) early_printk(const char *fmt, ...)
 
 #define __LOG_BUF_LEN	(1 << CONFIG_LOG_BUF_SHIFT)
 
+<<<<<<< HEAD
 #ifdef        CONFIG_DEBUG_LL
 extern void printascii(char *);
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* printk's without a loglevel use this.. */
 #define DEFAULT_MESSAGE_LOGLEVEL 4 /* KERN_WARNING */
 
@@ -141,8 +144,11 @@ static int selected_console = -1;
 static int preferred_console = -1;
 int console_set_on_cmdline;
 EXPORT_SYMBOL(console_set_on_cmdline);
+<<<<<<< HEAD
 int console_none_on_cmdline = 0;
 EXPORT_SYMBOL(console_none_on_cmdline);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* Flag: console code may call schedule() */
 static int console_may_schedule;
@@ -154,8 +160,11 @@ static char *log_buf = __log_buf;
 static int log_buf_len = __LOG_BUF_LEN;
 static unsigned logged_chars; /* Number of chars produced since last read+clear operation */
 static int saved_console_loglevel = -1;
+<<<<<<< HEAD
 char *auto_dump_log_buf_ptr = __log_buf;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #ifdef CONFIG_KEXEC
 /*
@@ -269,6 +278,7 @@ static inline void boot_delay_msec(void)
 }
 #endif
 
+<<<<<<< HEAD
 /*
  * Return the number of unread characters in the log buffer.
  */
@@ -331,6 +341,8 @@ int log_buf_copy(char *dest, int idx, int len)
  *	9 -- Return number of unread characters in the log buffer
  *     10 -- Return size of the log buffer
  */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int do_syslog(int type, char __user *buf, int len, bool from_file)
 {
 	unsigned i, j, limit, count;
@@ -806,9 +818,12 @@ asmlinkage int vprintk(const char *fmt, va_list args)
 	printed_len += vscnprintf(printk_buf + printed_len,
 				  sizeof(printk_buf) - printed_len, fmt, args);
 
+<<<<<<< HEAD
 #ifdef	CONFIG_DEBUG_LL
 	printascii(printk_buf);
 #endif
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	p = printk_buf;
 
@@ -982,9 +997,12 @@ static int __init console_setup(char *str)
 	idx = simple_strtoul(s, NULL, 10);
 	*s = 0;
 
+<<<<<<< HEAD
 	if (!strcmp(buf, "none"))
 		console_none_on_cmdline = 1;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	__add_preferred_console(buf, idx, options, brl_options);
 	console_set_on_cmdline = 1;
 	return 1;

@@ -1126,15 +1126,22 @@ int pdc_iodc_print(const unsigned char *str, unsigned count)
 	unsigned int i;
 	unsigned long flags;
 
+<<<<<<< HEAD
 	for (i = 0; i < count && i < 79;) {
+=======
+	for (i = 0; i < count;) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		switch(str[i]) {
 		case '\n':
 			iodc_dbuf[i+0] = '\r';
 			iodc_dbuf[i+1] = '\n';
 			i += 2;
 			goto print;
+<<<<<<< HEAD
 		case '\b':	/* BS */
 			i--; /* overwrite last */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		default:
 			iodc_dbuf[i] = str[i];
 			i++;
@@ -1142,6 +1149,7 @@ int pdc_iodc_print(const unsigned char *str, unsigned count)
 		}
 	}
 
+<<<<<<< HEAD
 	/* if we're at the end of line, and not already inserting a newline,
 	 * insert one anyway. iodc console doesn't claim to support >79 char
 	 * lines. don't account for this in the return value.
@@ -1151,6 +1159,8 @@ int pdc_iodc_print(const unsigned char *str, unsigned count)
 		iodc_dbuf[i+1] = '\n';
 	}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 print:
         spin_lock_irqsave(&pdc_lock, flags);
         real32_call(PAGE0->mem_cons.iodc_io,

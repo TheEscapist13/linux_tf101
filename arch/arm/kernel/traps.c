@@ -454,9 +454,13 @@ do_cache_op(unsigned long start, unsigned long end, int flags)
 		if (end > vma->vm_end)
 			end = vma->vm_end;
 
+<<<<<<< HEAD
 		up_read(&mm->mmap_sem);
 		flush_cache_user_range(start, end);
 		return;
+=======
+		flush_cache_user_range(vma, start, end);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 	up_read(&mm->mmap_sem);
 }
@@ -526,7 +530,11 @@ asmlinkage int arm_syscall(int no, struct pt_regs *regs)
 		if (has_tls_reg) {
 			asm ("mcr p15, 0, %0, c13, c0, 3"
 				: : "r" (regs->ARM_r0));
+<<<<<<< HEAD
 		} /*else*/ {
+=======
+		} else {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			/*
 			 * User space must never try to access this directly.
 			 * Expect your app to break eventually if you do so.

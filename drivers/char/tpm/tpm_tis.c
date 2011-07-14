@@ -25,6 +25,10 @@
 #include <linux/slab.h>
 #include <linux/interrupt.h>
 #include <linux/wait.h>
+<<<<<<< HEAD
+=======
+#include <linux/acpi.h>
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include "tpm.h"
 
 #define TPM_HEADER_SIZE 10
@@ -78,6 +82,29 @@ enum tis_defaults {
 static LIST_HEAD(tis_chips);
 static DEFINE_SPINLOCK(tis_lock);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ACPI
+static int is_itpm(struct pnp_dev *dev)
+{
+	struct acpi_device *acpi = pnp_acpi_device(dev);
+	struct acpi_hardware_id *id;
+
+	list_for_each_entry(id, &acpi->pnp.ids, list) {
+		if (!strcmp("INTC0102", id->id))
+			return 1;
+	}
+
+	return 0;
+}
+#else
+static int is_itpm(struct pnp_dev *dev)
+{
+	return 0;
+}
+#endif
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int check_locality(struct tpm_chip *chip, int l)
 {
 	if ((ioread8(chip->vendor.iobase + TPM_ACCESS(l)) &
@@ -355,6 +382,10 @@ static DEVICE_ATTR(temp_deactivated, S_IRUGO, tpm_show_temp_deactivated,
 		   NULL);
 static DEVICE_ATTR(caps, S_IRUGO, tpm_show_caps_1_2, NULL);
 static DEVICE_ATTR(cancel, S_IWUSR | S_IWGRP, NULL, tpm_store_cancel);
+<<<<<<< HEAD
+=======
+static DEVICE_ATTR(timeouts, S_IRUGO, tpm_show_timeouts, NULL);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static struct attribute *tis_attrs[] = {
 	&dev_attr_pubek.attr,
@@ -364,7 +395,12 @@ static struct attribute *tis_attrs[] = {
 	&dev_attr_owned.attr,
 	&dev_attr_temp_deactivated.attr,
 	&dev_attr_caps.attr,
+<<<<<<< HEAD
 	&dev_attr_cancel.attr, NULL,
+=======
+	&dev_attr_cancel.attr,
+	&dev_attr_timeouts.attr, NULL,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 static struct attribute_group tis_attr_grp = {
@@ -472,6 +508,12 @@ static int tpm_tis_init(struct device *dev, resource_size_t start,
 		 "1.2 TPM (device-id 0x%X, rev-id %d)\n",
 		 vendor >> 16, ioread8(chip->vendor.iobase + TPM_RID(0)));
 
+<<<<<<< HEAD
+=======
+	if (is_itpm(to_pnp_dev(dev)))
+		itpm = 1;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (itpm)
 		dev_info(dev, "Intel iTPM workaround enabled\n");
 

@@ -290,6 +290,13 @@ static int ath_pci_resume(struct pci_dev *pdev)
 			    AR_GPIO_OUTPUT_MUX_AS_OUTPUT);
 	ath9k_hw_set_gpio(sc->sc_ah, sc->sc_ah->led_pin, 1);
 
+<<<<<<< HEAD
+=======
+	sc->ps_idle = true;
+	ath9k_set_wiphy_idle(aphy, true);
+	ath_radio_disable(sc, hw);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 

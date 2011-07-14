@@ -4,7 +4,10 @@
 
 obj-$(CONFIG_BT_HCIVHCI)	+= hci_vhci.o
 obj-$(CONFIG_BT_HCIUART)	+= hci_uart.o
+<<<<<<< HEAD
 obj-$(CONFIG_BT_BLUESLEEP)	+= bluesleep.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 obj-$(CONFIG_BT_HCIBCM203X)	+= bcm203x.o
 obj-$(CONFIG_BT_HCIBPA10X)	+= bpa10x.o
 obj-$(CONFIG_BT_HCIBFUSB)	+= bfusb.o

@@ -905,8 +905,11 @@ static int serio_uevent(struct device *dev, struct kobj_uevent_env *env)
 #endif /* CONFIG_HOTPLUG */
 
 #ifdef CONFIG_PM
+<<<<<<< HEAD
 // EETI Patch //
 #if(0)
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int serio_suspend(struct device *dev)
 {
 	struct serio *serio = to_serio_port(dev);
@@ -928,10 +931,13 @@ static int serio_resume(struct device *dev)
 
 	return 0;
 }
+<<<<<<< HEAD
 #else
 #define serio_suspend	NULL
 #define serio_resume	NULL
 #endif
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static const struct dev_pm_ops serio_pm_ops = {
 	.suspend	= serio_suspend,

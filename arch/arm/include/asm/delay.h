@@ -8,9 +8,12 @@
 
 #include <asm/param.h>	/* HZ */
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARCH_PROVIDES_UDELAY
 #include <mach/delay.h>
 #else
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 extern void __delay(int loops);
 
 /*
@@ -43,6 +46,9 @@ extern void __const_udelay(unsigned long);
 			__const_udelay((n) * ((2199023U*HZ)>>11))) :	\
 	  __udelay(n))
 
+<<<<<<< HEAD
 #endif /* defined(ARCH_PROVIDES_UDELAY) */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif /* defined(_ARM_DELAY_H) */
 

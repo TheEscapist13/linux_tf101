@@ -1419,9 +1419,21 @@ static int i915_load_modeset_init(struct drm_device *dev,
 	if (ret)
 		DRM_INFO("failed to find VBIOS tables\n");
 
+<<<<<<< HEAD
 	/* if we have > 1 VGA cards, then disable the radeon VGA resources */
 	ret = vga_client_register(dev->pdev, dev, NULL, i915_vga_set_decode);
 	if (ret)
+=======
+	/* If we have > 1 VGA cards, then we need to arbitrate access
+	 * to the common VGA resources.
+	 *
+	 * If we are a secondary display controller (!PCI_DISPLAY_CLASS_VGA),
+	 * then we do not take part in VGA arbitration and the
+	 * vga_client_register() fails with -ENODEV.
+	 */
+	ret = vga_client_register(dev->pdev, dev, NULL, i915_vga_set_decode);
+	if (ret && ret != -ENODEV)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		goto cleanup_ringbuffer;
 
 	ret = vga_switcheroo_register_client(dev->pdev,

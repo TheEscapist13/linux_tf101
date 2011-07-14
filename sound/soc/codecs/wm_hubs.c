@@ -92,6 +92,10 @@ static void wait_for_dc_servo(struct snd_soc_codec *codec, unsigned int op)
 static void calibrate_dc_servo(struct snd_soc_codec *codec)
 {
 	struct wm_hubs_data *hubs = snd_soc_codec_get_drvdata(codec);
+<<<<<<< HEAD
+=======
+	s8 offset;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	u16 reg, reg_l, reg_r, dcs_cfg;
 
 	/* Set for 32 series updates */
@@ -130,6 +134,7 @@ static void calibrate_dc_servo(struct snd_soc_codec *codec)
 		dev_dbg(codec->dev, "DCS input: %x %x\n", reg_l, reg_r);
 
 		/* HPOUT1L */
+<<<<<<< HEAD
 		if (reg_l + hubs->dcs_codes > 0 &&
 		    reg_l + hubs->dcs_codes < 0xff)
 			reg_l += hubs->dcs_codes;
@@ -140,6 +145,16 @@ static void calibrate_dc_servo(struct snd_soc_codec *codec)
 		    reg_r + hubs->dcs_codes < 0xff)
 			reg_r += hubs->dcs_codes;
 		dcs_cfg |= reg_r;
+=======
+		offset = reg_l;
+		offset += hubs->dcs_codes;
+		dcs_cfg = (u8)offset << WM8993_DCS_DAC_WR_VAL_1_SHIFT;
+
+		/* HPOUT1R */
+		offset = reg_r;
+		offset += hubs->dcs_codes;
+		dcs_cfg |= (u8)offset;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		dev_dbg(codec->dev, "DCS result: %x\n", dcs_cfg);
 

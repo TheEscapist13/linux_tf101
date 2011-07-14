@@ -19,6 +19,7 @@ struct mmc_queue {
 	unsigned int		bounce_sg_len;
 };
 
+<<<<<<< HEAD
 struct mmc_blk_data {
 	spinlock_t	lock;
 	struct gendisk	*disk;
@@ -28,6 +29,8 @@ struct mmc_blk_data {
 	unsigned int	read_only;
 };
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 extern int mmc_init_queue(struct mmc_queue *, struct mmc_card *, spinlock_t *);
 extern void mmc_cleanup_queue(struct mmc_queue *);
 extern void mmc_queue_suspend(struct mmc_queue *);

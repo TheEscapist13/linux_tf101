@@ -1,7 +1,11 @@
 VERSION = 2
 PATCHLEVEL = 6
 SUBLEVEL = 36
+<<<<<<< HEAD
 EXTRAVERSION = .3
+=======
+EXTRAVERSION = .4
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 NAME = Flesh-Eating Bats with Fangs
 
 # *DOCUMENTATION*
@@ -188,8 +192,13 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc64/ \
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
+<<<<<<< HEAD
 ARCH		?= arm
 CROSS_COMPILE	?=  /home/dylan/android/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-
+=======
+ARCH		?= $(SUBARCH)
+CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)

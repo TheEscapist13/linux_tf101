@@ -636,7 +636,11 @@ int vga_client_register(struct pci_dev *pdev, void *cookie,
 			void (*irq_set_state)(void *cookie, bool state),
 			unsigned int (*set_vga_decode)(void *cookie, bool decode))
 {
+<<<<<<< HEAD
 	int ret = -1;
+=======
+	int ret = -ENODEV;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	struct vga_device *vgadev;
 	unsigned long flags;
 

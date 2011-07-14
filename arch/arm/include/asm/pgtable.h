@@ -184,7 +184,10 @@ extern void __pgd_error(const char *file, int line, unsigned long val);
 #define L_PTE_MT_DEV_NONSHARED	(0x0c << 2)	/* 1100 */
 #define L_PTE_MT_DEV_WC		(0x09 << 2)	/* 1001 */
 #define L_PTE_MT_DEV_CACHED	(0x0b << 2)	/* 1011 */
+<<<<<<< HEAD
 #define L_PTE_MT_INNER_WB	(0x05 << 2)	/* 0101 (armv6, armv7) */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define L_PTE_MT_MASK		(0x0f << 2)
 
 #ifndef __ASSEMBLY__
@@ -279,6 +282,7 @@ extern struct page *empty_zero_page;
 
 #define set_pte_ext(ptep,pte,ext) cpu_set_pte_ext(ptep,pte,ext)
 
+<<<<<<< HEAD
 #ifndef CONFIG_SMP
 static inline void __sync_icache_dcache(pte_t pteval)
 {
@@ -297,6 +301,11 @@ static inline void set_pte_at(struct mm_struct *mm, unsigned long addr,
 		set_pte_ext(ptep, pteval, PTE_EXT_NG);
 	}
 }
+=======
+#define set_pte_at(mm,addr,ptep,pteval) do { \
+	set_pte_ext(ptep, pteval, (addr) >= TASK_SIZE ? 0 : PTE_EXT_NG); \
+ } while (0)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /*
  * The following only work if pte_present() is true.
@@ -308,10 +317,13 @@ static inline void set_pte_at(struct mm_struct *mm, unsigned long addr,
 #define pte_young(pte)		(pte_val(pte) & L_PTE_YOUNG)
 #define pte_special(pte)	(0)
 
+<<<<<<< HEAD
 #define pte_present_exec_user(pte) \
 	((pte_val(pte) & (L_PTE_PRESENT | L_PTE_EXEC | L_PTE_USER)) == \
 	 (L_PTE_PRESENT | L_PTE_EXEC | L_PTE_USER))
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define PTE_BIT_FUNC(fn,op) \
 static inline pte_t pte_##fn(pte_t pte) { pte_val(pte) op; return pte; }
 
@@ -345,8 +357,11 @@ extern pgprot_t phys_mem_access_prot(struct file *file, unsigned long pfn,
 #define pgprot_dmacoherent(prot) \
 	__pgprot_modify(prot, L_PTE_MT_MASK|L_PTE_EXEC, L_PTE_MT_UNCACHED)
 #endif
+<<<<<<< HEAD
 #define pgprot_inner_writeback(prot) \
 	__pgprot_modify(prot, L_PTE_MT_MASK, L_PTE_MT_INNER_WB)
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #define pmd_none(pmd)		(!pmd_val(pmd))
 #define pmd_present(pmd)	(pmd_val(pmd))

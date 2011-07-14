@@ -927,6 +927,7 @@ static int __devinit agp_intel_probe(struct pci_dev *pdev,
 	dev_info(&pdev->dev, "Intel %s Chipset\n", intel_agp_chipsets[i].name);
 
 	/*
+<<<<<<< HEAD
 	* If the device has not been properly setup, the following will catch
 	* the problem and should stop the system from crashing.
 	* 20030610 - hamish@zot.org
@@ -941,6 +942,16 @@ static int __devinit agp_intel_probe(struct pci_dev *pdev,
 	* The following fixes the case where the BIOS has "forgotten" to
 	* provide an address range for the GART.
 	* 20030610 - hamish@zot.org
+=======
+	* The following fixes the case where the BIOS has "forgotten" to
+	* provide an address range for the GART.
+	* 20030610 - hamish@zot.org
+	* This happens before pci_enable_device() intentionally;
+	* calling pci_enable_device() before assigning the resource
+	* will result in the GART being disabled on machines with such
+	* BIOSs (the GART ends up with a BAR starting at 0, which
+	* conflicts a lot of other devices).
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	*/
 	r = &pdev->resource[0];
 	if (!r->start && r->end) {
@@ -951,6 +962,20 @@ static int __devinit agp_intel_probe(struct pci_dev *pdev,
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	/*
+	* If the device has not been properly setup, the following will catch
+	* the problem and should stop the system from crashing.
+	* 20030610 - hamish@zot.org
+	*/
+	if (pci_enable_device(pdev)) {
+		dev_err(&pdev->dev, "can't enable PCI device\n");
+		agp_put_bridge(bridge);
+		return -ENODEV;
+	}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* Fill in the mode register */
 	if (cap_ptr) {
 		pci_read_config_dword(pdev,

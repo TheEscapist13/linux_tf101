@@ -28,7 +28,10 @@
 
 static unsigned long shared_pte_mask = L_PTE_MT_BUFFERABLE;
 
+<<<<<<< HEAD
 #ifndef CONFIG_SMP
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * We take the easy way out of this problem - we make the
  * PTE uncacheable.  However, we leave the write buffer on.
@@ -166,7 +169,11 @@ make_coherent(struct address_space *mapping, struct vm_area_struct *vma,
  * a page table, or changing an existing PTE.  Basically, there are two
  * things that we need to take care of:
  *
+<<<<<<< HEAD
  *  1. If PG_dcache_clean is not set for the page, we need to ensure
+=======
+ *  1. If PG_dcache_dirty is set for the page, we need to ensure
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  *     that any cache entries for the kernels virtual memory
  *     range are written back to the page.
  *  2. If we have multiple shared mappings of the same space in
@@ -193,8 +200,15 @@ void update_mmu_cache(struct vm_area_struct *vma, unsigned long addr,
 		return;
 
 	mapping = page_mapping(page);
+<<<<<<< HEAD
 	if (!test_and_set_bit(PG_dcache_clean, &page->flags))
 		__flush_dcache_page(mapping, page);
+=======
+#ifndef CONFIG_SMP
+	if (test_and_clear_bit(PG_dcache_dirty, &page->flags))
+		__flush_dcache_page(mapping, page);
+#endif
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (mapping) {
 		if (cache_is_vivt())
 			make_coherent(mapping, vma, addr, ptep, pfn);
@@ -202,7 +216,10 @@ void update_mmu_cache(struct vm_area_struct *vma, unsigned long addr,
 			__flush_icache_all();
 	}
 }
+<<<<<<< HEAD
 #endif	/* !CONFIG_SMP */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /*
  * Check whether the write buffer has physical address aliasing

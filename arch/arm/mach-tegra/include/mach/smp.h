@@ -15,10 +15,16 @@
 /*
  * We use IRQ1 as the IPI
  */
+<<<<<<< HEAD
 static inline void smp_cross_call(const struct cpumask *mask, int ipi)
 {
 	dsb();
 	gic_raise_softirq(mask, ipi);
+=======
+static inline void smp_cross_call(const struct cpumask *mask)
+{
+	gic_raise_softirq(mask, 1);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 /*

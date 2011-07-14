@@ -452,9 +452,12 @@ config RADIO_TIMBERDALE
 	  found behind the Timberdale FPGA on the Russellville board.
 	  Enabling this driver will automatically select the DSP and tuner.
 
+<<<<<<< HEAD
 config RADIO_ASUS4329
 	bool "ASUS 4329 Raidio Receiver support"
 	depends on VIDEO_V4L2
                    default y
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 endif # RADIO_ADAPTERS

@@ -187,9 +187,15 @@ static int dp_link_clock_for_mode_clock(u8 dpcd[DP_DPCD_SIZE], int mode_clock)
 int dp_mode_valid(u8 dpcd[DP_DPCD_SIZE], int mode_clock)
 {
 	int lanes = dp_lanes_for_mode_clock(dpcd, mode_clock);
+<<<<<<< HEAD
 	int bw = dp_lanes_for_mode_clock(dpcd, mode_clock);
 
 	if ((lanes == 0) || (bw == 0))
+=======
+	int dp_clock = dp_link_clock_for_mode_clock(dpcd, mode_clock);
+
+	if ((lanes == 0) || (dp_clock == 0))
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		return MODE_CLOCK_HIGH;
 
 	return MODE_OK;

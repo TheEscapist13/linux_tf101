@@ -154,6 +154,48 @@ void cpuidle_resume_and_unlock(void)
 
 EXPORT_SYMBOL_GPL(cpuidle_resume_and_unlock);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ARCH_HAS_CPU_RELAX
+static int poll_idle(struct cpuidle_device *dev, struct cpuidle_state *st)
+{
+	ktime_t	t1, t2;
+	s64 diff;
+	int ret;
+
+	t1 = ktime_get();
+	local_irq_enable();
+	while (!need_resched())
+		cpu_relax();
+
+	t2 = ktime_get();
+	diff = ktime_to_us(ktime_sub(t2, t1));
+	if (diff > INT_MAX)
+		diff = INT_MAX;
+
+	ret = (int) diff;
+	return ret;
+}
+
+static void poll_idle_init(struct cpuidle_device *dev)
+{
+	struct cpuidle_state *state = &dev->states[0];
+
+	cpuidle_set_statedata(state, NULL);
+
+	snprintf(state->name, CPUIDLE_NAME_LEN, "C0");
+	snprintf(state->desc, CPUIDLE_DESC_LEN, "CPUIDLE CORE POLL IDLE");
+	state->exit_latency = 0;
+	state->target_residency = 0;
+	state->power_usage = -1;
+	state->flags = CPUIDLE_FLAG_POLL;
+	state->enter = poll_idle;
+}
+#else
+static void poll_idle_init(struct cpuidle_device *dev) {}
+#endif /* CONFIG_ARCH_HAS_CPU_RELAX */
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /**
  * cpuidle_enable_device - enables idle PM for a CPU
  * @dev: the CPU
@@ -178,6 +220,11 @@ int cpuidle_enable_device(struct cpuidle_device *dev)
 			return ret;
 	}
 
+<<<<<<< HEAD
+=======
+	poll_idle_init(dev);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if ((ret = cpuidle_add_state_sysfs(dev)))
 		return ret;
 
@@ -232,6 +279,7 @@ void cpuidle_disable_device(struct cpuidle_device *dev)
 
 EXPORT_SYMBOL_GPL(cpuidle_disable_device);
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARCH_HAS_CPU_RELAX
 static int poll_idle(struct cpuidle_device *dev, struct cpuidle_state *st)
 {
@@ -271,6 +319,8 @@ static void poll_idle_init(struct cpuidle_device *dev)
 static void poll_idle_init(struct cpuidle_device *dev) {}
 #endif /* CONFIG_ARCH_HAS_CPU_RELAX */
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /**
  * __cpuidle_register_device - internal register function called before register
  * and enable routines
@@ -291,8 +341,11 @@ static int __cpuidle_register_device(struct cpuidle_device *dev)
 
 	init_completion(&dev->kobj_unregister);
 
+<<<<<<< HEAD
 	poll_idle_init(dev);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * cpuidle driver should set the dev->power_specified bit
 	 * before registering the device if the driver provides

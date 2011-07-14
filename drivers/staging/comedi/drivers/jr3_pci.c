@@ -54,6 +54,10 @@ Devices: [JR3] PCI force sensor board (jr3_pci)
 
 #define PCI_VENDOR_ID_JR3 0x1762
 #define PCI_DEVICE_ID_JR3_1_CHANNEL 0x3111
+<<<<<<< HEAD
+=======
+#define PCI_DEVICE_ID_JR3_1_CHANNEL_NEW 0x1111
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define PCI_DEVICE_ID_JR3_2_CHANNEL 0x3112
 #define PCI_DEVICE_ID_JR3_3_CHANNEL 0x3113
 #define PCI_DEVICE_ID_JR3_4_CHANNEL 0x3114
@@ -73,6 +77,11 @@ static DEFINE_PCI_DEVICE_TABLE(jr3_pci_pci_table) = {
 	{
 	PCI_VENDOR_ID_JR3, PCI_DEVICE_ID_JR3_1_CHANNEL,
 		    PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0}, {
+<<<<<<< HEAD
+=======
+	PCI_VENDOR_ID_JR3, PCI_DEVICE_ID_JR3_1_CHANNEL_NEW,
+		    PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0}, {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	PCI_VENDOR_ID_JR3, PCI_DEVICE_ID_JR3_2_CHANNEL,
 		    PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0}, {
 	PCI_VENDOR_ID_JR3, PCI_DEVICE_ID_JR3_3_CHANNEL,
@@ -807,6 +816,13 @@ static int jr3_pci_attach(struct comedi_device *dev,
 					devpriv->n_channels = 1;
 				}
 				break;
+<<<<<<< HEAD
+=======
+			case PCI_DEVICE_ID_JR3_1_CHANNEL_NEW:{
+					devpriv->n_channels = 1;
+				}
+				break;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			case PCI_DEVICE_ID_JR3_2_CHANNEL:{
 					devpriv->n_channels = 2;
 				}

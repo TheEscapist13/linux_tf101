@@ -117,7 +117,10 @@ struct ehci_hcd {			/* one per controller */
 	struct timer_list	watchdog;
 	unsigned long		actions;
 	unsigned		stamp;
+<<<<<<< HEAD
 	unsigned		periodic_stamp;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	unsigned		random_frame;
 	unsigned long		next_statechange;
 	ktime_t			last_periodic_enable;
@@ -131,8 +134,13 @@ struct ehci_hcd {			/* one per controller */
 	unsigned		has_amcc_usb23:1;
 	unsigned		need_io_watchdog:1;
 	unsigned		broken_periodic:1;
+<<<<<<< HEAD
 	unsigned		fs_i_thresh:1;	/* Intel iso scheduling */
 	unsigned		port_reset_no_wait:1;
+=======
+	unsigned		amd_l1_fix:1;
+	unsigned		fs_i_thresh:1;	/* Intel iso scheduling */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* required for usb32 quirk */
 	#define OHCI_CTRL_HCFS          (3 << 6)

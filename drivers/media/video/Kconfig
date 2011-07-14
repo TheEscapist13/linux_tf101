@@ -553,7 +553,10 @@ config VIDEO_VIVI
 source "drivers/media/video/davinci/Kconfig"
 
 source "drivers/media/video/omap/Kconfig"
+<<<<<<< HEAD
 source "drivers/media/video/tegra/Kconfig"
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 source "drivers/media/video/bt8xx/Kconfig"
 

@@ -240,6 +240,10 @@ struct ath9k_ops_config {
 	u32 pcie_waen;
 	u8 analog_shiftreg;
 	u8 ht_enable;
+<<<<<<< HEAD
+=======
+	u8 paprd_disable;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	u32 ofdm_trig_low;
 	u32 ofdm_trig_high;
 	u32 cck_trig_high;

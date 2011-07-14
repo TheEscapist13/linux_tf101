@@ -87,6 +87,7 @@ int memmap_valid_within(unsigned long pfn,
 	return 1;
 }
 #endif /* CONFIG_ARCH_HAS_HOLES_MEMORYMODEL */
+<<<<<<< HEAD
 
 #ifdef CONFIG_SMP
 /* Called when a more accurate view of NR_FREE_PAGES is needed */
@@ -108,3 +109,5 @@ unsigned long zone_nr_free_pages(struct zone *zone)
 	return nr_free_pages;
 }
 #endif /* CONFIG_SMP */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

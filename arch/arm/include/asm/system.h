@@ -97,8 +97,11 @@ extern void __show_regs(struct pt_regs *);
 
 extern int cpu_architecture(void);
 extern void cpu_init(void);
+<<<<<<< HEAD
 extern void cpu_idle_wait(void);
 extern void default_idle(void);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 void arm_machine_restart(char mode, const char *cmd);
 extern void (*arm_pm_restart)(char str, const char *cmd);

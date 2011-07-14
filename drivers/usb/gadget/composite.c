@@ -24,7 +24,10 @@
 #include <linux/kernel.h>
 #include <linux/slab.h>
 #include <linux/device.h>
+<<<<<<< HEAD
 #include <linux/gpio.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <linux/usb/composite.h>
 
@@ -39,7 +42,10 @@
 /* big enough to hold our biggest descriptor */
 #define USB_BUFSIZ	1024
 
+<<<<<<< HEAD
 extern char * desc_interface_name;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct usb_composite_driver *composite;
 
 /* Some systems will need runtime overrides for the  product identifers
@@ -71,6 +77,7 @@ static char *iSerialNumber;
 module_param(iSerialNumber, charp, 0);
 MODULE_PARM_DESC(iSerialNumber, "SerialNumber string");
 
+<<<<<<< HEAD
 static void string_override(struct usb_gadget_strings **tab, u8 id, const char *s);
 
 /* GPIO VOLUME UP + DOWN */
@@ -151,6 +158,10 @@ void usb_composite_force_reset(struct usb_composite_dev *cdev)
 	}
 }
 
+=======
+/*-------------------------------------------------------------------------*/
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /**
  * usb_add_function() - add a function to a configuration
  * @config: the configuration
@@ -168,17 +179,24 @@ void usb_composite_force_reset(struct usb_composite_dev *cdev)
 int usb_add_function(struct usb_configuration *config,
 		struct usb_function *function)
 {
+<<<<<<< HEAD
 	struct usb_composite_dev	*cdev = config->cdev;
 	int	value = -EINVAL;
 	int index;
 
 	DBG(cdev, "adding '%s'/%p to config '%s'/%p\n",
+=======
+	int	value = -EINVAL;
+
+	DBG(config->cdev, "adding '%s'/%p to config '%s'/%p\n",
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			function->name, function,
 			config->label, config);
 
 	if (!function->set_alt || !function->disable)
 		goto done;
 
+<<<<<<< HEAD
 	index = atomic_inc_return(&cdev->driver->function_count);
 	function->dev = device_create(cdev->driver->class, NULL,
 		MKDEV(0, index), NULL, function->name);
@@ -192,6 +210,8 @@ int usb_add_function(struct usb_configuration *config,
 	}
 	dev_set_drvdata(function->dev, function);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	function->config = config;
 	list_add_tail(&function->list, &config->functions);
 
@@ -217,7 +237,11 @@ int usb_add_function(struct usb_configuration *config,
 
 done:
 	if (value)
+<<<<<<< HEAD
 		DBG(cdev, "adding '%s'/%p --> %d\n",
+=======
+		DBG(config->cdev, "adding '%s'/%p --> %d\n",
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 				function->name, function, value);
 	return value;
 }
@@ -327,20 +351,31 @@ static int config_buf(struct usb_configuration *config,
 		enum usb_device_speed speed, void *buf, u8 type)
 {
 	struct usb_config_descriptor	*c = buf;
+<<<<<<< HEAD
 	struct usb_interface_descriptor *intf;
 	struct usb_interface_assoc_descriptor *iad = NULL;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	void				*next = buf + USB_DT_CONFIG_SIZE;
 	int				len = USB_BUFSIZ - USB_DT_CONFIG_SIZE;
 	struct usb_function		*f;
 	int				status;
+<<<<<<< HEAD
 	int				interfaceCount = 0;
 	u8 *dest;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* write the config descriptor */
 	c = buf;
 	c->bLength = USB_DT_CONFIG_SIZE;
 	c->bDescriptorType = type;
+<<<<<<< HEAD
 	/* wTotalLength and bNumInterfaces are written later */
+=======
+	/* wTotalLength is written later */
+	c->bNumInterfaces = config->next_interface_id;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	c->bConfigurationValue = config->bConfigurationValue;
 	c->iConfiguration = config->iConfiguration;
 	c->bmAttributes = USB_CONFIG_ATT_ONE | config->bmAttributes;
@@ -359,18 +394,26 @@ static int config_buf(struct usb_configuration *config,
 	/* add each function's descriptors */
 	list_for_each_entry(f, &config->functions, list) {
 		struct usb_descriptor_header **descriptors;
+<<<<<<< HEAD
 		struct usb_descriptor_header *descriptor;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		if (speed == USB_SPEED_HIGH)
 			descriptors = f->hs_descriptors;
 		else
 			descriptors = f->descriptors;
+<<<<<<< HEAD
 		if (f->disabled || !descriptors || descriptors[0] == NULL)
+=======
+		if (!descriptors)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			continue;
 		status = usb_descriptor_fillbuf(next, len,
 			(const struct usb_descriptor_header **) descriptors);
 		if (status < 0)
 			return status;
+<<<<<<< HEAD
 
 		/* set interface numbers dynamically */
 		dest = next;
@@ -400,13 +443,18 @@ static int config_buf(struct usb_configuration *config,
 			dest += intf->bLength;
 		}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		len -= status;
 		next += status;
 	}
 
 	len = next - buf;
 	c->wTotalLength = cpu_to_le16(len);
+<<<<<<< HEAD
 	c->bNumInterfaces = interfaceCount;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return len;
 }
 
@@ -553,8 +601,11 @@ static int set_config(struct usb_composite_dev *cdev,
 
 		if (!f)
 			break;
+<<<<<<< HEAD
 		if (f->disabled)
 			continue;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		/*
 		 * Record which endpoints are used by the function. This is used
@@ -594,8 +645,11 @@ static int set_config(struct usb_composite_dev *cdev,
 	power = c->bMaxPower ? (2 * c->bMaxPower) : CONFIG_USB_GADGET_VBUS_DRAW;
 done:
 	usb_gadget_vbus_draw(gadget, power);
+<<<<<<< HEAD
 
 	schedule_work(&cdev->switch_work);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return result;
 }
 
@@ -912,6 +966,7 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 	u16				w_length = le16_to_cpu(ctrl->wLength);
 	struct usb_function		*f = NULL;
 	u8				endp;
+<<<<<<< HEAD
 	unsigned long			flags;
 
 	spin_lock_irqsave(&cdev->lock, flags);
@@ -920,6 +975,8 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		schedule_work(&cdev->switch_work);
 	}
 	spin_unlock_irqrestore(&cdev->lock, flags);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* partial re-init of the response message; the function or the
 	 * gadget might need to intercept e.g. a control-OUT completion
@@ -939,6 +996,7 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		switch (w_value >> 8) {
 
 		case USB_DT_DEVICE:
+<<<<<<< HEAD
 			//add for single interface product name
 			string_override(composite->strings,
 				cdev->desc.iProduct , desc_interface_name);
@@ -951,6 +1009,8 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 			        string_override(composite->strings,
 			                cdev->desc.iSerialNumber, USB_SN_String);
 			}
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			cdev->desc.bNumConfigurations =
 				count_configs(cdev, USB_DT_DEVICE);
 			value = min(w_length, (u16) sizeof cdev->desc);
@@ -975,6 +1035,7 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 		case USB_DT_STRING:
 			value = get_string(cdev, req->buf,
 					w_index, w_value & 0xff);
+<<<<<<< HEAD
 
 			/* Allow functions to handle USB_DT_STRING.
 			 * This is required for MTP.
@@ -990,6 +1051,8 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 				}
 			}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			if (value >= 0)
 				value = min(w_length, (u16) value);
 			break;
@@ -1015,11 +1078,19 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 	case USB_REQ_GET_CONFIGURATION:
 		if (ctrl->bRequestType != USB_DIR_IN)
 			goto unknown;
+<<<<<<< HEAD
 		if (cdev->config) {
 			*(u8 *)req->buf = cdev->config->bConfigurationValue;
 			value = min(w_length, (u16) 1);
 		} else
 			*(u8 *)req->buf = 0;
+=======
+		if (cdev->config)
+			*(u8 *)req->buf = cdev->config->bConfigurationValue;
+		else
+			*(u8 *)req->buf = 0;
+		value = min(w_length, (u16) 1);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		break;
 
 	/* function drivers must handle get/set altsetting; if there's
@@ -1094,6 +1165,7 @@ unknown:
 				value = c->setup(c, ctrl);
 		}
 
+<<<<<<< HEAD
 		/* If the vendor request is not processed (value < 0),
 		 * call all device registered configure setup callbacks
 		 * to process it.
@@ -1113,6 +1185,8 @@ unknown:
 			}
 		}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		goto done;
 	}
 
@@ -1144,12 +1218,17 @@ static void composite_disconnect(struct usb_gadget *gadget)
 	spin_lock_irqsave(&cdev->lock, flags);
 	if (cdev->config)
 		reset_config(cdev);
+<<<<<<< HEAD
 
 	if (composite->disconnect)
 		composite->disconnect(cdev);
 
 	cdev->connected = 0;
 	schedule_work(&cdev->switch_work);
+=======
+	if (composite->disconnect)
+		composite->disconnect(cdev);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	spin_unlock_irqrestore(&cdev->lock, flags);
 }
 
@@ -1211,9 +1290,12 @@ composite_unbind(struct usb_gadget *gadget)
 		kfree(cdev->req->buf);
 		usb_ep_free_request(gadget->ep0, cdev->req);
 	}
+<<<<<<< HEAD
 
 	switch_dev_unregister(&cdev->sw_connected);
 	switch_dev_unregister(&cdev->sw_config);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	kfree(cdev);
 	set_gadget_data(gadget, NULL);
 	device_remove_file(&gadget->dev, &dev_attr_suspended);
@@ -1242,6 +1324,7 @@ string_override(struct usb_gadget_strings **tab, u8 id, const char *s)
 	}
 }
 
+<<<<<<< HEAD
 static void
 composite_switch_work(struct work_struct *data)
 {
@@ -1266,6 +1349,8 @@ composite_switch_work(struct work_struct *data)
 		switch_set_state(&cdev->sw_config, 0);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int composite_bind(struct usb_gadget *gadget)
 {
 	struct usb_composite_dev	*cdev;
@@ -1309,6 +1394,7 @@ static int composite_bind(struct usb_gadget *gadget)
 	if (status < 0)
 		goto fail;
 
+<<<<<<< HEAD
 	cdev->sw_connected.name = "usb_connected";
 	status = switch_dev_register(&cdev->sw_connected);
 	if (status < 0)
@@ -1319,6 +1405,8 @@ static int composite_bind(struct usb_gadget *gadget)
 		goto fail;
 	INIT_WORK(&cdev->switch_work, composite_switch_work);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	cdev->desc = *composite->dev;
 	cdev->desc.bMaxPacketSize0 = gadget->ep0->maxpacket;
 
@@ -1401,6 +1489,7 @@ composite_resume(struct usb_gadget *gadget)
 	cdev->suspended = 0;
 }
 
+<<<<<<< HEAD
 static int
 composite_uevent(struct device *dev, struct kobj_uevent_env *env)
 {
@@ -1418,6 +1507,8 @@ composite_uevent(struct device *dev, struct kobj_uevent_env *env)
 	return 0;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*-------------------------------------------------------------------------*/
 
 static struct usb_gadget_driver composite_driver = {
@@ -1463,11 +1554,14 @@ int usb_composite_register(struct usb_composite_driver *driver)
 	composite_driver.driver.name = driver->name;
 	composite = driver;
 
+<<<<<<< HEAD
 	driver->class = class_create(THIS_MODULE, "usb_composite");
 	if (IS_ERR(driver->class))
 		return PTR_ERR(driver->class);
 	driver->class->dev_uevent = composite_uevent;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return usb_gadget_register_driver(&composite_driver);
 }
 

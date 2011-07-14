@@ -114,6 +114,12 @@ MODULE_PARM_DESC(hird, "host initiated resume duration, +1 for each 75us\n");
 
 #define	INTR_MASK (STS_IAA | STS_FATAL | STS_PCD | STS_ERR | STS_INT)
 
+<<<<<<< HEAD
+=======
+/* for ASPM quirk of ISOC on AMD SB800 */
+static struct pci_dev *amd_nb_dev;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*-------------------------------------------------------------------------*/
 
 #include "ehci.h"
@@ -514,6 +520,14 @@ static void ehci_stop (struct usb_hcd *hcd)
 	spin_unlock_irq (&ehci->lock);
 	ehci_mem_cleanup (ehci);
 
+<<<<<<< HEAD
+=======
+	if (amd_nb_dev) {
+		pci_dev_put(amd_nb_dev);
+		amd_nb_dev = NULL;
+	}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #ifdef	EHCI_STATS
 	ehci_dbg (ehci, "irq normal %ld err %ld reclaim %ld (lost %ld)\n",
 		ehci->stats.normal, ehci->stats.error, ehci->stats.reclaim,
@@ -549,6 +563,11 @@ static int ehci_init(struct usb_hcd *hcd)
 	ehci->iaa_watchdog.function = ehci_iaa_watchdog;
 	ehci->iaa_watchdog.data = (unsigned long) ehci;
 
+<<<<<<< HEAD
+=======
+	hcc_params = ehci_readl(ehci, &ehci->caps->hcc_params);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * hw default: 1K periodic list heads, one per frame.
 	 * periodic_size can shrink by USBCMD update if hcc_params allows.
@@ -556,11 +575,27 @@ static int ehci_init(struct usb_hcd *hcd)
 	ehci->periodic_size = DEFAULT_I_TDPS;
 	INIT_LIST_HEAD(&ehci->cached_itd_list);
 	INIT_LIST_HEAD(&ehci->cached_sitd_list);
+<<<<<<< HEAD
+=======
+
+	if (HCC_PGM_FRAMELISTLEN(hcc_params)) {
+		/* periodic schedule size can be smaller than default */
+		switch (EHCI_TUNE_FLS) {
+		case 0: ehci->periodic_size = 1024; break;
+		case 1: ehci->periodic_size = 512; break;
+		case 2: ehci->periodic_size = 256; break;
+		default:	BUG();
+		}
+	}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if ((retval = ehci_mem_init(ehci, GFP_KERNEL)) < 0)
 		return retval;
 
 	/* controllers may cache some of the periodic schedule ... */
+<<<<<<< HEAD
 	hcc_params = ehci_readl(ehci, &ehci->caps->hcc_params);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (HCC_ISOC_CACHE(hcc_params))		// full frame cache
 		ehci->i_thresh = 2 + 8;
 	else					// N microframes cached
@@ -614,12 +649,15 @@ static int ehci_init(struct usb_hcd *hcd)
 		/* periodic schedule size can be smaller than default */
 		temp &= ~(3 << 2);
 		temp |= (EHCI_TUNE_FLS << 2);
+<<<<<<< HEAD
 		switch (EHCI_TUNE_FLS) {
 		case 0: ehci->periodic_size = 1024; break;
 		case 1: ehci->periodic_size = 512; break;
 		case 2: ehci->periodic_size = 256; break;
 		default:	BUG();
 		}
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 	if (HCC_LPM(hcc_params)) {
 		/* support link power management EHCI 1.1 addendum */
@@ -1197,11 +1235,14 @@ MODULE_LICENSE ("GPL");
 #define	PLATFORM_DRIVER		ehci_atmel_driver
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_EHCI_TEGRA
 #include "ehci-tegra.c"
 #define PLATFORM_DRIVER		tegra_ehci_driver
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #if !defined(PCI_DRIVER) && !defined(PLATFORM_DRIVER) && \
     !defined(PS3_SYSTEM_BUS_DRIVER) && !defined(OF_PLATFORM_DRIVER) && \
     !defined(XILINX_OF_PLATFORM_DRIVER)

@@ -299,7 +299,10 @@ mmc_send_cxd_data(struct mmc_card *card, struct mmc_host *host,
 
 	memcpy(buf, data_buf, len);
 	kfree(data_buf);
+<<<<<<< HEAD
 	data_buf = NULL;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (cmd.error)
 		return cmd.error;
@@ -388,6 +391,7 @@ int mmc_spi_set_crc(struct mmc_host *host, int use_crc)
 	return err;
 }
 
+<<<<<<< HEAD
 /**
  *	mmc_switch - modify EXT_CSD register
  *	@card: the MMC card associated with the data transfer
@@ -397,6 +401,8 @@ int mmc_spi_set_crc(struct mmc_host *host, int use_crc)
  *
  *	Modifies the EXT_CSD register for selected card.
  */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int mmc_switch(struct mmc_card *card, u8 set, u8 index, u8 value)
 {
 	int err;
@@ -444,8 +450,11 @@ int mmc_switch(struct mmc_card *card, u8 set, u8 index, u8 value)
 	return 0;
 }
 
+<<<<<<< HEAD
 EXPORT_SYMBOL(mmc_switch);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int mmc_send_status(struct mmc_card *card, u32 *status)
 {
 	int err;

@@ -3402,6 +3402,13 @@ static bool cfq_should_wait_busy(struct cfq_data *cfqd, struct cfq_queue *cfqq)
 {
 	struct cfq_io_context *cic = cfqd->active_cic;
 
+<<<<<<< HEAD
+=======
+	/* If the queue already has requests, don't wait */
+	if (!RB_EMPTY_ROOT(&cfqq->sort_list))
+		return false;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* If there are other queues in the group, don't wait */
 	if (cfqq->cfqg->nr_cfqq > 1)
 		return false;

@@ -69,6 +69,7 @@ static const u8 mbm_guid[16] = {
 	0xa6, 0x07, 0xc0, 0xff, 0xcb, 0x7e, 0x39, 0x2a,
 };
 
+<<<<<<< HEAD
 static int is_ncm(struct usb_interface_descriptor *desc)
 {
 	return desc->bInterfaceClass == USB_CLASS_COMM
@@ -76,6 +77,8 @@ static int is_ncm(struct usb_interface_descriptor *desc)
 		&& desc->bInterfaceProtocol == 0;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * probes control interface, claims data interface, collects the bulk
  * endpoints, activates data interface (if needed), maybe sets MTU.
@@ -90,7 +93,10 @@ int usbnet_generic_cdc_bind(struct usbnet *dev, struct usb_interface *intf)
 	struct cdc_state		*info = (void *) &dev->data;
 	int				status;
 	int				rndis;
+<<<<<<< HEAD
 	int				ncm;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	struct usb_driver		*driver = driver_of(intf);
 	struct usb_cdc_mdlm_desc	*desc = NULL;
 	struct usb_cdc_mdlm_detail_desc *detail = NULL;
@@ -135,9 +141,12 @@ int usbnet_generic_cdc_bind(struct usbnet *dev, struct usb_interface *intf)
 		 is_activesync(&intf->cur_altsetting->desc) ||
 		 is_wireless_rndis(&intf->cur_altsetting->desc));
 
+<<<<<<< HEAD
 	/* is cdc-ncm device? */
 	ncm = is_ncm(&intf->cur_altsetting->desc);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	memset(info, 0, sizeof *info);
 	info->control = intf;
 	while (len > 3) {
@@ -275,6 +284,7 @@ int usbnet_generic_cdc_bind(struct usbnet *dev, struct usb_interface *intf)
 			} else
 				goto bad_desc;
 			break;
+<<<<<<< HEAD
 		case USB_CDC_NCM_TYPE:
 			if (info->ncm) {
 				dev_dbg(&intf->dev,
@@ -293,6 +303,8 @@ int usbnet_generic_cdc_bind(struct usbnet *dev, struct usb_interface *intf)
 			dev_dbg(&intf->dev, "bmNetworkCapabilities: 0x%02x\n",
 				info->ncm->bmNetworkCapabilities);
 			break;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		}
 next_desc:
 		len -= buf [0];	/* bLength */
@@ -314,6 +326,7 @@ next_desc:
 			goto bad_desc;
 		}
 
+<<<<<<< HEAD
 	} else if (!info->header || !info->u || (!rndis && !info->ether) ||
 		(ncm && !info->ncm)) {
 		dev_dbg(&intf->dev, "missing cdc %s%s%s%sdescriptor\n",
@@ -321,6 +334,13 @@ next_desc:
 			info->u ? "" : "union ",
 			info->ether ? "" : "ether ",
 			info->ncm ? "" : "ncm ");
+=======
+	} else if (!info->header || !info->u || (!rndis && !info->ether)) {
+		dev_dbg(&intf->dev, "missing cdc %s%s%sdescriptor\n",
+			info->header ? "" : "header ",
+			info->u ? "" : "union ",
+			info->ether ? "" : "ether ");
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		goto bad_desc;
 	}
 
@@ -411,7 +431,11 @@ static void dumpspeed(struct usbnet *dev, __le32 *speeds)
 		   __le32_to_cpu(speeds[1]) / 1000);
 }
 
+<<<<<<< HEAD
 void usbnet_cdc_status(struct usbnet *dev, struct urb *urb)
+=======
+static void cdc_status(struct usbnet *dev, struct urb *urb)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	struct usb_cdc_notification	*event;
 
@@ -451,7 +475,10 @@ void usbnet_cdc_status(struct usbnet *dev, struct urb *urb)
 		break;
 	}
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(usbnet_cdc_status);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static int cdc_bind(struct usbnet *dev, struct usb_interface *intf)
 {
@@ -488,7 +515,11 @@ static const struct driver_info	cdc_info = {
 	// .check_connect = cdc_check_connect,
 	.bind =		cdc_bind,
 	.unbind =	usbnet_cdc_unbind,
+<<<<<<< HEAD
 	.status =	usbnet_cdc_status,
+=======
+	.status =	cdc_status,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.manage_power =	cdc_manage_power,
 };
 
@@ -497,7 +528,11 @@ static const struct driver_info mbm_info = {
 	.flags =	FLAG_WWAN,
 	.bind = 	cdc_bind,
 	.unbind =	usbnet_cdc_unbind,
+<<<<<<< HEAD
 	.status =	usbnet_cdc_status,
+=======
+	.status =	cdc_status,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.manage_power =	cdc_manage_power,
 };
 

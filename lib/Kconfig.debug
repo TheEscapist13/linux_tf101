@@ -392,7 +392,11 @@ config DEBUG_KMEMLEAK_EARLY_LOG_SIZE
 	int "Maximum kmemleak early log entries"
 	depends on DEBUG_KMEMLEAK
 	range 200 40000
+<<<<<<< HEAD
 	default 1000
+=======
+	default 400
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	help
 	  Kmemleak must track all the memory allocations to avoid
 	  reporting false positives. Since memory may be allocated or
@@ -604,9 +608,14 @@ config DEBUG_LOCKING_API_SELFTESTS
 	  mutexes and rwsems.
 
 config STACKTRACE
+<<<<<<< HEAD
 	bool "Stacktrace"
 	depends on STACKTRACE_SUPPORT
 	default y
+=======
+	bool
+	depends on STACKTRACE_SUPPORT
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 config DEBUG_KOBJECT
 	bool "kobject debugging"

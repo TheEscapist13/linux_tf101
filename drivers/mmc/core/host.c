@@ -30,7 +30,10 @@ static void mmc_host_classdev_release(struct device *dev)
 {
 	struct mmc_host *host = cls_dev_to_mmc_host(dev);
 	kfree(host);
+<<<<<<< HEAD
 	host = NULL;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 static struct class mmc_host_class = {
@@ -107,7 +110,10 @@ struct mmc_host *mmc_alloc_host(int extra, struct device *dev)
 
 free:
 	kfree(host);
+<<<<<<< HEAD
 	host = NULL;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return NULL;
 }
 
@@ -139,8 +145,12 @@ int mmc_add_host(struct mmc_host *host)
 #endif
 
 	mmc_start_host(host);
+<<<<<<< HEAD
 	if (!(host->pm_flags & MMC_PM_IGNORE_PM_NOTIFY))
 		register_pm_notifier(&host->pm_notify);
+=======
+	register_pm_notifier(&host->pm_notify);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return 0;
 }
@@ -157,9 +167,13 @@ EXPORT_SYMBOL(mmc_add_host);
  */
 void mmc_remove_host(struct mmc_host *host)
 {
+<<<<<<< HEAD
 	if (!(host->pm_flags & MMC_PM_IGNORE_PM_NOTIFY))
 		unregister_pm_notifier(&host->pm_notify);
 
+=======
+	unregister_pm_notifier(&host->pm_notify);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	mmc_stop_host(host);
 
 #ifdef CONFIG_DEBUG_FS

@@ -118,7 +118,11 @@ struct gs_port {
 };
 
 /* increase N_PORTS if you need more */
+<<<<<<< HEAD
 #define N_PORTS		8
+=======
+#define N_PORTS		4
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct portmaster {
 	struct mutex	lock;			/* protect open/close */
 	struct gs_port	*port;

@@ -523,12 +523,15 @@ void ___dma_page_dev_to_cpu(struct page *page, unsigned long off,
 		outer_inv_range(paddr, paddr + size);
 
 	dma_cache_maint_page(page, off, size, dir, dmac_unmap_area);
+<<<<<<< HEAD
 
 	/*
 	 * Mark the D-cache clean for this page to avoid extra flushing.
 	 */
 	if (dir != DMA_TO_DEVICE)
 		set_bit(PG_dcache_clean, &page->flags);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 EXPORT_SYMBOL(___dma_page_dev_to_cpu);
 

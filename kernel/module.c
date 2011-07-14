@@ -2256,7 +2256,11 @@ static int check_modinfo(struct module *mod, struct load_info *info)
 	} else if (!same_magic(modmagic, vermagic, info->index.vers)) {
 		printk(KERN_ERR "%s: version magic '%s' should be '%s'\n",
 		       mod->name, modmagic, vermagic);
+<<<<<<< HEAD
 		//return -ENOEXEC;
+=======
+		return -ENOEXEC;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	if (get_modinfo(info, "staging")) {

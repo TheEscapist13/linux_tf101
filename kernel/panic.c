@@ -23,8 +23,11 @@
 #include <linux/init.h>
 #include <linux/nmi.h>
 #include <linux/dmi.h>
+<<<<<<< HEAD
 #include <asm/io.h>
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #define PANIC_TIMER_STEP 100
 #define PANIC_BLINK_SPD 18
@@ -35,10 +38,14 @@ static int pause_on_oops;
 static int pause_on_oops_flag;
 static DEFINE_SPINLOCK(pause_on_oops_lock);
 
+<<<<<<< HEAD
 #ifndef CONFIG_PANIC_TIMEOUT
 #define CONFIG_PANIC_TIMEOUT 0
 #endif
 int panic_timeout = CONFIG_PANIC_TIMEOUT;
+=======
+int panic_timeout;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 ATOMIC_NOTIFIER_HEAD(panic_notifier_list);
 
@@ -53,6 +60,7 @@ static long no_blink(int state)
 long (*panic_blink)(int state);
 EXPORT_SYMBOL(panic_blink);
 
+<<<<<<< HEAD
 
 /*	Auto dump kernel log when kernel panic occur.
 *	kernel panic message will be passed at the address IRAM_CMD_ADDRESS
@@ -76,6 +84,8 @@ void auto_dump_kernel_log(void){
 
 
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /**
  *	panic - halt the system
  *	@fmt: The text string to print
@@ -131,9 +141,12 @@ NORET_TYPE void panic(const char * fmt, ...)
 	if (!panic_blink)
 		panic_blink = no_blink;
 
+<<<<<<< HEAD
 	auto_dump_kernel_log();
 	panic_timeout = 1;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (panic_timeout > 0) {
 		/*
 		 * Delay timeout seconds before rebooting the machine.

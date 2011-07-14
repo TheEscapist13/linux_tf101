@@ -14,7 +14,10 @@
 #define __LINUX_POWER_SUPPLY_H__
 
 #include <linux/device.h>
+<<<<<<< HEAD
 #include <linux/wakelock.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include <linux/workqueue.h>
 #include <linux/leds.h>
 
@@ -127,7 +130,10 @@ enum power_supply_type {
 	POWER_SUPPLY_TYPE_UPS,
 	POWER_SUPPLY_TYPE_MAINS,
 	POWER_SUPPLY_TYPE_USB,
+<<<<<<< HEAD
 	POWER_SUPPLY_TYPE_DOCK_BATTERY,
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 union power_supply_propval {
@@ -161,9 +167,12 @@ struct power_supply {
 	/* private */
 	struct device *dev;
 	struct work_struct changed_work;
+<<<<<<< HEAD
 	spinlock_t changed_lock;
 	bool changed;
 	struct wake_lock work_wake_lock;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #ifdef CONFIG_LEDS_TRIGGERS
 	struct led_trigger *charging_full_trig;

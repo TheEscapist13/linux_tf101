@@ -562,8 +562,11 @@ struct snd_soc_card {
 	/* callbacks */
 	int (*set_bias_level)(struct snd_soc_card *,
 			      enum snd_soc_bias_level level);
+<<<<<<< HEAD
 	int (*set_bias_level_post)(struct snd_soc_card *,
 				   enum snd_soc_bias_level level);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	long pmdown_time;
 

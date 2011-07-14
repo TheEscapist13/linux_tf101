@@ -1276,6 +1276,10 @@ static struct usb_serial_driver iuu_device = {
 		   .name = "iuu_phoenix",
 		   },
 	.id_table = id_table,
+<<<<<<< HEAD
+=======
+	.usb_driver = &iuu_driver,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.num_ports = 1,
 	.bulk_in_size = 512,
 	.bulk_out_size = 512,

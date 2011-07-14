@@ -305,6 +305,7 @@ static int cpufreq_stat_notifier_trans(struct notifier_block *nb,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int cpufreq_stats_create_table_cpu(unsigned int cpu)
 {
 	struct cpufreq_policy *policy;
@@ -326,6 +327,8 @@ out:
 	return ret;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int __cpuinit cpufreq_stat_cpu_callback(struct notifier_block *nfb,
 					       unsigned long action,
 					       void *hcpu)
@@ -337,6 +340,7 @@ static int __cpuinit cpufreq_stat_cpu_callback(struct notifier_block *nfb,
 	case CPU_ONLINE_FROZEN:
 		cpufreq_update_policy(cpu);
 		break;
+<<<<<<< HEAD
 	case CPU_DOWN_PREPARE:
 	case CPU_DOWN_PREPARE_FROZEN:
 		cpufreq_stats_free_table(cpu);
@@ -345,6 +349,12 @@ static int __cpuinit cpufreq_stat_cpu_callback(struct notifier_block *nfb,
 	case CPU_DOWN_FAILED_FROZEN:
 		cpufreq_stats_create_table_cpu(cpu);
 		break;
+=======
+	case CPU_DEAD:
+	case CPU_DEAD_FROZEN:
+		cpufreq_stats_free_table(cpu);
+		break;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 	return NOTIFY_OK;
 }
@@ -352,7 +362,10 @@ static int __cpuinit cpufreq_stat_cpu_callback(struct notifier_block *nfb,
 static struct notifier_block cpufreq_stat_cpu_notifier __refdata =
 {
 	.notifier_call = cpufreq_stat_cpu_callback,
+<<<<<<< HEAD
 	.priority = 1,
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 static struct notifier_block notifier_policy_block = {

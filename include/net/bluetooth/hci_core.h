@@ -339,21 +339,33 @@ void hci_add_sco(struct hci_conn *conn, __u16 handle);
 void hci_setup_sync(struct hci_conn *conn, __u16 handle);
 void hci_sco_setup(struct hci_conn *conn, __u8 status);
 
+<<<<<<< HEAD
 struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type,
 					__u16 pkt_type, bdaddr_t *dst);
+=======
+struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int hci_conn_del(struct hci_conn *conn);
 void hci_conn_hash_flush(struct hci_dev *hdev);
 void hci_conn_check_pending(struct hci_dev *hdev);
 
+<<<<<<< HEAD
 struct hci_conn *hci_connect(struct hci_dev *hdev, int type,
 					__u16 pkt_type, bdaddr_t *dst,
 					__u8 sec_level, __u8 auth_type);
+=======
+struct hci_conn *hci_connect(struct hci_dev *hdev, int type, bdaddr_t *dst, __u8 sec_level, __u8 auth_type);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int hci_conn_check_link_mode(struct hci_conn *conn);
 int hci_conn_security(struct hci_conn *conn, __u8 sec_level, __u8 auth_type);
 int hci_conn_change_link_key(struct hci_conn *conn);
 int hci_conn_switch_role(struct hci_conn *conn, __u8 role);
 
+<<<<<<< HEAD
 void hci_conn_enter_active_mode(struct hci_conn *conn, __u8 force_active);
+=======
+void hci_conn_enter_active_mode(struct hci_conn *conn);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 void hci_conn_enter_sniff_mode(struct hci_conn *conn);
 
 void hci_conn_hold_device(struct hci_conn *conn);
@@ -374,7 +386,11 @@ static inline void hci_conn_put(struct hci_conn *conn)
 			if (conn->state == BT_CONNECTED) {
 				timeo = msecs_to_jiffies(conn->disc_timeout);
 				if (!conn->out)
+<<<<<<< HEAD
 					timeo *= 20;
+=======
+					timeo *= 2;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			} else
 				timeo = msecs_to_jiffies(10);
 		} else
@@ -459,7 +475,10 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
 #define lmp_sniffsubr_capable(dev) ((dev)->features[5] & LMP_SNIFF_SUBR)
 #define lmp_esco_capable(dev)      ((dev)->features[3] & LMP_ESCO)
 #define lmp_ssp_capable(dev)       ((dev)->features[6] & LMP_SIMPLE_PAIR)
+<<<<<<< HEAD
 #define lmp_no_flush_capable(dev)  ((dev)->features[6] & LMP_NO_FLUSH)
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* ----- HCI protocols ----- */
 struct hci_proto {

@@ -6,7 +6,11 @@
 
 lib-y		:= backtrace.o changebit.o csumipv6.o csumpartial.o   \
 		   csumpartialcopy.o csumpartialcopyuser.o clearbit.o \
+<<<<<<< HEAD
 		   findbit.o memchr.o memcpy.o                        \
+=======
+		   delay.o findbit.o memchr.o memcpy.o		      \
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		   memmove.o memset.o memzero.o setbit.o              \
 		   strncpy_from_user.o strnlen_user.o                 \
 		   strchr.o strrchr.o                                 \
@@ -17,10 +21,13 @@ lib-y		:= backtrace.o changebit.o csumipv6.o csumpartial.o   \
 
 mmu-y	:= clear_user.o copy_page.o getuser.o putuser.o
 
+<<<<<<< HEAD
 ifneq ($(CONFIG_ARCH_PROVIDES_UDELAY),y)
   lib-y += delay.o
 endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 # the code in uaccess.S is not preemption safe and
 # probably faster on ARMv3 only
 ifeq ($(CONFIG_PREEMPT),y)

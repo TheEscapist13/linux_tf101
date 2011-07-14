@@ -1183,7 +1183,11 @@ static int wm8990_set_bias_level(struct snd_soc_codec *codec,
 				     WM8990_VMIDTOG);
 
 			/* Delay to allow output caps to discharge */
+<<<<<<< HEAD
 			msleep(msecs_to_jiffies(300));
+=======
+			msleep(300);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 			/* Disable VMIDTOG */
 			snd_soc_write(codec, WM8990_ANTIPOP2, WM8990_SOFTST |
@@ -1195,17 +1199,29 @@ static int wm8990_set_bias_level(struct snd_soc_codec *codec,
 			/* Enable outputs */
 			snd_soc_write(codec, WM8990_POWER_MANAGEMENT_1, 0x1b00);
 
+<<<<<<< HEAD
 			msleep(msecs_to_jiffies(50));
+=======
+			msleep(50);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 			/* Enable VMID at 2x50k */
 			snd_soc_write(codec, WM8990_POWER_MANAGEMENT_1, 0x1f02);
 
+<<<<<<< HEAD
 			msleep(msecs_to_jiffies(100));
+=======
+			msleep(100);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 			/* Enable VREF */
 			snd_soc_write(codec, WM8990_POWER_MANAGEMENT_1, 0x1f03);
 
+<<<<<<< HEAD
 			msleep(msecs_to_jiffies(600));
+=======
+			msleep(600);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 			/* Enable BUFIOEN */
 			snd_soc_write(codec, WM8990_ANTIPOP2, WM8990_SOFTST |
@@ -1250,7 +1266,11 @@ static int wm8990_set_bias_level(struct snd_soc_codec *codec,
 		/* Disable VMID */
 		snd_soc_write(codec, WM8990_POWER_MANAGEMENT_1, 0x1f01);
 
+<<<<<<< HEAD
 		msleep(msecs_to_jiffies(300));
+=======
+		msleep(300);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		/* Enable all output discharge bits */
 		snd_soc_write(codec, WM8990_ANTIPOP1, WM8990_DIS_LLINE |

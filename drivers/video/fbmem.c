@@ -1014,7 +1014,11 @@ fb_blank(struct fb_info *info, int blank)
  		blank = FB_BLANK_POWERDOWN;
 
 	if (info->fbops->fb_blank)
+<<<<<<< HEAD
 		ret = info->fbops->fb_blank(blank, info); /* to fb.c */
+=======
+ 		ret = info->fbops->fb_blank(blank, info);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
  	if (!ret) {
 		struct fb_event event;

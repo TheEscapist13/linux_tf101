@@ -45,12 +45,21 @@ static enum hrtimer_restart snd_hrtimer_callback(struct hrtimer *hrt)
 {
 	struct snd_hrtimer *stime = container_of(hrt, struct snd_hrtimer, hrt);
 	struct snd_timer *t = stime->timer;
+<<<<<<< HEAD
+=======
+	unsigned long oruns;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (!atomic_read(&stime->running))
 		return HRTIMER_NORESTART;
 
+<<<<<<< HEAD
 	hrtimer_forward_now(hrt, ns_to_ktime(t->sticks * resolution));
 	snd_timer_interrupt(stime->timer, t->sticks);
+=======
+	oruns = hrtimer_forward_now(hrt, ns_to_ktime(t->sticks * resolution));
+	snd_timer_interrupt(stime->timer, t->sticks * oruns);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (!atomic_read(&stime->running))
 		return HRTIMER_NORESTART;

@@ -799,6 +799,7 @@ static int vhci_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
 		spin_unlock_irqrestore(&vdev->priv_lock, flags2);
 	}
 
+<<<<<<< HEAD
 
 	if (!vdev->ud.tcp_socket) {
 		/* tcp connection is closed */
@@ -813,6 +814,8 @@ static int vhci_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
 		spin_lock_irqsave(&the_controller->lock, flags);
 	}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	spin_unlock_irqrestore(&the_controller->lock, flags);
 
 	usbip_dbg_vhci_hc("leave\n");

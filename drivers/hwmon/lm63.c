@@ -98,6 +98,12 @@ static const unsigned short normal_i2c[] = { 0x18, 0x4c, 0x4e, I2C_CLIENT_END };
  * value, it uses signed 8-bit values with LSB = 1 degree Celsius.
  * For remote temperature, low and high limits, it uses signed 11-bit values
  * with LSB = 0.125 degree Celsius, left-justified in 16-bit registers.
+<<<<<<< HEAD
+=======
+ * For LM64 the actual remote diode temperature is 16 degree Celsius higher
+ * than the register reading. Remote temperature setpoints have to be
+ * adapted accordingly.
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  */
 
 #define FAN_FROM_REG(reg)	((reg) == 0xFFFC || (reg) == 0 ? 0 : \
@@ -165,6 +171,11 @@ struct lm63_data {
 	struct mutex update_lock;
 	char valid; /* zero until following fields are valid */
 	unsigned long last_updated; /* in jiffies */
+<<<<<<< HEAD
+=======
+	int kind;
+	int temp2_offset;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* registers values */
 	u8 config, config_fan;
@@ -247,16 +258,44 @@ static ssize_t show_pwm1_enable(struct device *dev, struct device_attribute *dum
 	return sprintf(buf, "%d\n", data->config_fan & 0x20 ? 1 : 2);
 }
 
+<<<<<<< HEAD
 static ssize_t show_temp8(struct device *dev, struct device_attribute *devattr,
 			  char *buf)
+=======
+/*
+ * There are 8bit registers for both local(temp1) and remote(temp2) sensor.
+ * For remote sensor registers temp2_offset has to be considered,
+ * for local sensor it must not.
+ * So we need separate 8bit accessors for local and remote sensor.
+ */
+static ssize_t show_local_temp8(struct device *dev,
+				struct device_attribute *devattr,
+				char *buf)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
 	struct lm63_data *data = lm63_update_device(dev);
 	return sprintf(buf, "%d\n", TEMP8_FROM_REG(data->temp8[attr->index]));
 }
 
+<<<<<<< HEAD
 static ssize_t set_temp8(struct device *dev, struct device_attribute *dummy,
 			 const char *buf, size_t count)
+=======
+static ssize_t show_remote_temp8(struct device *dev,
+				 struct device_attribute *devattr,
+				 char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct lm63_data *data = lm63_update_device(dev);
+	return sprintf(buf, "%d\n", TEMP8_FROM_REG(data->temp8[attr->index])
+		       + data->temp2_offset);
+}
+
+static ssize_t set_local_temp8(struct device *dev,
+			       struct device_attribute *dummy,
+			       const char *buf, size_t count)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	struct i2c_client *client = to_i2c_client(dev);
 	struct lm63_data *data = i2c_get_clientdata(client);
@@ -274,7 +313,12 @@ static ssize_t show_temp11(struct device *dev, struct device_attribute *devattr,
 {
 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
 	struct lm63_data *data = lm63_update_device(dev);
+<<<<<<< HEAD
 	return sprintf(buf, "%d\n", TEMP11_FROM_REG(data->temp11[attr->index]));
+=======
+	return sprintf(buf, "%d\n", TEMP11_FROM_REG(data->temp11[attr->index])
+		       + data->temp2_offset);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 static ssize_t set_temp11(struct device *dev, struct device_attribute *devattr,
@@ -294,7 +338,11 @@ static ssize_t set_temp11(struct device *dev, struct device_attribute *devattr,
 	int nr = attr->index;
 
 	mutex_lock(&data->update_lock);
+<<<<<<< HEAD
 	data->temp11[nr] = TEMP11_TO_REG(val);
+=======
+	data->temp11[nr] = TEMP11_TO_REG(val - data->temp2_offset);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	i2c_smbus_write_byte_data(client, reg[(nr - 1) * 2],
 				  data->temp11[nr] >> 8);
 	i2c_smbus_write_byte_data(client, reg[(nr - 1) * 2 + 1],
@@ -310,6 +358,10 @@ static ssize_t show_temp2_crit_hyst(struct device *dev, struct device_attribute 
 {
 	struct lm63_data *data = lm63_update_device(dev);
 	return sprintf(buf, "%d\n", TEMP8_FROM_REG(data->temp8[2])
+<<<<<<< HEAD
+=======
+		       + data->temp2_offset
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		       - TEMP8_FROM_REG(data->temp2_crit_hyst));
 }
 
@@ -324,7 +376,11 @@ static ssize_t set_temp2_crit_hyst(struct device *dev, struct device_attribute *
 	long hyst;
 
 	mutex_lock(&data->update_lock);
+<<<<<<< HEAD
 	hyst = TEMP8_FROM_REG(data->temp8[2]) - val;
+=======
+	hyst = TEMP8_FROM_REG(data->temp8[2]) + data->temp2_offset - val;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	i2c_smbus_write_byte_data(client, LM63_REG_REMOTE_TCRIT_HYST,
 				  HYST_TO_REG(hyst));
 	mutex_unlock(&data->update_lock);
@@ -355,16 +411,31 @@ static SENSOR_DEVICE_ATTR(fan1_min, S_IWUSR | S_IRUGO, show_fan,
 static DEVICE_ATTR(pwm1, S_IWUSR | S_IRUGO, show_pwm1, set_pwm1);
 static DEVICE_ATTR(pwm1_enable, S_IRUGO, show_pwm1_enable, NULL);
 
+<<<<<<< HEAD
 static SENSOR_DEVICE_ATTR(temp1_input, S_IRUGO, show_temp8, NULL, 0);
 static SENSOR_DEVICE_ATTR(temp1_max, S_IWUSR | S_IRUGO, show_temp8,
 	set_temp8, 1);
+=======
+static SENSOR_DEVICE_ATTR(temp1_input, S_IRUGO, show_local_temp8, NULL, 0);
+static SENSOR_DEVICE_ATTR(temp1_max, S_IWUSR | S_IRUGO, show_local_temp8,
+	set_local_temp8, 1);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static SENSOR_DEVICE_ATTR(temp2_input, S_IRUGO, show_temp11, NULL, 0);
 static SENSOR_DEVICE_ATTR(temp2_min, S_IWUSR | S_IRUGO, show_temp11,
 	set_temp11, 1);
 static SENSOR_DEVICE_ATTR(temp2_max, S_IWUSR | S_IRUGO, show_temp11,
 	set_temp11, 2);
+<<<<<<< HEAD
 static SENSOR_DEVICE_ATTR(temp2_crit, S_IRUGO, show_temp8, NULL, 2);
+=======
+/*
+ * On LM63, temp2_crit can be set only once, which should be job
+ * of the bootloader.
+ */
+static SENSOR_DEVICE_ATTR(temp2_crit, S_IRUGO, show_remote_temp8,
+	NULL, 2);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static DEVICE_ATTR(temp2_crit_hyst, S_IWUSR | S_IRUGO, show_temp2_crit_hyst,
 	set_temp2_crit_hyst);
 
@@ -479,7 +550,16 @@ static int lm63_probe(struct i2c_client *new_client,
 	data->valid = 0;
 	mutex_init(&data->update_lock);
 
+<<<<<<< HEAD
 	/* Initialize the LM63 chip */
+=======
+	/* Set the device type */
+	data->kind = id->driver_data;
+	if (data->kind == lm64)
+		data->temp2_offset = 16000;
+
+	/* Initialize chip */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	lm63_init_client(new_client);
 
 	/* Register sysfs hooks */

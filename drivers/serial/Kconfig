@@ -542,6 +542,7 @@ config SERIAL_S5PV210
 	help
 	  Serial port support for Samsung's S5P Family of SoC's
 
+<<<<<<< HEAD
 config SERIAL_TEGRA
 	boolean "High speed serial support for NVIDIA Tegra SoCs"
 	depends on ARCH_TEGRA && TEGRA_SYSTEM_DMA
@@ -550,6 +551,8 @@ config SERIAL_TEGRA
 	  Support for the on-chip UARTs on NVIDIA Tegra SoC, providing
 	  /dev/ttyHSx, where x is determined by the number of UARTs on the
 	  platform
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 config SERIAL_MAX3100
 	tristate "MAX3100 support"

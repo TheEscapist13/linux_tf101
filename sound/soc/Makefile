@@ -18,4 +18,7 @@ obj-$(CONFIG_SND_SOC)	+= s3c24xx/
 obj-$(CONFIG_SND_SOC)	+= s6000/
 obj-$(CONFIG_SND_SOC)	+= sh/
 obj-$(CONFIG_SND_SOC)	+= txx9/
+<<<<<<< HEAD
 obj-$(CONFIG_SND_SOC)	+= tegra/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

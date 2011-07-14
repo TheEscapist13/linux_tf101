@@ -52,5 +52,8 @@ obj-$(CONFIG_MAC80211_HWSIM)	+= mac80211_hwsim.o
 obj-$(CONFIG_WL12XX)	+= wl12xx/
 
 obj-$(CONFIG_IWM)	+= iwmc3200wifi/
+<<<<<<< HEAD
 
 obj-$(CONFIG_BCM4329)	+= bcm4329/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

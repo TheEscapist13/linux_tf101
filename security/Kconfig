@@ -141,7 +141,10 @@ source security/selinux/Kconfig
 source security/smack/Kconfig
 source security/tomoyo/Kconfig
 source security/apparmor/Kconfig
+<<<<<<< HEAD
 source security/tf_driver/Kconfig
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 source security/integrity/ima/Kconfig
 

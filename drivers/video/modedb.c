@@ -402,6 +402,7 @@ const struct fb_videomode vesa_modes[] = {
 	  FB_SYNC_VERT_HIGH_ACT, FB_VMODE_NONINTERLACED, FB_MODE_IS_VESA },
 };
 EXPORT_SYMBOL(vesa_modes);
+<<<<<<< HEAD
 
 const struct fb_videomode cea_modes[CEA_MODEDB_SIZE] = {
 	{},
@@ -855,6 +856,8 @@ const struct fb_videomode cea_modes[CEA_MODEDB_SIZE] = {
 	 .vmode = FB_VMODE_NONINTERLACED},
 };
 EXPORT_SYMBOL(cea_modes);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif /* CONFIG_FB_MODE_HELPERS */
 
 /**
@@ -1163,7 +1166,11 @@ void fb_var_to_videomode(struct fb_videomode *mode,
 	mode->upper_margin = var->upper_margin;
 	mode->lower_margin = var->lower_margin;
 	mode->sync = var->sync;
+<<<<<<< HEAD
 	mode->vmode = var->vmode & (FB_VMODE_MASK | FB_VMODE_STEREO_MASK);
+=======
+	mode->vmode = var->vmode & FB_VMODE_MASK;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	mode->flag = FB_MODE_IS_FROM_VAR;
 	mode->refresh = 0;
 
@@ -1208,7 +1215,11 @@ void fb_videomode_to_var(struct fb_var_screeninfo *var,
 	var->hsync_len = mode->hsync_len;
 	var->vsync_len = mode->vsync_len;
 	var->sync = mode->sync;
+<<<<<<< HEAD
 	var->vmode = mode->vmode & (FB_VMODE_MASK | FB_VMODE_STEREO_MASK);
+=======
+	var->vmode = mode->vmode & FB_VMODE_MASK;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 /**
@@ -1376,7 +1387,11 @@ int fb_add_videomode(const struct fb_videomode *mode, struct list_head *head)
 		if (!modelist)
 			return -ENOMEM;
 		modelist->mode = *mode;
+<<<<<<< HEAD
 		list_add_tail(&modelist->list, head);
+=======
+		list_add(&modelist->list, head);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 	return 0;
 }

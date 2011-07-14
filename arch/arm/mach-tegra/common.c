@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * arch/arm/mach-tegra/common.c
+=======
+ * arch/arm/mach-tegra/board-harmony.c
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  *
  * Copyright (C) 2010 Google, Inc.
  *
@@ -17,6 +21,7 @@
  *
  */
 
+<<<<<<< HEAD
 #include <linux/console.h>
 #include <linux/init.h>
 #include <linux/io.h>
@@ -71,10 +76,26 @@ static __initdata struct tegra_clk_init_table common_clk_init_table[] = {
 	/* name		parent		rate		enabled */
 	{ "clk_m",	NULL,		0,		true },
 	{ "pll_m",	"clk_m",	600000000,	true },
+=======
+#include <linux/init.h>
+#include <linux/io.h>
+
+#include <asm/hardware/cache-l2x0.h>
+
+#include <mach/iomap.h>
+
+#include "board.h"
+#include "clock.h"
+
+static __initdata struct tegra_clk_init_table common_clk_init_table[] = {
+	/* name		parent		rate		enabled */
+	{ "clk_m",	NULL,		0,		true },
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{ "pll_p",	"clk_m",	216000000,	true },
 	{ "pll_p_out1",	"pll_p",	28800000,	true },
 	{ "pll_p_out2",	"pll_p",	48000000,	true },
 	{ "pll_p_out3",	"pll_p",	72000000,	true },
+<<<<<<< HEAD
 	{ "pll_m_out1",	"pll_m",	120000000,	true },
 	{ "sclk",	"pll_m_out1",	120000000,	true },
 	{ "hclk",	"sclk",		120000000,	true },
@@ -93,6 +114,12 @@ static __initdata struct tegra_clk_init_table common_clk_init_table[] = {
 	{ "sdmmc2",	"pll_p",	48000000,	false},
 	{ "sdmmc3",	"pll_p",	48000000,	false},
 	{ "sdmmc4",	"pll_p",	48000000,	false},
+=======
+	{ "pll_p_out4",	"pll_p",	108000000,	true },
+	{ "sys",	"pll_p_out4",	108000000,	true },
+	{ "hclk",	"sys",		108000000,	true },
+	{ "pclk",	"hclk",		54000000,	true },
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{ NULL,		NULL,		0,		0},
 };
 
@@ -101,6 +128,7 @@ void __init tegra_init_cache(void)
 #ifdef CONFIG_CACHE_L2X0
 	void __iomem *p = IO_ADDRESS(TEGRA_ARM_PERIF_BASE) + 0x3000;
 
+<<<<<<< HEAD
 #ifndef CONFIG_TRUSTED_FOUNDATIONS
    /*
    ISSUE : Some registers of PL310 controler must be called from Secure context!
@@ -409,4 +437,18 @@ void __init tegra_reserve(unsigned long carveout_size, unsigned long fb_size,
 		tegra_fb2_start + tegra_fb2_size - 1,
 		tegra_carveout_start,
 		tegra_carveout_start + tegra_carveout_size - 1);
+=======
+	writel(0x331, p + L2X0_TAG_LATENCY_CTRL);
+	writel(0x441, p + L2X0_DATA_LATENCY_CTRL);
+
+	l2x0_init(p, 0x6C080001, 0x8200c3fe);
+#endif
+}
+
+void __init tegra_common_init(void)
+{
+	tegra_init_clock();
+	tegra_clk_init_from_table(common_clk_init_table);
+	tegra_init_cache();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }

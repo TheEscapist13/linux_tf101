@@ -106,6 +106,10 @@ struct usb_device_id rtusb_usb_id[] = {
 	{USB_DEVICE(0x0411, 0x016f)},	/* MelCo.,Inc. WLI-UC-G301N */
 	{USB_DEVICE(0x1737, 0x0070)},	/* Linksys WUSB100 */
 	{USB_DEVICE(0x1737, 0x0071)},	/* Linksys WUSB600N */
+<<<<<<< HEAD
+=======
+	{USB_DEVICE(0x1737, 0x0078)},	/* Linksys WUSB100v2 */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{USB_DEVICE(0x0411, 0x00e8)},	/* Buffalo WLI-UC-G300N */
 	{USB_DEVICE(0x050d, 0x815c)},	/* Belkin F5D8053 */
 	{USB_DEVICE(0x100D, 0x9031)},	/* Motorola 2770 */

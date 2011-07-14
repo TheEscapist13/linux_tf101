@@ -1332,11 +1332,23 @@ int usb_serial_register(struct usb_serial_driver *driver)
 		return -ENODEV;
 
 	fixup_generic(driver);
+<<<<<<< HEAD
 	if (driver->usb_driver)
 		driver->usb_driver->supports_autosuspend = 1;
 
 	if (!driver->description)
 		driver->description = driver->driver.name;
+=======
+
+	if (!driver->description)
+		driver->description = driver->driver.name;
+	if (!driver->usb_driver) {
+		WARN(1, "Serial driver %s has no usb_driver\n",
+				driver->description);
+		return -EINVAL;
+	}
+	driver->usb_driver->supports_autosuspend = 1;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* Add this device to our list of devices */
 	mutex_lock(&table_lock);

@@ -819,7 +819,11 @@ _scsih_is_end_device(u32 device_info)
 }
 
 /**
+<<<<<<< HEAD
  * mptscsih_get_scsi_lookup - returns scmd entry
+=======
+ * _scsih_scsi_lookup_get - returns scmd entry
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  * @ioc: per adapter object
  * @smid: system request message index
  *
@@ -832,6 +836,31 @@ _scsih_scsi_lookup_get(struct MPT2SAS_ADAPTER *ioc, u16 smid)
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * _scsih_scsi_lookup_get_clear - returns scmd entry
+ * @ioc: per adapter object
+ * @smid: system request message index
+ *
+ * Returns the smid stored scmd pointer.
+ * Then will derefrence the stored scmd pointer.
+ */
+static inline struct scsi_cmnd *
+_scsih_scsi_lookup_get_clear(struct MPT2SAS_ADAPTER *ioc, u16 smid)
+{
+	unsigned long flags;
+	struct scsi_cmnd *scmd;
+
+	spin_lock_irqsave(&ioc->scsi_lookup_lock, flags);
+	scmd = ioc->scsi_lookup[smid - 1].scmd;
+	ioc->scsi_lookup[smid - 1].scmd = NULL;
+	spin_unlock_irqrestore(&ioc->scsi_lookup_lock, flags);
+
+	return scmd;
+}
+
+/**
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  * _scsih_scsi_lookup_find_by_scmd - scmd lookup
  * @ioc: per adapter object
  * @smid: system request message index
@@ -2957,9 +2986,12 @@ _scsih_check_topo_delete_events(struct MPT2SAS_ADAPTER *ioc,
 	u16 handle;
 
 	for (i = 0 ; i < event_data->NumEntries; i++) {
+<<<<<<< HEAD
 		if (event_data->PHY[i].PhyStatus &
 		    MPI2_EVENT_SAS_TOPO_PHYSTATUS_VACANT)
 			continue;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		handle = le16_to_cpu(event_data->PHY[i].AttachedDevHandle);
 		if (!handle)
 			continue;
@@ -3186,7 +3218,11 @@ _scsih_flush_running_cmds(struct MPT2SAS_ADAPTER *ioc)
 	u16 count = 0;
 
 	for (smid = 1; smid <= ioc->scsiio_depth; smid++) {
+<<<<<<< HEAD
 		scmd = _scsih_scsi_lookup_get(ioc, smid);
+=======
+		scmd = _scsih_scsi_lookup_get_clear(ioc, smid);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		if (!scmd)
 			continue;
 		count++;
@@ -3778,7 +3814,11 @@ _scsih_io_done(struct MPT2SAS_ADAPTER *ioc, u16 smid, u8 msix_index, u32 reply)
 	u32 response_code = 0;
 
 	mpi_reply = mpt2sas_base_get_reply_virt_addr(ioc, reply);
+<<<<<<< HEAD
 	scmd = _scsih_scsi_lookup_get(ioc, smid);
+=======
+	scmd = _scsih_scsi_lookup_get_clear(ioc, smid);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (scmd == NULL)
 		return 1;
 
@@ -4940,6 +4980,15 @@ _scsih_sas_device_status_change_event(struct MPT2SAS_ADAPTER *ioc,
 		     event_data);
 #endif
 
+<<<<<<< HEAD
+=======
+	/* In MPI Revision K (0xC), the internal device reset complete was
+	 * implemented, so avoid setting tm_busy flag for older firmware.
+	 */
+	if ((ioc->facts.HeaderVersion >> 8) < 0xC)
+		return;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (event_data->ReasonCode !=
 	    MPI2_EVENT_SAS_DEV_STAT_RC_INTERNAL_DEVICE_RESET &&
 	   event_data->ReasonCode !=
@@ -5034,6 +5083,10 @@ _scsih_sas_broadcast_primative_event(struct MPT2SAS_ADAPTER *ioc,
     struct fw_event_work *fw_event)
 {
 	struct scsi_cmnd *scmd;
+<<<<<<< HEAD
+=======
+	struct scsi_device *sdev;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	u16 smid, handle;
 	u32 lun;
 	struct MPT2SAS_DEVICE *sas_device_priv_data;
@@ -5044,12 +5097,23 @@ _scsih_sas_broadcast_primative_event(struct MPT2SAS_ADAPTER *ioc,
 	Mpi2EventDataSasBroadcastPrimitive_t *event_data = fw_event->event_data;
 #endif
 	u16 ioc_status;
+<<<<<<< HEAD
+=======
+	unsigned long flags;
+	int r;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	dewtprintk(ioc, printk(MPT2SAS_INFO_FMT "broadcast primative: "
 	    "phy number(%d), width(%d)\n", ioc->name, event_data->PhyNum,
 	    event_data->PortWidth));
 	dtmprintk(ioc, printk(MPT2SAS_INFO_FMT "%s: enter\n", ioc->name,
 	    __func__));
 
+<<<<<<< HEAD
+=======
+	spin_lock_irqsave(&ioc->scsi_lookup_lock, flags);
+	ioc->broadcast_aen_busy = 0;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	termination_count = 0;
 	query_count = 0;
 	mpi_reply = ioc->tm_cmds.reply;
@@ -5057,7 +5121,12 @@ _scsih_sas_broadcast_primative_event(struct MPT2SAS_ADAPTER *ioc,
 		scmd = _scsih_scsi_lookup_get(ioc, smid);
 		if (!scmd)
 			continue;
+<<<<<<< HEAD
 		sas_device_priv_data = scmd->device->hostdata;
+=======
+		sdev = scmd->device;
+		sas_device_priv_data = sdev->hostdata;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		if (!sas_device_priv_data || !sas_device_priv_data->sas_target)
 			continue;
 		 /* skip hidden raid components */
@@ -5073,6 +5142,10 @@ _scsih_sas_broadcast_primative_event(struct MPT2SAS_ADAPTER *ioc,
 		lun = sas_device_priv_data->lun;
 		query_count++;
 
+<<<<<<< HEAD
+=======
+		spin_unlock_irqrestore(&ioc->scsi_lookup_lock, flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		mpt2sas_scsih_issue_tm(ioc, handle, 0, 0, lun,
 		    MPI2_SCSITASKMGMT_TASKTYPE_QUERY_TASK, smid, 30, NULL);
 		ioc->tm_cmds.status = MPT2_CMD_NOT_USED;
@@ -5082,6 +5155,7 @@ _scsih_sas_broadcast_primative_event(struct MPT2SAS_ADAPTER *ioc,
 		    (mpi_reply->ResponseCode ==
 		     MPI2_SCSITASKMGMT_RSP_TM_SUCCEEDED ||
 		     mpi_reply->ResponseCode ==
+<<<<<<< HEAD
 		     MPI2_SCSITASKMGMT_RSP_IO_QUEUED_ON_IOC))
 			continue;
 
@@ -5090,6 +5164,22 @@ _scsih_sas_broadcast_primative_event(struct MPT2SAS_ADAPTER *ioc,
 		termination_count += le32_to_cpu(mpi_reply->TerminationCount);
 	}
 	ioc->broadcast_aen_busy = 0;
+=======
+		     MPI2_SCSITASKMGMT_RSP_IO_QUEUED_ON_IOC)) {
+			spin_lock_irqsave(&ioc->scsi_lookup_lock, flags);
+			continue;
+		}
+		r = mpt2sas_scsih_issue_tm(ioc, handle, sdev->channel, sdev->id,
+		    sdev->lun, MPI2_SCSITASKMGMT_TASKTYPE_ABORT_TASK, smid, 30,
+		    scmd);
+		if (r == FAILED)
+			sdev_printk(KERN_WARNING, sdev, "task abort: FAILED "
+			    "scmd(%p)\n", scmd);
+		termination_count += le32_to_cpu(mpi_reply->TerminationCount);
+		spin_lock_irqsave(&ioc->scsi_lookup_lock, flags);
+	}
+	spin_unlock_irqrestore(&ioc->scsi_lookup_lock, flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	dtmprintk(ioc, printk(MPT2SAS_INFO_FMT
 	    "%s - exit, query_count = %d termination_count = %d\n",
@@ -6685,6 +6775,10 @@ _scsih_remove(struct pci_dev *pdev)
 		destroy_workqueue(wq);
 
 	/* release all the volumes */
+<<<<<<< HEAD
+=======
+	_scsih_ir_shutdown(ioc);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	list_for_each_entry_safe(raid_device, next, &ioc->raid_device_list,
 	    list) {
 		if (raid_device->starget) {

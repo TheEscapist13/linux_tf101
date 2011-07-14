@@ -34,6 +34,7 @@
 
 #ifndef __ASSEMBLY__
 void gic_dist_init(unsigned int gic_nr, void __iomem *base, unsigned int irq_start);
+<<<<<<< HEAD
 void gic_dist_save(unsigned int gic_nr);
 void gic_dist_restore(unsigned int gic_nr);
 void gic_dist_exit(unsigned int gic_nr);
@@ -49,6 +50,11 @@ int gic_set_type(unsigned int irq, unsigned int type);
 #ifdef CONFIG_SMP
 int gic_set_cpu(unsigned int irq, const struct cpumask *mask_val);
 #endif
+=======
+void gic_cpu_init(unsigned int gic_nr, void __iomem *base);
+void gic_cascade_irq(unsigned int gic_nr, unsigned int irq);
+void gic_raise_softirq(const struct cpumask *mask, unsigned int irq);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif
 
 #endif

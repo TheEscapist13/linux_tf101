@@ -73,8 +73,11 @@ extern void poll_initwait(struct poll_wqueues *pwq);
 extern void poll_freewait(struct poll_wqueues *pwq);
 extern int poll_schedule_timeout(struct poll_wqueues *pwq, int state,
 				 ktime_t *expires, unsigned long slack);
+<<<<<<< HEAD
 extern long select_estimate_accuracy(struct timespec *tv);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static inline int poll_schedule(struct poll_wqueues *pwq, int state)
 {

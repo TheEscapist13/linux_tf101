@@ -24,11 +24,14 @@
 #include "sd_ops.h"
 #include "sdio_ops.h"
 #include "sdio_cis.h"
+<<<<<<< HEAD
 #include <mach/board-ventana-misc.h>
 
 #ifdef CONFIG_MMC_EMBEDDED_SDIO
 #include <linux/mmc/sdio_ids.h>
 #endif
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static int sdio_read_fbr(struct sdio_func *func)
 {
@@ -263,6 +266,7 @@ static int mmc_sdio_switch_hs(struct mmc_card *card, int enable)
 	int ret;
 	u8 speed;
 
+<<<<<<< HEAD
 	if (!(card->host->caps & MMC_CAP_FORCE_HS)) {
 		if (!(card->host->caps & MMC_CAP_SD_HIGHSPEED))
 			return 0;
@@ -270,6 +274,13 @@ static int mmc_sdio_switch_hs(struct mmc_card *card, int enable)
 		if (!card->cccr.high_speed)
 			return 0;
 	}
+=======
+	if (!(card->host->caps & MMC_CAP_SD_HIGHSPEED))
+		return 0;
+
+	if (!card->cccr.high_speed)
+		return 0;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	ret = mmc_io_rw_direct(card, 0, 0, SDIO_CCCR_SPEED, 0, &speed);
 	if (ret)
@@ -309,7 +320,10 @@ static unsigned mmc_sdio_get_max_clock(struct mmc_card *card)
 {
 	unsigned max_dtr;
 
+<<<<<<< HEAD
 #if 0
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (mmc_card_highspeed(card)) {
 		/*
 		 * The SDIO specification doesn't mention how
@@ -321,6 +335,7 @@ static unsigned mmc_sdio_get_max_clock(struct mmc_card *card)
 	} else {
 		max_dtr = card->cis.max_dtr;
 	}
+<<<<<<< HEAD
 #endif
 
 	switch (ASUSGetProjectID()) {
@@ -350,6 +365,8 @@ static unsigned mmc_sdio_get_max_clock(struct mmc_card *card)
 		printk("Set SDIO clock to 50MHz\n");
 
 	}
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (card->type == MMC_TYPE_SD_COMBO)
 		max_dtr = min(max_dtr, mmc_sd_get_max_clock(card));
@@ -471,6 +488,7 @@ static int mmc_sdio_init_card(struct mmc_host *host, u32 ocr,
 		goto finish;
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_EMBEDDED_SDIO
 	if (host->embedded_sdio_data.cccr)
 		memcpy(&card->cccr, host->embedded_sdio_data.cccr, sizeof(struct sdio_cccr));
@@ -500,6 +518,21 @@ static int mmc_sdio_init_card(struct mmc_host *host, u32 ocr,
 #ifdef CONFIG_MMC_EMBEDDED_SDIO
 	}
 #endif
+=======
+	/*
+	 * Read the common registers.
+	 */
+	err = sdio_read_cccr(card);
+	if (err)
+		goto remove;
+
+	/*
+	 * Read the common CIS tuples.
+	 */
+	err = sdio_read_common_cis(card);
+	if (err)
+		goto remove;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (oldcard) {
 		int same = (card->cis.vendor == oldcard->cis.vendor &&
@@ -511,7 +544,10 @@ static int mmc_sdio_init_card(struct mmc_host *host, u32 ocr,
 		card = oldcard;
 		return 0;
 	}
+<<<<<<< HEAD
 	mmc_fixup_device(card, NULL);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (card->type == MMC_TYPE_SD_COMBO) {
 		err = mmc_sd_setup_card(host, card, oldcard != NULL);
@@ -759,15 +795,19 @@ int mmc_attach_sdio(struct mmc_host *host, u32 ocr)
 	funcs = (ocr & 0x70000000) >> 28;
 	card->sdio_funcs = 0;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_EMBEDDED_SDIO
 	if (host->embedded_sdio_data.funcs)
 		card->sdio_funcs = funcs = host->embedded_sdio_data.num_funcs;
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * Initialize (but don't add) all present functions.
 	 */
 	for (i = 0; i < funcs; i++, card->sdio_funcs++) {
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_EMBEDDED_SDIO
 		if (host->embedded_sdio_data.funcs) {
 			struct sdio_func *tmp;
@@ -789,6 +829,11 @@ int mmc_attach_sdio(struct mmc_host *host, u32 ocr)
 #ifdef CONFIG_MMC_EMBEDDED_SDIO
 		}
 #endif
+=======
+		err = sdio_init_func(host->card, i + 1);
+		if (err)
+			goto remove;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	mmc_release_host(host);
@@ -830,6 +875,7 @@ err:
 	return err;
 }
 
+<<<<<<< HEAD
 int sdio_reset_comm(struct mmc_card *card)
 {
 	struct mmc_host *host = card->host;
@@ -904,3 +950,5 @@ err:
 	return err;
 }
 EXPORT_SYMBOL(sdio_reset_comm);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

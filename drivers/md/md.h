@@ -149,7 +149,12 @@ struct mddev_s
 						       * are happening, so run/
 						       * takeover/stop are not safe
 						       */
+<<<<<<< HEAD
 
+=======
+	int				ready; /* See when safe to pass
+						* IO requests down */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	struct gendisk			*gendisk;
 
 	struct kobject			kobj;

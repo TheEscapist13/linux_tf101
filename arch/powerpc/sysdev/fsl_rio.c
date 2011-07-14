@@ -954,7 +954,10 @@ fsl_rio_dbell_handler(int irq, void *dev_instance)
 	if (dsr & DOORBELL_DSR_QFI) {
 		pr_info("RIO: doorbell queue full\n");
 		out_be32(&priv->msg_regs->dsr, DOORBELL_DSR_QFI);
+<<<<<<< HEAD
 		goto out;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	/* XXX Need to check/dispatch until queue empty */

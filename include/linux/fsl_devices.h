@@ -63,7 +63,10 @@ struct fsl_usb2_platform_data {
 	enum fsl_usb2_operating_modes	operating_mode;
 	enum fsl_usb2_phy_modes		phy_mode;
 	unsigned int			port_enables;
+<<<<<<< HEAD
 	void				*phy_config;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 /* Flags in fsl_usb2_mph_platform_data */

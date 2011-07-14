@@ -12,6 +12,7 @@ obj-$(CONFIG_ATMEL_TCLIB)	+= atmel_tclib.o
 obj-$(CONFIG_BMP085)		+= bmp085.o
 obj-$(CONFIG_ICS932S401)	+= ics932s401.o
 obj-$(CONFIG_LKDTM)		+= lkdtm.o
+<<<<<<< HEAD
 obj-$(CONFIG_TIFM_CORE)		+= tifm_core.o
 obj-$(CONFIG_TIFM_7XX1)		+= tifm_7xx1.o
 obj-$(CONFIG_PHANTOM)		+= phantom.o
@@ -20,6 +21,14 @@ obj-$(CONFIG_ANDROID_PMEM)	+= pmem.o
 obj-$(CONFIG_SGI_IOC4)		+= ioc4.o
 obj-$(CONFIG_ENCLOSURE_SERVICES) += enclosure.o
 obj-$(CONFIG_KERNEL_DEBUGGER_CORE)	+= kernel_debugger.o
+=======
+obj-$(CONFIG_TIFM_CORE)       	+= tifm_core.o
+obj-$(CONFIG_TIFM_7XX1)       	+= tifm_7xx1.o
+obj-$(CONFIG_PHANTOM)		+= phantom.o
+obj-$(CONFIG_SENSORS_BH1780)	+= bh1780gli.o
+obj-$(CONFIG_SGI_IOC4)		+= ioc4.o
+obj-$(CONFIG_ENCLOSURE_SERVICES) += enclosure.o
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 obj-$(CONFIG_KGDB_TESTS)	+= kgdbts.o
 obj-$(CONFIG_SGI_XP)		+= sgi-xp/
 obj-$(CONFIG_SGI_GRU)		+= sgi-gru/
@@ -30,7 +39,10 @@ obj-$(CONFIG_SENSORS_TSL2550)	+= tsl2550.o
 obj-$(CONFIG_EP93XX_PWM)	+= ep93xx_pwm.o
 obj-$(CONFIG_DS1682)		+= ds1682.o
 obj-$(CONFIG_TI_DAC7512)	+= ti_dac7512.o
+<<<<<<< HEAD
 obj-$(CONFIG_UID_STAT)		+= uid_stat.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 obj-$(CONFIG_C2PORT)		+= c2port/
 obj-$(CONFIG_IWMC3200TOP)      += iwmc3200top/
 obj-$(CONFIG_HMC6352)		+= hmc6352.o
@@ -38,6 +50,7 @@ obj-y				+= eeprom/
 obj-y				+= cb710/
 obj-$(CONFIG_VMWARE_BALLOON)	+= vmw_balloon.o
 obj-$(CONFIG_ARM_CHARLCD)	+= arm-charlcd.o
+<<<<<<< HEAD
 obj-$(CONFIG_WL127X_RFKILL)	+= wl127x-rfkill.o
 obj-$(CONFIG_APANIC)		+= apanic.o
 obj-$(CONFIG_SENSORS_AK8975)	+= akm8975.o
@@ -49,3 +62,5 @@ obj-$(CONFIG_SENSORS_NCT1008)	+= nct1008.o
 obj-$(CONFIG_TEGRA_CRYPTO_DEV)	+= tegra-cryptodev.o
 obj-$(CONFIG_MAX1749_VIBRATOR)	+= max1749.o
 obj-$(CONFIG_KERNEL_RAMDUMP)	+= ramdump.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

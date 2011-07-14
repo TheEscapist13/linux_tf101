@@ -94,6 +94,7 @@ void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 	if (tsk != current) {
 #ifdef CONFIG_SMP
 		/*
+<<<<<<< HEAD
 		 * What guarantees do we have here that 'tsk' is not
 		 * running on another CPU?  For now, ignore it as we
 		 * can't guarantee we won't explode.
@@ -101,6 +102,12 @@ void save_stack_trace_tsk(struct task_struct *tsk, struct stack_trace *trace)
 		if (trace->nr_entries < trace->max_entries)
 			trace->entries[trace->nr_entries++] = ULONG_MAX;
 		return;
+=======
+		 * What guarantees do we have here that 'tsk'
+		 * is not running on another CPU?
+		 */
+		BUG();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #else
 		data.no_sched_functions = 1;
 		frame.fp = thread_saved_fp(tsk);

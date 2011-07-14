@@ -602,6 +602,7 @@ setup_rt_frame(int usig, struct k_sigaction *ka, siginfo_t *info,
 
 static inline void setup_syscall_restart(struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	if (regs->ARM_ORIG_r0 == -ERESTARTNOHAND ||
 	    regs->ARM_ORIG_r0 == -ERESTARTSYS ||
 	    regs->ARM_ORIG_r0 == -ERESTARTNOINTR ||
@@ -610,6 +611,8 @@ static inline void setup_syscall_restart(struct pt_regs *regs)
 		regs->ARM_r0 = -EINTR;
 		return;
 	}
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	regs->ARM_r0 = regs->ARM_ORIG_r0;
 	regs->ARM_pc -= thumb_mode(regs) ? 2 : 4;
 }
@@ -742,7 +745,10 @@ static void do_signal(struct pt_regs *regs, int syscall)
 	 */
 	if (syscall) {
 		if (regs->ARM_r0 == -ERESTART_RESTARTBLOCK) {
+<<<<<<< HEAD
 			regs->ARM_r0 = -EAGAIN; /* prevent multiple restarts */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			if (thumb_mode(regs)) {
 				regs->ARM_r7 = __NR_restart_syscall - __NR_SYSCALL_BASE;
 				regs->ARM_pc -= 2;

@@ -308,7 +308,11 @@ int ath_rx_init(struct ath_softc *sc, int nbufs)
 	struct ath_buf *bf;
 	int error = 0;
 
+<<<<<<< HEAD
 	spin_lock_init(&sc->rx.pcu_lock);
+=======
+	spin_lock_init(&sc->sc_pcu_lock);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	sc->sc_flags &= ~SC_OP_RXFLUSH;
 	spin_lock_init(&sc->rx.rxbuflock);
 

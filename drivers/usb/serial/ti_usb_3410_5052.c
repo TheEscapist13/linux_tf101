@@ -365,9 +365,15 @@ failed_1port:
 
 static void __exit ti_exit(void)
 {
+<<<<<<< HEAD
 	usb_serial_deregister(&ti_1port_device);
 	usb_serial_deregister(&ti_2port_device);
 	usb_deregister(&ti_usb_driver);
+=======
+	usb_deregister(&ti_usb_driver);
+	usb_serial_deregister(&ti_1port_device);
+	usb_serial_deregister(&ti_2port_device);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 

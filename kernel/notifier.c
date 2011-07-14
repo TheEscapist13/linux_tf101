@@ -102,6 +102,7 @@ static int __kprobes notifier_call_chain(struct notifier_block **nl,
 	}
 	return ret;
 }
+<<<<<<< HEAD
 static int __kprobes notifier_call_chain2(struct notifier_block **nl,
 					unsigned long val, void *v,
 					int nr_to_call,	int *nr_calls)
@@ -133,6 +134,9 @@ static int __kprobes notifier_call_chain2(struct notifier_block **nl,
 	}
 	return ret;
 }
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  *	Atomic notifier chain routines.  Registration and unregistration
  *	use a spinlock, and call_chain is synchronized by RCU (no locks).
@@ -348,6 +352,7 @@ int __blocking_notifier_call_chain(struct blocking_notifier_head *nh,
 	return ret;
 }
 EXPORT_SYMBOL_GPL(__blocking_notifier_call_chain);
+<<<<<<< HEAD
  int __blocking_notifier_call_chain2(struct blocking_notifier_head *nh,
 				   unsigned long val, void *v,
 				   int nr_to_call, int *nr_calls)
@@ -375,6 +380,9 @@ int blocking_notifier_call_chain2(struct blocking_notifier_head *nh,
 	return __blocking_notifier_call_chain2(nh, val, v, -1, NULL);
 }
 EXPORT_SYMBOL_GPL(blocking_notifier_call_chain2);
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int blocking_notifier_call_chain(struct blocking_notifier_head *nh,
 		unsigned long val, void *v)
 {

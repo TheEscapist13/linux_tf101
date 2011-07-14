@@ -558,7 +558,11 @@ static int open_kcore(struct inode *inode, struct file *filp)
 static const struct file_operations proc_kcore_operations = {
 	.read		= read_kcore,
 	.open		= open_kcore,
+<<<<<<< HEAD
 	.llseek		= generic_file_llseek,
+=======
+	.llseek		= default_llseek,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 #ifdef CONFIG_MEMORY_HOTPLUG

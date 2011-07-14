@@ -753,6 +753,7 @@ static int fat_ioctl_readdir(struct inode *inode, struct file *filp,
 	return ret;
 }
 
+<<<<<<< HEAD
 static int fat_ioctl_volume_id(struct inode *dir)
 {
 	struct super_block *sb = dir->i_sb;
@@ -760,6 +761,8 @@ static int fat_ioctl_volume_id(struct inode *dir)
 	return sbi->vol_id;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static long fat_dir_ioctl(struct file *filp, unsigned int cmd,
 			  unsigned long arg)
 {
@@ -776,8 +779,11 @@ static long fat_dir_ioctl(struct file *filp, unsigned int cmd,
 		short_only = 0;
 		both = 1;
 		break;
+<<<<<<< HEAD
 	case VFAT_IOCTL_GET_VOLUME_ID:
 		return fat_ioctl_volume_id(inode);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	default:
 		return fat_generic_ioctl(filp, cmd, arg);
 	}

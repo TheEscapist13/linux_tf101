@@ -13,10 +13,13 @@ typedef struct {
 
 #ifdef CONFIG_CPU_HAS_ASID
 #define ASID(mm)	((mm)->context.id & 255)
+<<<<<<< HEAD
 
 /* init_mm.context.id_lock should be initialized. */
 #define INIT_MM_CONTEXT(name)                                                 \
 	.context.id_lock    = __SPIN_LOCK_UNLOCKED(name.context.id_lock),
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #else
 #define ASID(mm)	(0)
 #endif

@@ -15,6 +15,7 @@
 #define WM8903_GPIO_NO_CONFIG 0x8000
 
 /*
+<<<<<<< HEAD
  * WM8903_GPn_FN values
  *
  * See datasheets for list of valid values per pin
@@ -31,6 +32,8 @@
 #define WM8903_GPn_FN_GPIO_FFL_CLOCK_OUTPUT		9
 
 /*
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  * R6 (0x06) - Mic Bias Control 0
  */
 #define WM8903_MICDET_HYST_ENA                  0x0080  /* MICDET_HYST_ENA */
@@ -247,9 +250,12 @@
 #define WM8903_GP5_DB_SHIFT                          0  /* GP5_DB */
 #define WM8903_GP5_DB_WIDTH                          1  /* GP5_DB */
 
+<<<<<<< HEAD
 /* the number of gpio pins */
 #define WM8903_NUM_GPIO 5
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct wm8903_platform_data {
 	bool irq_active_low;   /* Set if IRQ active low, default high */
 
@@ -262,9 +268,13 @@ struct wm8903_platform_data {
 
 	int micdet_delay;      /* Delay after microphone detection (ms) */
 
+<<<<<<< HEAD
 	int gpio_base;
 
 	u32 gpio_cfg[WM8903_NUM_GPIO]; /* Default register values for GPIO pin mux */
+=======
+	u32 gpio_cfg[5];       /* Default register values for GPIO pin mux */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 #endif

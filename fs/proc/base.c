@@ -130,12 +130,15 @@ struct pid_entry {
 		NULL, &proc_single_file_operations,	\
 		{ .proc_show = show } )
 
+<<<<<<< HEAD
 /* ANDROID is for special files in /proc. */
 #define ANDROID(NAME, MODE, OTYPE)			\
 	NOD(NAME, (S_IFREG|(MODE)),			\
 		&proc_##OTYPE##_inode_operations,	\
 		&proc_##OTYPE##_operations, {})
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * Count the number of hardlinks for the pid_entry table, excluding the .
  * and .. links.
@@ -237,8 +240,12 @@ struct mm_struct *mm_for_maps(struct task_struct *task)
 
 	mm = get_task_mm(task);
 	if (mm && mm != current->mm &&
+<<<<<<< HEAD
 			!ptrace_may_access(task, PTRACE_MODE_READ) &&
 			!capable(CAP_SYS_RESOURCE)) {
+=======
+			!ptrace_may_access(task, PTRACE_MODE_READ)) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		mmput(mm);
 		mm = NULL;
 	}
@@ -1078,6 +1085,7 @@ static ssize_t oom_adjust_write(struct file *file, const char __user *buf,
 	return count;
 }
 
+<<<<<<< HEAD
 static int oom_adjust_permission(struct inode *inode, int mask)
 {
 	uid_t uid;
@@ -1105,6 +1113,8 @@ static const struct inode_operations proc_oom_adjust_inode_operations = {
 	.permission	= oom_adjust_permission,
 };
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static const struct file_operations proc_oom_adjust_operations = {
 	.read		= oom_adjust_read,
 	.write		= oom_adjust_write,
@@ -2743,7 +2753,11 @@ static const struct pid_entry tgid_base_stuff[] = {
 	INF("wchan",      S_IRUGO, proc_pid_wchan),
 #endif
 #ifdef CONFIG_STACKTRACE
+<<<<<<< HEAD
 //	ONE("stack",      S_IRUSR, proc_pid_stack),
+=======
+	ONE("stack",      S_IRUSR, proc_pid_stack),
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif
 #ifdef CONFIG_SCHEDSTATS
 	INF("schedstat",  S_IRUGO, proc_pid_schedstat),
@@ -2758,7 +2772,11 @@ static const struct pid_entry tgid_base_stuff[] = {
 	REG("cgroup",  S_IRUGO, proc_cgroup_operations),
 #endif
 	INF("oom_score",  S_IRUGO, proc_oom_score),
+<<<<<<< HEAD
 	ANDROID("oom_adj",S_IRUGO|S_IWUSR, oom_adjust),
+=======
+	REG("oom_adj",    S_IRUGO|S_IWUSR, proc_oom_adjust_operations),
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	REG("oom_score_adj", S_IRUGO|S_IWUSR, proc_oom_score_adj_operations),
 #ifdef CONFIG_AUDITSYSCALL
 	REG("loginuid",   S_IWUSR|S_IRUGO, proc_loginuid_operations),
@@ -3078,7 +3096,11 @@ static const struct pid_entry tid_base_stuff[] = {
 	INF("wchan",     S_IRUGO, proc_pid_wchan),
 #endif
 #ifdef CONFIG_STACKTRACE
+<<<<<<< HEAD
 //	ONE("stack",      S_IRUSR, proc_pid_stack),
+=======
+	ONE("stack",      S_IRUSR, proc_pid_stack),
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif
 #ifdef CONFIG_SCHEDSTATS
 	INF("schedstat", S_IRUGO, proc_pid_schedstat),

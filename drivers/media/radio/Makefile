@@ -26,6 +26,9 @@ obj-$(CONFIG_RADIO_TEA5764) += radio-tea5764.o
 obj-$(CONFIG_RADIO_SAA7706H) += saa7706h.o
 obj-$(CONFIG_RADIO_TEF6862) += tef6862.o
 obj-$(CONFIG_RADIO_TIMBERDALE) += radio-timb.o
+<<<<<<< HEAD
 obj-$(CONFIG_RADIO_ASUS4329) += radio-asus4329.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 EXTRA_CFLAGS += -Isound

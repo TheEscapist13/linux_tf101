@@ -222,7 +222,11 @@ config SND_SOC_WM8750
 	tristate
 
 config SND_SOC_WM8753
+<<<<<<< HEAD
 	tristate "WM8753 Codec"
+=======
+	tristate
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 config SND_SOC_WM8776
 	tristate
@@ -231,7 +235,11 @@ config SND_SOC_WM8900
 	tristate
 
 config SND_SOC_WM8903
+<<<<<<< HEAD
 	tristate "WM8903 Codec"
+=======
+	tristate
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 config SND_SOC_WM8904
 	tristate

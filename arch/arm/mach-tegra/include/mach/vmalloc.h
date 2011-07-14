@@ -23,6 +23,10 @@
 
 #include <asm/sizes.h>
 
+<<<<<<< HEAD
 #define VMALLOC_END        0xF8000000UL
+=======
+#define VMALLOC_END        0xFE000000UL
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #endif

@@ -572,7 +572,12 @@ int labpc_common_attach(struct comedi_device *dev, unsigned long iobase,
 	/* grab our IRQ */
 	if (irq) {
 		isr_flags = 0;
+<<<<<<< HEAD
 		if (thisboard->bustype == pci_bustype)
+=======
+		if (thisboard->bustype == pci_bustype
+		    || thisboard->bustype == pcmcia_bustype)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			isr_flags |= IRQF_SHARED;
 		if (request_irq(irq, labpc_interrupt, isr_flags,
 				driver_labpc.driver_name, dev)) {

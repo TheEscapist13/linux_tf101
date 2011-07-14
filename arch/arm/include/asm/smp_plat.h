@@ -13,13 +13,19 @@ static inline int tlb_ops_need_broadcast(void)
 	return ((read_cpuid_ext(CPUID_EXT_MMFR3) >> 12) & 0xf) < 2;
 }
 
+<<<<<<< HEAD
 #if !defined(CONFIG_SMP) || __LINUX_ARM_ARCH__ >= 7
 #define cache_ops_need_broadcast()	0
 #else
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static inline int cache_ops_need_broadcast(void)
 {
 	return ((read_cpuid_ext(CPUID_EXT_MMFR3) >> 12) & 0xf) < 1;
 }
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #endif

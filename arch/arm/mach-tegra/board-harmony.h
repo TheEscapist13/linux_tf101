@@ -18,7 +18,10 @@
 #define _MACH_TEGRA_BOARD_HARMONY_H
 
 void harmony_pinmux_init(void);
+<<<<<<< HEAD
 int harmony_panel_init(void);
 int harmony_sdhci_init(void);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #endif

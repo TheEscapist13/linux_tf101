@@ -1712,11 +1712,19 @@ ieee80211_rx_h_mesh_fwding(struct ieee80211_rx_data *rx)
 
 			fwd_skb = skb_copy(skb, GFP_ATOMIC);
 
+<<<<<<< HEAD
 			if (!fwd_skb && net_ratelimit()) {
 				printk(KERN_DEBUG "%s: failed to clone mesh frame\n",
 						   sdata->name);
 				goto out;
 			}
+=======
+			if (!fwd_skb && net_ratelimit())
+				printk(KERN_DEBUG "%s: failed to clone mesh frame\n",
+						   sdata->name);
+			if (!fwd_skb)
+				goto out;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 			fwd_hdr =  (struct ieee80211_hdr *) fwd_skb->data;
 			memcpy(fwd_hdr->addr2, sdata->vif.addr, ETH_ALEN);

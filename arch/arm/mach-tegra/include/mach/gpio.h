@@ -22,8 +22,12 @@
 
 #include <mach/irqs.h>
 
+<<<<<<< HEAD
 #define TEGRA_NR_GPIOS		INT_GPIO_NR
 #define ARCH_NR_GPIOS		(TEGRA_NR_GPIOS + 128)
+=======
+#define ARCH_NR_GPIOS		INT_GPIO_NR
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm-generic/gpio.h>
 
@@ -36,7 +40,11 @@
 
 static inline int gpio_to_irq(unsigned int gpio)
 {
+<<<<<<< HEAD
 	if (gpio < TEGRA_NR_GPIOS)
+=======
+	if (gpio < ARCH_NR_GPIOS)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		return INT_GPIO_BASE + gpio;
 	return -EINVAL;
 }

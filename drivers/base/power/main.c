@@ -26,7 +26,10 @@
 #include <linux/interrupt.h>
 #include <linux/sched.h>
 #include <linux/async.h>
+<<<<<<< HEAD
 #include <linux/timer.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include "../base.h"
 #include "power.h"
@@ -40,18 +43,25 @@
  * we must never try to acquire a device lock while holding
  * dpm_list_mutex.
  */
+<<<<<<< HEAD
 extern int async_synchronize_full_timeout(unsigned int timeout);
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 LIST_HEAD(dpm_list);
 
 static DEFINE_MUTEX(dpm_list_mtx);
 static pm_message_t pm_transition;
 
+<<<<<<< HEAD
 static void dpm_drv_timeout(unsigned long data);
 struct dpm_drv_wd_data {
 	struct device *dev;
 	struct task_struct *tsk;
 };
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * Set once the preparation of devices for a PM transition has started, reset
  * before starting to resume devices.  Protected by dpm_list_mtx.
@@ -531,9 +541,13 @@ static int device_resume(struct device *dev, pm_message_t state, bool async)
 	TRACE_DEVICE(dev);
 	TRACE_RESUME(0);
 
+<<<<<<< HEAD
 	if (dev->parent && (dev->parent->power.status >= DPM_OFF ||
 			    dev->parent->power.status == DPM_RESUMING))
 		dpm_wait(dev->parent, async);
+=======
+	dpm_wait(dev->parent, async);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	device_lock(dev);
 
 	dev->power.status = DPM_RESUMING;
@@ -594,6 +608,7 @@ static bool is_async(struct device *dev)
 }
 
 /**
+<<<<<<< HEAD
  *	dpm_drv_timeout - Driver suspend / resume watchdog handler
  *	@data: struct device which timed out
  *
@@ -618,6 +633,8 @@ static void dpm_drv_timeout(unsigned long data)
 }
 
 /**
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  * dpm_resume - Execute "resume" callbacks for non-sysdev devices.
  * @state: PM transition of the system being carried out.
  *
@@ -629,8 +646,12 @@ static void dpm_resume(pm_message_t state)
 	struct list_head list;
 	struct device *dev;
 	ktime_t starttime = ktime_get();
+<<<<<<< HEAD
 	int ret;
 	printk(KERN_ERR "PM: dpm_resume+\n");
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	INIT_LIST_HEAD(&list);
 	mutex_lock(&dpm_list_mtx);
 	pm_transition = state;
@@ -667,11 +688,17 @@ static void dpm_resume(pm_message_t state)
 			list_move_tail(&dev->power.entry, &list);
 		put_device(dev);
 	}
+<<<<<<< HEAD
 	printk(KERN_ERR "PM: dpm_resume-\n");
 	list_splice(&list, &dpm_list);
 	mutex_unlock(&dpm_list_mtx);
 	ret=async_synchronize_full_timeout(2*HZ);
 	printk( "PM: dpm_resume-suspend_async_synchronize_full=%d\n",ret );
+=======
+	list_splice(&list, &dpm_list);
+	mutex_unlock(&dpm_list_mtx);
+	async_synchronize_full();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	dpm_show_time(starttime, state, NULL);
 }
 
@@ -876,6 +903,7 @@ static int async_error;
 static int __device_suspend(struct device *dev, pm_message_t state, bool async)
 {
 	int error = 0;
+<<<<<<< HEAD
 	struct timer_list timer;
 	struct dpm_drv_wd_data data;
 
@@ -889,6 +917,10 @@ static int __device_suspend(struct device *dev, pm_message_t state, bool async)
 	timer.data = (unsigned long)&data;
 	add_timer(&timer);
 
+=======
+
+	dpm_wait_for_children(dev, async);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	device_lock(dev);
 
 	if (async_error)
@@ -930,10 +962,13 @@ static int __device_suspend(struct device *dev, pm_message_t state, bool async)
 
  End:
 	device_unlock(dev);
+<<<<<<< HEAD
 
 	del_timer_sync(&timer);
 	destroy_timer_on_stack(&timer);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	complete_all(&dev->power.completion);
 
 	return error;
@@ -975,12 +1010,19 @@ static int dpm_suspend(pm_message_t state)
 	struct list_head list;
 	ktime_t starttime = ktime_get();
 	int error = 0;
+<<<<<<< HEAD
        int ret=0;
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	INIT_LIST_HEAD(&list);
 	mutex_lock(&dpm_list_mtx);
 	pm_transition = state;
 	async_error = 0;
+<<<<<<< HEAD
 	printk(KERN_ERR "PM: dpm_suspend+\n");
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	while (!list_empty(&dpm_list)) {
 		struct device *dev = to_device(dpm_list.prev);
 
@@ -1003,10 +1045,14 @@ static int dpm_suspend(pm_message_t state)
 	}
 	list_splice(&list, dpm_list.prev);
 	mutex_unlock(&dpm_list_mtx);
+<<<<<<< HEAD
 	ret=async_synchronize_full_timeout(2*HZ);
 	if(!ret)//fail
 	     error=1;
 	printk( "PM: dpm_suspend-suspend_async_synchronize_full=%d\n",ret );
+=======
+	async_synchronize_full();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (!error)
 		error = async_error;
 	if (!error)

@@ -17,7 +17,10 @@
 #define TWD_TIMER_CONTROL_ONESHOT	(0 << 1)
 #define TWD_TIMER_CONTROL_PERIODIC	(1 << 1)
 #define TWD_TIMER_CONTROL_IT_ENABLE	(1 << 2)
+<<<<<<< HEAD
 #define TWD_TIMER_CONTROL_PRESCALE_MASK	(0xFF << 8)
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 struct clock_event_device;
 
@@ -27,6 +30,7 @@ void twd_timer_stop(void);
 int twd_timer_ack(void);
 void twd_timer_setup(struct clock_event_device *);
 
+<<<<<<< HEAD
 /*
  * Use this setup function on systems where the cpu clock frequency may
  * change.  periphclk_prescaler is the fixed divider value between the cpu
@@ -37,4 +41,6 @@ void twd_timer_setup(struct clock_event_device *);
 void twd_timer_setup_scalable(struct clock_event_device *,
 	unsigned long target_rate, unsigned int periphclk_prescaler);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif

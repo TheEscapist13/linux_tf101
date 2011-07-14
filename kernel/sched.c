@@ -72,7 +72,10 @@
 #include <linux/ctype.h>
 #include <linux/ftrace.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/cpuacct.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm/tlb.h>
 #include <asm/irq_regs.h>
@@ -3804,10 +3807,15 @@ static inline void schedule_debug(struct task_struct *prev)
 	 * schedule() atomically, we ignore that path for now.
 	 * Otherwise, whine if we are scheduling when we should not be.
 	 */
+<<<<<<< HEAD
 	if (unlikely(in_atomic_preempt_off() && !prev->exit_state)){
 		__schedule_bug(prev);
 		dec_preempt_count();
 	}
+=======
+	if (unlikely(in_atomic_preempt_off() && !prev->exit_state))
+		__schedule_bug(prev);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	profile_hit(SCHED_PROFILING, __builtin_return_address(0));
 
@@ -5378,7 +5386,11 @@ void sched_show_task(struct task_struct *p)
 	unsigned state;
 
 	state = p->state ? __ffs(p->state) + 1 : 0;
+<<<<<<< HEAD
 	printk(KERN_INFO "%-15.15s %c", p->comm,
+=======
+	printk(KERN_INFO "%-13.13s %c", p->comm,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		state < sizeof(stat_nam) - 1 ? stat_nam[state] : '?');
 #if BITS_PER_LONG == 32
 	if (state == TASK_RUNNING)
@@ -8027,6 +8039,7 @@ static inline int preempt_count_equals(int preempt_offset)
 	return (nested == PREEMPT_INATOMIC_BASE + preempt_offset);
 }
 
+<<<<<<< HEAD
 static int __might_sleep_init_called;
 int __init __might_sleep_init(void)
 {
@@ -8035,16 +8048,22 @@ int __init __might_sleep_init(void)
 }
 early_initcall(__might_sleep_init);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 void __might_sleep(const char *file, int line, int preempt_offset)
 {
 #ifdef in_atomic
 	static unsigned long prev_jiffy;	/* ratelimiting */
 
 	if ((preempt_count_equals(preempt_offset) && !irqs_disabled()) ||
+<<<<<<< HEAD
 	    oops_in_progress)
 		return;
 	if (system_state != SYSTEM_RUNNING &&
 	    (!__might_sleep_init_called || system_state != SYSTEM_BOOTING))
+=======
+	    system_state != SYSTEM_RUNNING || oops_in_progress)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		return;
 	if (time_before(jiffies, prev_jiffy + HZ) && prev_jiffy)
 		return;
@@ -8444,11 +8463,14 @@ void sched_move_task(struct task_struct *tsk)
 	if (unlikely(running))
 		tsk->sched_class->put_prev_task(rq, tsk);
 
+<<<<<<< HEAD
 #ifdef CONFIG_FAIR_GROUP_SCHED
 	if (tsk->sched_class->prep_move_group)
 		tsk->sched_class->prep_move_group(tsk, on_rq);
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	set_task_rq(tsk, task_cpu(tsk));
 
 #ifdef CONFIG_FAIR_GROUP_SCHED
@@ -8866,6 +8888,7 @@ cpu_cgroup_destroy(struct cgroup_subsys *ss, struct cgroup *cgrp)
 static int
 cpu_cgroup_can_attach_task(struct cgroup *cgrp, struct task_struct *tsk)
 {
+<<<<<<< HEAD
 	if ((current != tsk) && (!capable(CAP_SYS_NICE))) {
 		const struct cred *cred = current_cred(), *tcred;
 
@@ -8875,6 +8898,8 @@ cpu_cgroup_can_attach_task(struct cgroup *cgrp, struct task_struct *tsk)
 			return -EPERM;
 	}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #ifdef CONFIG_RT_GROUP_SCHED
 	if (!sched_rt_can_attach(cgroup_tg(cgrp), tsk))
 		return -EINVAL;
@@ -9019,6 +9044,7 @@ struct cpuacct {
 	u64 __percpu *cpuusage;
 	struct percpu_counter cpustat[CPUACCT_STAT_NSTATS];
 	struct cpuacct *parent;
+<<<<<<< HEAD
 	struct cpuacct_charge_calls *cpufreq_fn;
 	void *cpuacct_data;
 };
@@ -9043,6 +9069,10 @@ int cpuacct_register_cpufreq(struct cpuacct_charge_calls *fn)
 	return 0;
 }
 
+=======
+};
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct cgroup_subsys cpuacct_subsys;
 
 /* return cpu accounting group corresponding to this container */
@@ -9077,6 +9107,7 @@ static struct cgroup_subsys_state *cpuacct_create(
 		if (percpu_counter_init(&ca->cpustat[i], 0))
 			goto out_free_counters;
 
+<<<<<<< HEAD
 	ca->cpufreq_fn = cpuacct_cpufreq;
 
 	/* If available, have platform code initalize cpu frequency table */
@@ -9087,6 +9118,10 @@ static struct cgroup_subsys_state *cpuacct_create(
 		ca->parent = cgroup_ca(cgrp->parent);
 	else
 		cpuacct_root = ca;
+=======
+	if (cgrp->parent)
+		ca->parent = cgroup_ca(cgrp->parent);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return &ca->css;
 
@@ -9214,6 +9249,7 @@ static int cpuacct_stats_show(struct cgroup *cgrp, struct cftype *cft,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int cpuacct_cpufreq_show(struct cgroup *cgrp, struct cftype *cft,
 		struct cgroup_map_cb *cb)
 {
@@ -9240,6 +9276,8 @@ static u64 cpuacct_powerusage_read(struct cgroup *cgrp, struct cftype *cft)
 	return totalpower;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct cftype files[] = {
 	{
 		.name = "usage",
@@ -9254,6 +9292,7 @@ static struct cftype files[] = {
 		.name = "stat",
 		.read_map = cpuacct_stats_show,
 	},
+<<<<<<< HEAD
 	{
 		.name =  "cpufreq",
 		.read_map = cpuacct_cpufreq_show,
@@ -9262,6 +9301,8 @@ static struct cftype files[] = {
 		.name = "power",
 		.read_u64 = cpuacct_powerusage_read
 	},
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 static int cpuacct_populate(struct cgroup_subsys *ss, struct cgroup *cgrp)
@@ -9291,10 +9332,13 @@ static void cpuacct_charge(struct task_struct *tsk, u64 cputime)
 	for (; ca; ca = ca->parent) {
 		u64 *cpuusage = per_cpu_ptr(ca->cpuusage, cpu);
 		*cpuusage += cputime;
+<<<<<<< HEAD
 
 		/* Call back into platform code to account for CPU speeds */
 		if (ca->cpufreq_fn && ca->cpufreq_fn->charge)
 			ca->cpufreq_fn->charge(ca->cpuacct_data, cputime, cpu);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	rcu_read_unlock();

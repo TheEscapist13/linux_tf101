@@ -194,6 +194,27 @@ void generic_smp_call_function_interrupt(void)
 	list_for_each_entry_rcu(data, &call_function.queue, csd.list) {
 		int refs;
 
+<<<<<<< HEAD
+=======
+		/*
+		 * Since we walk the list without any locks, we might
+		 * see an entry that was completed, removed from the
+		 * list and is in the process of being reused.
+		 *
+		 * We must check that the cpu is in the cpumask before
+		 * checking the refs, and both must be set before
+		 * executing the callback on this cpu.
+		 */
+
+		if (!cpumask_test_cpu(cpu, data->cpumask))
+			continue;
+
+		smp_rmb();
+
+		if (atomic_read(&data->refs) == 0)
+			continue;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		if (!cpumask_test_and_clear_cpu(cpu, data->cpumask))
 			continue;
 
@@ -202,6 +223,11 @@ void generic_smp_call_function_interrupt(void)
 		refs = atomic_dec_return(&data->refs);
 		WARN_ON(refs < 0);
 		if (!refs) {
+<<<<<<< HEAD
+=======
+			WARN_ON(!cpumask_empty(data->cpumask));
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			raw_spin_lock(&call_function.lock);
 			list_del_rcu(&data->csd.list);
 			raw_spin_unlock(&call_function.lock);
@@ -453,11 +479,27 @@ void smp_call_function_many(const struct cpumask *mask,
 
 	data = &__get_cpu_var(cfd_data);
 	csd_lock(&data->csd);
+<<<<<<< HEAD
+=======
+	BUG_ON(atomic_read(&data->refs) || !cpumask_empty(data->cpumask));
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	data->csd.func = func;
 	data->csd.info = info;
 	cpumask_and(data->cpumask, mask, cpu_online_mask);
 	cpumask_clear_cpu(this_cpu, data->cpumask);
+<<<<<<< HEAD
+=======
+
+	/*
+	 * To ensure the interrupt handler gets an complete view
+	 * we order the cpumask and refs writes and order the read
+	 * of them in the interrupt handler.  In addition we may
+	 * only clear our own cpu bit from the mask.
+	 */
+	smp_wmb();
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	atomic_set(&data->refs, cpumask_weight(data->cpumask));
 
 	raw_spin_lock_irqsave(&call_function.lock, flags);

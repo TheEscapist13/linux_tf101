@@ -179,7 +179,10 @@ obj-$(CONFIG_VIDEO_IR_I2C)  += ir-kbd-i2c.o
 obj-y	+= davinci/
 
 obj-$(CONFIG_ARCH_OMAP)	+= omap/
+<<<<<<< HEAD
 obj-$(CONFIG_ARCH_TEGRA) += tegra/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 EXTRA_CFLAGS += -Idrivers/media/dvb/dvb-core
 EXTRA_CFLAGS += -Idrivers/media/dvb/frontends

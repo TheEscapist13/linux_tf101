@@ -171,7 +171,10 @@ static char * const zone_names[MAX_NR_ZONES] = {
 };
 
 int min_free_kbytes = 1024;
+<<<<<<< HEAD
 int min_free_order_shift = 1;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static unsigned long __meminitdata nr_kernel_pages;
 static unsigned long __meminitdata nr_all_pages;
@@ -1460,6 +1463,7 @@ static inline int should_fail_alloc_page(gfp_t gfp_mask, unsigned int order)
 #endif /* CONFIG_FAIL_PAGE_ALLOC */
 
 /*
+<<<<<<< HEAD
  * Return 1 if free pages are above 'mark'. This takes into account the order
  * of the allocation.
  */
@@ -1471,24 +1475,69 @@ int zone_watermark_ok(struct zone *z, int order, unsigned long mark,
 	long free_pages = zone_nr_free_pages(z) - (1 << order) + 1;
 	int o;
 
+=======
+ * Return true if free pages are above 'mark'. This takes into account the order
+ * of the allocation.
+ */
+static bool __zone_watermark_ok(struct zone *z, int order, unsigned long mark,
+		      int classzone_idx, int alloc_flags, long free_pages)
+{
+	/* free_pages my go negative - that's OK */
+	long min = mark;
+	int o;
+
+	free_pages -= (1 << order) + 1;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (alloc_flags & ALLOC_HIGH)
 		min -= min / 2;
 	if (alloc_flags & ALLOC_HARDER)
 		min -= min / 4;
 
 	if (free_pages <= min + z->lowmem_reserve[classzone_idx])
+<<<<<<< HEAD
 		return 0;
+=======
+		return false;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	for (o = 0; o < order; o++) {
 		/* At the next order, this order's pages become unavailable */
 		free_pages -= z->free_area[o].nr_free << o;
 
 		/* Require fewer higher order pages to be free */
+<<<<<<< HEAD
 		min >>= min_free_order_shift;
 
 		if (free_pages <= min)
 			return 0;
 	}
 	return 1;
+=======
+		min >>= 1;
+
+		if (free_pages <= min)
+			return false;
+	}
+	return true;
+}
+
+bool zone_watermark_ok(struct zone *z, int order, unsigned long mark,
+		      int classzone_idx, int alloc_flags)
+{
+	return __zone_watermark_ok(z, order, mark, classzone_idx, alloc_flags,
+					zone_page_state(z, NR_FREE_PAGES));
+}
+
+bool zone_watermark_ok_safe(struct zone *z, int order, unsigned long mark,
+		      int classzone_idx, int alloc_flags)
+{
+	long free_pages = zone_page_state(z, NR_FREE_PAGES);
+
+	if (z->percpu_drift_mark && free_pages < z->percpu_drift_mark)
+		free_pages = zone_page_state_snapshot(z, NR_FREE_PAGES);
+
+	return __zone_watermark_ok(z, order, mark, classzone_idx, alloc_flags,
+								free_pages);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 #ifdef CONFIG_NUMA
@@ -2442,7 +2491,11 @@ void show_free_areas(void)
 			" all_unreclaimable? %s"
 			"\n",
 			zone->name,
+<<<<<<< HEAD
 			K(zone_nr_free_pages(zone)),
+=======
+			K(zone_page_state(zone, NR_FREE_PAGES)),
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			K(min_wmark_pages(zone)),
 			K(low_wmark_pages(zone)),
 			K(high_wmark_pages(zone)),
@@ -3165,6 +3218,7 @@ static inline unsigned long wait_table_bits(unsigned long size)
 #define LONG_ALIGN(x) (((x)+(sizeof(long))-1)&~((sizeof(long))-1))
 
 /*
+<<<<<<< HEAD
  * Check if a pageblock contains reserved pages
  */
 static int pageblock_is_reserved(unsigned long start_pfn)
@@ -3179,6 +3233,8 @@ static int pageblock_is_reserved(unsigned long start_pfn)
 }
 
 /*
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  * Mark a number of pageblocks as MIGRATE_RESERVE. The number
  * of blocks reserved is based on min_wmark_pages(zone). The memory within
  * the reserve will tend to store contiguous free pages. Setting min_free_kbytes
@@ -3217,7 +3273,11 @@ static void setup_zone_migrate_reserve(struct zone *zone)
 			continue;
 
 		/* Blocks with reserved pages will never free, skip them. */
+<<<<<<< HEAD
 		if (pageblock_is_reserved(pfn))
+=======
+		if (PageReserved(page))
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			continue;
 
 		block_migratetype = get_pageblock_migratetype(page);

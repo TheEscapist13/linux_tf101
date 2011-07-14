@@ -483,8 +483,11 @@ struct net_device *RtmpPhyNetDevInit(struct rt_rtmp_adapter *pAd,
 	net_dev->ml_priv = (void *)pAd;
 	pAd->net_dev = net_dev;
 
+<<<<<<< HEAD
 	netif_stop_queue(net_dev);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return net_dev;
 
 }

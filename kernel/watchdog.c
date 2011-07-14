@@ -441,9 +441,12 @@ static int watchdog_enable(int cpu)
 		wake_up_process(p);
 	}
 
+<<<<<<< HEAD
 	/* if any cpu succeeds, watchdog is considered enabled for the system */
 	watchdog_enabled = 1;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 
@@ -471,12 +474,25 @@ static void watchdog_disable(int cpu)
 static void watchdog_enable_all_cpus(void)
 {
 	int cpu;
+<<<<<<< HEAD
 	int result = 0;
 
 	for_each_online_cpu(cpu)
 		result += watchdog_enable(cpu);
 
 	if (result)
+=======
+
+	watchdog_enabled = 0;
+
+	for_each_online_cpu(cpu)
+		if (!watchdog_enable(cpu))
+			/* if any cpu succeeds, watchdog is considered
+			   enabled for the system */
+			watchdog_enabled = 1;
+
+	if (!watchdog_enabled)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		printk(KERN_ERR "watchdog: failed to be enabled on some cpus\n");
 
 }
@@ -504,10 +520,19 @@ int proc_dowatchdog_enabled(struct ctl_table *table, int write,
 {
 	proc_dointvec(table, write, buffer, length, ppos);
 
+<<<<<<< HEAD
 	if (watchdog_enabled)
 		watchdog_enable_all_cpus();
 	else
 		watchdog_disable_all_cpus();
+=======
+	if (write) {
+		if (watchdog_enabled)
+			watchdog_enable_all_cpus();
+		else
+			watchdog_disable_all_cpus();
+	}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 

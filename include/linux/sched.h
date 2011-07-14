@@ -1073,7 +1073,10 @@ struct sched_class {
 
 #ifdef CONFIG_FAIR_GROUP_SCHED
 	void (*moved_group) (struct task_struct *p, int on_rq);
+<<<<<<< HEAD
 	void (*prep_move_group) (struct task_struct *p, int on_rq);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif
 };
 
@@ -1679,9 +1682,12 @@ static inline void put_task_struct(struct task_struct *t)
 extern void task_times(struct task_struct *p, cputime_t *ut, cputime_t *st);
 extern void thread_group_times(struct task_struct *p, cputime_t *ut, cputime_t *st);
 
+<<<<<<< HEAD
 extern int task_free_register(struct notifier_block *n);
 extern int task_free_unregister(struct notifier_block *n);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * Per process flags
  */

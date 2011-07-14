@@ -156,7 +156,11 @@ config USB_ATMEL_USBA
 
 config USB_GADGET_FSL_USB2
 	boolean "Freescale Highspeed USB DR Peripheral Controller"
+<<<<<<< HEAD
 	depends on FSL_SOC || ARCH_MXC || ARCH_TEGRA
+=======
+	depends on FSL_SOC || ARCH_MXC
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	select USB_GADGET_DUALSPEED
 	help
 	   Some of Freescale PowerPC processors have a High Speed
@@ -837,6 +841,7 @@ config USB_G_PRINTER
 	  For more information, see Documentation/usb/gadget_printer.txt
 	  which includes sample code for accessing the device file.
 
+<<<<<<< HEAD
 config USB_ANDROID
 	boolean "Android Gadget"
 	depends on SWITCH
@@ -885,6 +890,8 @@ config USB_ANDROID_RNDIS_WCEIS
          If you enable this option, the device is no longer CDC ethernet
          compatible.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config USB_CDC_COMPOSITE
 	tristate "CDC Composite Device (Ethernet and ACM)"
 	depends on NET

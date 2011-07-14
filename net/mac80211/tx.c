@@ -1694,7 +1694,11 @@ netdev_tx_t ieee80211_subif_start_xmit(struct sk_buff *skb,
 {
 	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
 	struct ieee80211_local *local = sdata->local;
+<<<<<<< HEAD
 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+=======
+	struct ieee80211_tx_info *info;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	int ret = NETDEV_TX_BUSY, head_need;
 	u16 ethertype, hdrlen,  meshhdrlen = 0;
 	__le16 fc;
@@ -1984,6 +1988,10 @@ netdev_tx_t ieee80211_subif_start_xmit(struct sk_buff *skb,
 	skb_set_network_header(skb, nh_pos);
 	skb_set_transport_header(skb, h_pos);
 
+<<<<<<< HEAD
+=======
+	info = IEEE80211_SKB_CB(skb);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	memset(info, 0, sizeof(*info));
 
 	dev->trans_start = jiffies;
@@ -2175,6 +2183,12 @@ struct sk_buff *ieee80211_beacon_get_tim(struct ieee80211_hw *hw,
 
 	sdata = vif_to_sdata(vif);
 
+<<<<<<< HEAD
+=======
+	if (!ieee80211_sdata_running(sdata))
+		goto out;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (tim_offset)
 		*tim_offset = 0;
 	if (tim_length)

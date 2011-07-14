@@ -76,5 +76,8 @@ obj-$(CONFIG_MFD_RDC321X)	+= rdc321x-southbridge.o
 obj-$(CONFIG_MFD_JANZ_CMODIO)	+= janz-cmodio.o
 obj-$(CONFIG_MFD_JZ4740_ADC)	+= jz4740-adc.o
 obj-$(CONFIG_MFD_TPS6586X)	+= tps6586x.o
+<<<<<<< HEAD
 obj-$(CONFIG_MFD_MAX8907C)	+= max8907c.o
 obj-$(CONFIG_MFD_MAX8907C)	+= max8907c-irq.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

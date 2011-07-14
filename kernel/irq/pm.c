@@ -72,12 +72,17 @@ int check_wakeup_irqs(void)
 	int irq;
 
 	for_each_irq_desc(irq, desc)
+<<<<<<< HEAD
 		if ((desc->status & IRQ_WAKEUP) &&
 		    (desc->status & IRQ_PENDING)) {
 			pr_info("Wakeup IRQ %d %s pending, suspend aborted\n",
 				irq, desc->name ? desc->name : "");
 			return -EBUSY;
 		}
+=======
+		if ((desc->status & IRQ_WAKEUP) && (desc->status & IRQ_PENDING))
+			return -EBUSY;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return 0;
 }

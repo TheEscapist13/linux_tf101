@@ -354,12 +354,23 @@ unsigned long tpm_calc_ordinal_duration(struct tpm_chip *chip,
 		    tpm_protected_ordinal_duration[ordinal &
 						   TPM_PROTECTED_ORDINAL_MASK];
 
+<<<<<<< HEAD
 	if (duration_idx != TPM_UNDEFINED)
 		duration = chip->vendor.duration[duration_idx];
 	if (duration <= 0)
 		return 2 * 60 * HZ;
 	else
 		return duration;
+=======
+	if (duration_idx != TPM_UNDEFINED) {
+		duration = chip->vendor.duration[duration_idx];
+		/* if duration is 0, it's because chip->vendor.duration wasn't */
+		/* filled yet, so we set the lowest timeout just to give enough */
+		/* time for tpm_get_timeouts() to succeed */
+		return (duration <= 0 ? HZ : duration);
+	} else
+		return 2 * 60 * HZ;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 EXPORT_SYMBOL_GPL(tpm_calc_ordinal_duration);
 
@@ -565,9 +576,17 @@ duration:
 	if (rc)
 		return;
 
+<<<<<<< HEAD
 	if (be32_to_cpu(tpm_cmd.header.out.return_code)
 	    != 3 * sizeof(u32))
 		return;
+=======
+	if (be32_to_cpu(tpm_cmd.header.out.return_code) != 0 ||
+	    be32_to_cpu(tpm_cmd.header.out.length)
+	    != sizeof(tpm_cmd.header.out) + sizeof(u32) + 3 * sizeof(u32))
+		return;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	duration_cap = &tpm_cmd.params.getcap_out.cap.duration;
 	chip->vendor.duration[TPM_SHORT] =
 	    usecs_to_jiffies(be32_to_cpu(duration_cap->tpm_short));
@@ -911,6 +930,21 @@ ssize_t tpm_show_caps_1_2(struct device * dev,
 }
 EXPORT_SYMBOL_GPL(tpm_show_caps_1_2);
 
+<<<<<<< HEAD
+=======
+ssize_t tpm_show_timeouts(struct device *dev, struct device_attribute *attr,
+			  char *buf)
+{
+	struct tpm_chip *chip = dev_get_drvdata(dev);
+
+	return sprintf(buf, "%d %d %d\n",
+	               jiffies_to_usecs(chip->vendor.duration[TPM_SHORT]),
+	               jiffies_to_usecs(chip->vendor.duration[TPM_MEDIUM]),
+	               jiffies_to_usecs(chip->vendor.duration[TPM_LONG]));
+}
+EXPORT_SYMBOL_GPL(tpm_show_timeouts);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 ssize_t tpm_store_cancel(struct device *dev, struct device_attribute *attr,
 			const char *buf, size_t count)
 {

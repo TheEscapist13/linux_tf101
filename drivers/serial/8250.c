@@ -39,7 +39,10 @@
 #include <linux/nmi.h>
 #include <linux/mutex.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <mach/board-ventana-misc.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm/io.h>
 #include <asm/irq.h>
@@ -242,7 +245,12 @@ static const struct serial8250_config uart_config[] = {
 		.fifo_size	= 128,
 		.tx_loadsz	= 128,
 		.fcr		= UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_10,
+<<<<<<< HEAD
 		.flags		= UART_CAP_FIFO | UART_CAP_EFR | UART_CAP_SLEEP,
+=======
+		/* UART_CAP_EFR breaks billionon CF bluetooth card. */
+		.flags		= UART_CAP_FIFO | UART_CAP_SLEEP,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	},
 	[PORT_16654] = {
 		.name		= "ST16654",
@@ -308,6 +316,7 @@ static const struct serial8250_config uart_config[] = {
 		.fcr		= UART_FCR_ENABLE_FIFO | UART_FCR_R_TRIG_10,
 		.flags		= UART_CAP_FIFO | UART_CAP_AFE,
 	},
+<<<<<<< HEAD
 	[PORT_TEGRA] = {
 		.name		= "Tegra",
 		.fifo_size	= 32,
@@ -316,6 +325,8 @@ static const struct serial8250_config uart_config[] = {
 				  UART_FCR_R_TRIG_01,
 		.flags		= UART_CAP_FIFO | UART_CAP_HW_CTSRTS,
 	},
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 #if defined(CONFIG_MIPS_ALCHEMY)
@@ -1459,8 +1470,13 @@ receive_chars(struct uart_8250_port *up, unsigned int *status)
 			else if (lsr & UART_LSR_FE)
 				flag = TTY_FRAME;
 		}
+<<<<<<< HEAD
 		//if (uart_handle_sysrq_char(&up->port, ch))
 		//	goto ignore_char;
+=======
+		if (uart_handle_sysrq_char(&up->port, ch))
+			goto ignore_char;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		uart_insert_char(&up->port, lsr, UART_LSR_OE, ch, flag);
 
@@ -1838,6 +1854,7 @@ static void serial8250_set_mctrl(struct uart_port *port, unsigned int mctrl)
 	struct uart_8250_port *up = (struct uart_8250_port *)port;
 	unsigned char mcr = 0;
 
+<<<<<<< HEAD
 	if (up->port.type == PORT_TEGRA) {
 		if (mctrl & TIOCM_RTS)
 			mcr |= UART_MCR_HW_RTS;
@@ -1845,6 +1862,10 @@ static void serial8250_set_mctrl(struct uart_port *port, unsigned int mctrl)
 		if (mctrl & TIOCM_RTS)
 			mcr |= UART_MCR_RTS;
 	}
+=======
+	if (mctrl & TIOCM_RTS)
+		mcr |= UART_MCR_RTS;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (mctrl & TIOCM_DTR)
 		mcr |= UART_MCR_DTR;
 	if (mctrl & TIOCM_OUT1)
@@ -2172,9 +2193,12 @@ dont_test_tx_en:
 	 * anyway, so we don't enable them here.
 	 */
 	up->ier = UART_IER_RLSI | UART_IER_RDI;
+<<<<<<< HEAD
 	/* Use the receive timeout interrupt for tegra port*/
 	if (up->port.type == PORT_TEGRA)
 		up->ier |= UART_IER_RTOIE;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	serial_outp(up, UART_IER, up->ier);
 
 	if (up->port.flags & UPF_FOURPORT) {
@@ -2393,6 +2417,7 @@ serial8250_do_set_termios(struct uart_port *port, struct ktermios *termios,
 		serial_outp(up, UART_EFR, efr);
 	}
 
+<<<<<<< HEAD
 	if (up->capabilities & UART_CAP_HW_CTSRTS) {
 		unsigned char mcr = serial_inp(up, UART_MCR);
 		/*
@@ -2407,6 +2432,8 @@ serial8250_do_set_termios(struct uart_port *port, struct ktermios *termios,
 	}
 
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #ifdef CONFIG_ARCH_OMAP
 	/* Workaround to enable 115200 baud on OMAP1510 internal ports */
 	if (cpu_is_omap1510() && is_omap_port(up)) {
@@ -3229,10 +3256,13 @@ void serial8250_unregister_port(int line)
 {
 	struct uart_8250_port *uart = &serial8250_ports[line];
 
+<<<<<<< HEAD
 	//WARN: Add a workaround for ISR release on specific IRQ
 	if (ASUSGetProjectID() == 103)
 		serial8250_shutdown((struct uart_port *)uart);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	mutex_lock(&serial_mutex);
 	uart_remove_one_port(&serial8250_reg, &uart->port);
 	if (serial8250_isa_devs) {
@@ -3247,12 +3277,15 @@ void serial8250_unregister_port(int line)
 }
 EXPORT_SYMBOL(serial8250_unregister_port);
 
+<<<<<<< HEAD
 void serial8250_console_unregister(void)
 {
 	unregister_console(&serial8250_console);
 }
 EXPORT_SYMBOL(serial8250_console_unregister);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int __init serial8250_init(void)
 {
 	int ret;

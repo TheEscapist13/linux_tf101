@@ -218,14 +218,21 @@ static int mmc_ext_csd_open(struct inode *inode, struct file *filp)
 
 	filp->private_data = buf;
 	kfree(ext_csd);
+<<<<<<< HEAD
 	ext_csd = NULL;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 
 out_free:
 	kfree(buf);
+<<<<<<< HEAD
 	buf = NULL;
 	kfree(ext_csd);
 	ext_csd = NULL;
+=======
+	kfree(ext_csd);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return err;
 }
 
@@ -241,7 +248,10 @@ static ssize_t mmc_ext_csd_read(struct file *filp, char __user *ubuf,
 static int mmc_ext_csd_release(struct inode *inode, struct file *file)
 {
 	kfree(file->private_data);
+<<<<<<< HEAD
 	file->private_data = NULL;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 

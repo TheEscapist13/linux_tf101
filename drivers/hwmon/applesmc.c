@@ -162,6 +162,13 @@ static const char *temperature_sensors_sets[][41] = {
 /* Set 22: MacBook Pro 7,1 */
 	{ "TB0T", "TB1T", "TB2T", "TC0D", "TC0P", "TN0D", "TN0P", "TN0S",
 	  "TN1D", "TN1F", "TN1G", "TN1S", "Th1H", "Ts0P", "Ts0S", NULL },
+<<<<<<< HEAD
+=======
+/* Set 23: MacBook Air 3,1 */
+	{ "TB0T", "TB1T", "TB2T", "TC0D", "TC0E", "TC0P", "TC1E", "TCZ3",
+	  "TCZ4", "TCZ5", "TG0E", "TG1E", "TG2E", "TGZ3", "TGZ4", "TGZ5",
+	  "TH0F", "TH0O", "TM0P" },
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 /* List of keys used to read/write fan speeds */
@@ -444,6 +451,7 @@ static int applesmc_read_motion_sensor(int index, s16* value)
 }
 
 /*
+<<<<<<< HEAD
  * applesmc_device_init - initialize the accelerometer.  Returns zero on success
  * and negative error code on failure.  Can sleep.
  */
@@ -454,10 +462,22 @@ static int applesmc_device_init(void)
 
 	if (!applesmc_accelerometer)
 		return 0;
+=======
+ * applesmc_device_init - initialize the accelerometer.  Can sleep.
+ */
+static void applesmc_device_init(void)
+{
+	int total;
+	u8 buffer[2];
+
+	if (!applesmc_accelerometer)
+		return;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	mutex_lock(&applesmc_lock);
 
 	for (total = INIT_TIMEOUT_MSECS; total > 0; total -= INIT_WAIT_MSECS) {
+<<<<<<< HEAD
 		if (debug)
 			printk(KERN_DEBUG "applesmc try %d\n", total);
 		if (!applesmc_read_key(MOTION_SENSOR_KEY, buffer, 2) &&
@@ -476,6 +496,11 @@ static int applesmc_device_init(void)
 			ret = 0;
 			goto out;
 		}
+=======
+		if (!applesmc_read_key(MOTION_SENSOR_KEY, buffer, 2) &&
+				(buffer[0] != 0x00 || buffer[1] != 0x00))
+			goto out;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		buffer[0] = 0xe0;
 		buffer[1] = 0x00;
 		applesmc_write_key(MOTION_SENSOR_KEY, buffer, 2);
@@ -486,7 +511,10 @@ static int applesmc_device_init(void)
 
 out:
 	mutex_unlock(&applesmc_lock);
+<<<<<<< HEAD
 	return ret;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 /*
@@ -512,6 +540,7 @@ static int applesmc_get_fan_count(void)
 /* Device model stuff */
 static int applesmc_probe(struct platform_device *dev)
 {
+<<<<<<< HEAD
 	int ret;
 
 	ret = applesmc_device_init();
@@ -519,6 +548,10 @@ static int applesmc_probe(struct platform_device *dev)
 		return ret;
 
 	printk(KERN_INFO "applesmc: device successfully initialized.\n");
+=======
+	applesmc_device_init();
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 
@@ -535,9 +568,13 @@ static int applesmc_pm_resume(struct device *dev)
 /* Reinitialize device on resume from hibernation */
 static int applesmc_pm_restore(struct device *dev)
 {
+<<<<<<< HEAD
 	int ret = applesmc_device_init();
 	if (ret)
 		return ret;
+=======
+	applesmc_device_init();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return applesmc_pm_resume(dev);
 }
 
@@ -1524,11 +1561,23 @@ static __initdata struct dmi_match_data applesmc_dmi_data[] = {
 	{ .accelerometer = 1, .light = 1, .temperature_set = 21 },
 /* MacBook Pro 7,1: accelerometer, backlight and temperature set 22 */
 	{ .accelerometer = 1, .light = 1, .temperature_set = 22 },
+<<<<<<< HEAD
+=======
+/* MacBook Air 3,1: accelerometer, backlight and temperature set 23 */
+	{ .accelerometer = 0, .light = 0, .temperature_set = 23 },
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 /* Note that DMI_MATCH(...,"MacBook") will match "MacBookPro1,1".
  * So we need to put "Apple MacBook Pro" before "Apple MacBook". */
 static __initdata struct dmi_system_id applesmc_whitelist[] = {
+<<<<<<< HEAD
+=======
+	{ applesmc_dmi_match, "Apple MacBook Air 3", {
+	  DMI_MATCH(DMI_BOARD_VENDOR, "Apple"),
+	  DMI_MATCH(DMI_PRODUCT_NAME, "MacBookAir3") },
+		&applesmc_dmi_data[23]},
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{ applesmc_dmi_match, "Apple MacBook Air 2", {
 	  DMI_MATCH(DMI_BOARD_VENDOR, "Apple"),
 	  DMI_MATCH(DMI_PRODUCT_NAME, "MacBookAir2") },

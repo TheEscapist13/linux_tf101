@@ -168,6 +168,15 @@ static inline void iwl_disable_interrupts(struct iwl_priv *priv)
 	IWL_DEBUG_ISR(priv, "Disabled interrupts\n");
 }
 
+<<<<<<< HEAD
+=======
+static inline void iwl_enable_rfkill_int(struct iwl_priv *priv)
+{
+	IWL_DEBUG_ISR(priv, "Enabling rfkill interrupt\n");
+	iwl_write32(priv, CSR_INT_MASK, CSR_INT_BIT_RF_KILL);
+}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static inline void iwl_enable_interrupts(struct iwl_priv *priv)
 {
 	IWL_DEBUG_ISR(priv, "Enabling interrupts\n");

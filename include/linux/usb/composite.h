@@ -36,10 +36,15 @@
 
 #include <linux/usb/ch9.h>
 #include <linux/usb/gadget.h>
+<<<<<<< HEAD
 #include <linux/switch.h>
 
 
 struct usb_composite_dev;
+=======
+
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct usb_configuration;
 
 /**
@@ -103,9 +108,12 @@ struct usb_function {
 
 	struct usb_configuration	*config;
 
+<<<<<<< HEAD
 	/* disabled is zero if the function is enabled */
 	int				disabled;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* REVISIT:  bind() functions can be marked __init, which
 	 * makes trouble for section mismatch analysis.  See if
 	 * we can't restructure things to avoid mismatching.
@@ -133,7 +141,10 @@ struct usb_function {
 	/* internals */
 	struct list_head		list;
 	DECLARE_BITMAP(endpoints, 32);
+<<<<<<< HEAD
 	struct device			*dev;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 int usb_add_function(struct usb_configuration *, struct usb_function *);
@@ -143,9 +154,12 @@ int usb_function_activate(struct usb_function *);
 
 int usb_interface_id(struct usb_configuration *, struct usb_function *);
 
+<<<<<<< HEAD
 void usb_function_set_enabled(struct usb_function *, int);
 void usb_composite_force_reset(struct usb_composite_dev *);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /**
  * ep_choose - select descriptor endpoint at current device speed
  * @g: gadget, connected and running at some speed
@@ -278,9 +292,12 @@ struct usb_composite_driver {
 	const struct usb_device_descriptor	*dev;
 	struct usb_gadget_strings		**strings;
 
+<<<<<<< HEAD
 	struct class		*class;
 	atomic_t		function_count;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* REVISIT:  bind() functions can be marked __init, which
 	 * makes trouble for section mismatch analysis.  See if
 	 * we can't restructure things to avoid mismatching...
@@ -294,8 +311,11 @@ struct usb_composite_driver {
 	/* global suspend hooks */
 	void			(*suspend)(struct usb_composite_dev *);
 	void			(*resume)(struct usb_composite_dev *);
+<<<<<<< HEAD
 
 	void			(*enable_function)(struct usb_function *f, int enable);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 extern int usb_composite_register(struct usb_composite_driver *);
@@ -356,6 +376,7 @@ struct usb_composite_dev {
 
 	/* protects at least deactivation count */
 	spinlock_t			lock;
+<<<<<<< HEAD
 
 	/* switch indicating connected/disconnected state */
 	struct switch_dev		sw_connected;
@@ -365,6 +386,8 @@ struct usb_composite_dev {
 	bool				connected;
 
 	struct work_struct switch_work;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 extern int usb_string_id(struct usb_composite_dev *c);

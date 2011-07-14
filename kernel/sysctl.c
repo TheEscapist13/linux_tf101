@@ -94,7 +94,10 @@ extern char core_pattern[];
 extern unsigned int core_pipe_limit;
 extern int pid_max;
 extern int min_free_kbytes;
+<<<<<<< HEAD
 extern int min_free_order_shift;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 extern int pid_max_min, pid_max_max;
 extern int sysctl_drop_caches;
 extern int percpu_pagelist_fraction;
@@ -1158,6 +1161,7 @@ static struct ctl_table vm_table[] = {
 		.extra1		= &zero,
 	},
 	{
+<<<<<<< HEAD
 		.procname	= "min_free_order_shift",
 		.data		= &min_free_order_shift,
 		.maxlen		= sizeof(min_free_order_shift),
@@ -1165,6 +1169,8 @@ static struct ctl_table vm_table[] = {
 		.proc_handler	= &proc_dointvec
 	},
 	{
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		.procname	= "percpu_pagelist_fraction",
 		.data		= &percpu_pagelist_fraction,
 		.maxlen		= sizeof(percpu_pagelist_fraction),

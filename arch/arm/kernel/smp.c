@@ -47,6 +47,7 @@ struct secondary_data secondary_data;
 
 /*
  * structures for inter-processor calls
+<<<<<<< HEAD
  */
 struct ipi_data {
 	unsigned long ipi_count;
@@ -56,6 +57,22 @@ static DEFINE_PER_CPU(struct ipi_data, ipi_data);
 
 enum ipi_msg_type {
 	IPI_TIMER = 2,
+=======
+ * - A collection of single bit ipi messages.
+ */
+struct ipi_data {
+	spinlock_t lock;
+	unsigned long ipi_count;
+	unsigned long bits;
+};
+
+static DEFINE_PER_CPU(struct ipi_data, ipi_data) = {
+	.lock	= SPIN_LOCK_UNLOCKED,
+};
+
+enum ipi_msg_type {
+	IPI_TIMER,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	IPI_RESCHEDULE,
 	IPI_CALL_FUNC,
 	IPI_CALL_FUNC_SINGLE,
@@ -162,7 +179,11 @@ int __cpu_disable(void)
 	unsigned int cpu = smp_processor_id();
 	struct task_struct *p;
 	int ret;
+<<<<<<< HEAD
 	printk("__cpu_disable cpu=%u\n",cpu);
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	ret = platform_cpu_disable(cpu);
 	if (ret)
 		return ret;
@@ -336,10 +357,32 @@ void __init smp_prepare_boot_cpu(void)
 
 static void send_ipi_message(const struct cpumask *mask, enum ipi_msg_type msg)
 {
+<<<<<<< HEAD
 	/*
 	 * Call the platform specific cross-CPU call function.
 	 */
 	smp_cross_call(mask, msg);
+=======
+	unsigned long flags;
+	unsigned int cpu;
+
+	local_irq_save(flags);
+
+	for_each_cpu(cpu, mask) {
+		struct ipi_data *ipi = &per_cpu(ipi_data, cpu);
+
+		spin_lock(&ipi->lock);
+		ipi->bits |= 1 << msg;
+		spin_unlock(&ipi->lock);
+	}
+
+	/*
+	 * Call the platform specific cross-CPU call function.
+	 */
+	smp_cross_call(mask);
+
+	local_irq_restore(flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 void arch_send_call_function_ipi_mask(const struct cpumask *mask)
@@ -470,8 +513,19 @@ static void ipi_cpu_stop(unsigned int cpu)
 
 /*
  * Main handler for inter-processor interrupts
+<<<<<<< HEAD
  */
 asmlinkage void __exception do_IPI(int ipinr, struct pt_regs *regs)
+=======
+ *
+ * For ARM, the ipimask now only identifies a single
+ * category of IPI (Bit 1 IPIs have been replaced by a
+ * different mechanism):
+ *
+ *  Bit 0 - Inter-processor function call
+ */
+asmlinkage void __exception do_IPI(struct pt_regs *regs)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	unsigned int cpu = smp_processor_id();
 	struct ipi_data *ipi = &per_cpu(ipi_data, cpu);
@@ -479,6 +533,7 @@ asmlinkage void __exception do_IPI(int ipinr, struct pt_regs *regs)
 
 	ipi->ipi_count++;
 
+<<<<<<< HEAD
 	switch (ipinr) {
 	case IPI_TIMER:
 		ipi_timer();
@@ -508,6 +563,58 @@ asmlinkage void __exception do_IPI(int ipinr, struct pt_regs *regs)
 				cpu, ipinr);
 		break;
 	}
+=======
+	for (;;) {
+		unsigned long msgs;
+
+		spin_lock(&ipi->lock);
+		msgs = ipi->bits;
+		ipi->bits = 0;
+		spin_unlock(&ipi->lock);
+
+		if (!msgs)
+			break;
+
+		do {
+			unsigned nextmsg;
+
+			nextmsg = msgs & -msgs;
+			msgs &= ~nextmsg;
+			nextmsg = ffz(~nextmsg);
+
+			switch (nextmsg) {
+			case IPI_TIMER:
+				ipi_timer();
+				break;
+
+			case IPI_RESCHEDULE:
+				/*
+				 * nothing more to do - eveything is
+				 * done on the interrupt return path
+				 */
+				break;
+
+			case IPI_CALL_FUNC:
+				generic_smp_call_function_interrupt();
+				break;
+
+			case IPI_CALL_FUNC_SINGLE:
+				generic_smp_call_function_single_interrupt();
+				break;
+
+			case IPI_CPU_STOP:
+				ipi_cpu_stop(cpu);
+				break;
+
+			default:
+				printk(KERN_CRIT "CPU%u: Unknown IPI message 0x%x\n",
+				       cpu, nextmsg);
+				break;
+			}
+		} while (msgs);
+	}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	set_irq_regs(old_regs);
 }
 
@@ -518,6 +625,7 @@ void smp_send_reschedule(int cpu)
 
 void smp_send_stop(void)
 {
+<<<<<<< HEAD
 	unsigned long timeout;
 
 	if (num_online_cpus() > 1) {
@@ -534,6 +642,11 @@ void smp_send_stop(void)
 
 	if (num_online_cpus() > 1)
 		pr_warning("SMP: failed to stop secondary CPUs ");
+=======
+	cpumask_t mask = cpu_online_map;
+	cpu_clear(smp_processor_id(), mask);
+	send_ipi_message(&mask, IPI_CPU_STOP);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 /*

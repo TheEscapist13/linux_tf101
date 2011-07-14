@@ -651,8 +651,13 @@ static int fec_enet_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
 	fep->mii_timeout = 0;
 	init_completion(&fep->mdio_done);
 
+<<<<<<< HEAD
 	/* start a read op */
 	writel(FEC_MMFR_ST | FEC_MMFR_OP_READ |
+=======
+	/* start a write op */
+	writel(FEC_MMFR_ST | FEC_MMFR_OP_WRITE |
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		FEC_MMFR_PA(mii_id) | FEC_MMFR_RA(regnum) |
 		FEC_MMFR_TA | FEC_MMFR_DATA(value),
 		fep->hwp + FEC_MII_DATA);

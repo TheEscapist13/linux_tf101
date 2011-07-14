@@ -210,7 +210,11 @@ static int bf5xx_tdm_set_channel_map(struct snd_soc_dai *dai,
 #ifdef CONFIG_PM
 static int bf5xx_tdm_suspend(struct snd_soc_dai *dai)
 {
+<<<<<<< HEAD
 	struct sport_device *sport = dai->private_data;
+=======
+	struct sport_device *sport = snd_soc_dai_get_drvdata(dai);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (!dai->active)
 		return 0;

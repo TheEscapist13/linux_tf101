@@ -29,11 +29,20 @@ MODULE_AUTHOR("Utz Bacher <utz.bacher@de.ibm.com>,"\
 MODULE_DESCRIPTION("QDIO base support");
 MODULE_LICENSE("GPL");
 
+<<<<<<< HEAD
 static inline int do_siga_sync(struct subchannel_id schid,
 			       unsigned int out_mask, unsigned int in_mask)
 {
 	register unsigned long __fc asm ("0") = 2;
 	register struct subchannel_id __schid asm ("1") = schid;
+=======
+static inline int do_siga_sync(unsigned long schid,
+			       unsigned int out_mask, unsigned int in_mask,
+			       unsigned int fc)
+{
+	register unsigned long __fc asm ("0") = fc;
+	register unsigned long __schid asm ("1") = schid;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	register unsigned long out asm ("2") = out_mask;
 	register unsigned long in asm ("3") = in_mask;
 	int cc;
@@ -47,10 +56,18 @@ static inline int do_siga_sync(struct subchannel_id schid,
 	return cc;
 }
 
+<<<<<<< HEAD
 static inline int do_siga_input(struct subchannel_id schid, unsigned int mask)
 {
 	register unsigned long __fc asm ("0") = 1;
 	register struct subchannel_id __schid asm ("1") = schid;
+=======
+static inline int do_siga_input(unsigned long schid, unsigned int mask,
+				unsigned int fc)
+{
+	register unsigned long __fc asm ("0") = fc;
+	register unsigned long __schid asm ("1") = schid;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	register unsigned long __mask asm ("2") = mask;
 	int cc;
 
@@ -279,6 +296,11 @@ void qdio_init_buf_states(struct qdio_irq *irq_ptr)
 static inline int qdio_siga_sync(struct qdio_q *q, unsigned int output,
 			  unsigned int input)
 {
+<<<<<<< HEAD
+=======
+	unsigned long schid = *((u32 *) &q->irq_ptr->schid);
+	unsigned int fc = QDIO_SIGA_SYNC;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	int cc;
 
 	if (!need_siga_sync(q))
@@ -287,7 +309,16 @@ static inline int qdio_siga_sync(struct qdio_q *q, unsigned int output,
 	DBF_DEV_EVENT(DBF_INFO, q->irq_ptr, "siga-s:%1d", q->nr);
 	qperf_inc(q, siga_sync);
 
+<<<<<<< HEAD
 	cc = do_siga_sync(q->irq_ptr->schid, output, input);
+=======
+	if (is_qebsm(q)) {
+		schid = q->irq_ptr->sch_token;
+		fc |= QDIO_SIGA_QEBSM_FLAG;
+	}
+
+	cc = do_siga_sync(schid, output, input, fc);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (cc)
 		DBF_ERROR("%4x SIGA-S:%2d", SCH_NO(q), cc);
 	return cc;
@@ -313,8 +344,13 @@ static inline int qdio_siga_sync_all(struct qdio_q *q)
 
 static int qdio_siga_output(struct qdio_q *q, unsigned int *busy_bit)
 {
+<<<<<<< HEAD
 	unsigned long schid;
 	unsigned int fc = 0;
+=======
+	unsigned long schid = *((u32 *) &q->irq_ptr->schid);
+	unsigned int fc = QDIO_SIGA_WRITE;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	u64 start_time = 0;
 	int cc;
 
@@ -323,11 +359,16 @@ static int qdio_siga_output(struct qdio_q *q, unsigned int *busy_bit)
 
 	if (is_qebsm(q)) {
 		schid = q->irq_ptr->sch_token;
+<<<<<<< HEAD
 		fc |= 0x80;
 	}
 	else
 		schid = *((u32 *)&q->irq_ptr->schid);
 
+=======
+		fc |= QDIO_SIGA_QEBSM_FLAG;
+	}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 again:
 	cc = do_siga_output(schid, q->mask, busy_bit, fc);
 
@@ -347,12 +388,26 @@ again:
 
 static inline int qdio_siga_input(struct qdio_q *q)
 {
+<<<<<<< HEAD
+=======
+	unsigned long schid = *((u32 *) &q->irq_ptr->schid);
+	unsigned int fc = QDIO_SIGA_READ;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	int cc;
 
 	DBF_DEV_EVENT(DBF_INFO, q->irq_ptr, "siga-r:%1d", q->nr);
 	qperf_inc(q, siga_read);
 
+<<<<<<< HEAD
 	cc = do_siga_input(q->irq_ptr->schid, q->mask);
+=======
+	if (is_qebsm(q)) {
+		schid = q->irq_ptr->sch_token;
+		fc |= QDIO_SIGA_QEBSM_FLAG;
+	}
+
+	cc = do_siga_input(schid, q->mask, fc);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (cc)
 		DBF_ERROR("%4x SIGA-R:%2d", SCH_NO(q), cc);
 	return cc;

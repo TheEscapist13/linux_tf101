@@ -1265,6 +1265,7 @@ static void hcd_free_coherent(struct usb_bus *bus, dma_addr_t *dma_handle,
 
 static void unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
 {
+<<<<<<< HEAD
 	if (hcd->driver->unmap_urb_for_dma)
 		hcd->driver->unmap_urb_for_dma(hcd, urb);
 	else
@@ -1273,6 +1274,8 @@ static void unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
 
 void usb_hcd_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
 {
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	enum dma_data_direction dir;
 
 	if (urb->transfer_flags & URB_SETUP_MAP_SINGLE)
@@ -1315,11 +1318,15 @@ void usb_hcd_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
 			URB_DMA_MAP_SG | URB_DMA_MAP_PAGE |
 			URB_DMA_MAP_SINGLE | URB_MAP_LOCAL);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(usb_hcd_unmap_urb_for_dma);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static int map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
 			   gfp_t mem_flags)
 {
+<<<<<<< HEAD
 	if (hcd->driver->map_urb_for_dma)
 		return hcd->driver->map_urb_for_dma(hcd, urb, mem_flags);
 	else
@@ -1329,6 +1336,8 @@ static int map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
 int usb_hcd_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
 			    gfp_t mem_flags)
 {
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	enum dma_data_direction dir;
 	int ret = 0;
 
@@ -1418,11 +1427,18 @@ int usb_hcd_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
 		}
 		if (ret && (urb->transfer_flags & (URB_SETUP_MAP_SINGLE |
 				URB_SETUP_MAP_LOCAL)))
+<<<<<<< HEAD
 			usb_hcd_unmap_urb_for_dma(hcd, urb);
 	}
 	return ret;
 }
 EXPORT_SYMBOL_GPL(usb_hcd_map_urb_for_dma);
+=======
+			unmap_urb_for_dma(hcd, urb);
+	}
+	return ret;
+}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /*-------------------------------------------------------------------------*/
 
@@ -1964,7 +1980,10 @@ int hcd_bus_resume(struct usb_device *rhdev, pm_message_t msg)
 
 	dev_dbg(&rhdev->dev, "usb %s%s\n",
 			(msg.event & PM_EVENT_AUTO ? "auto-" : ""), "resume");
+<<<<<<< HEAD
 	clear_bit(HCD_FLAG_WAKEUP_PENDING, &hcd->flags);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (!hcd->driver->bus_resume)
 		return -ENOENT;
 	if (hcd->state == HC_STATE_RUNNING)
@@ -1972,6 +1991,10 @@ int hcd_bus_resume(struct usb_device *rhdev, pm_message_t msg)
 
 	hcd->state = HC_STATE_RESUMING;
 	status = hcd->driver->bus_resume(hcd);
+<<<<<<< HEAD
+=======
+	clear_bit(HCD_FLAG_WAKEUP_PENDING, &hcd->flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (status == 0) {
 		/* TRSMRCY = 10 msec */
 		msleep(10);

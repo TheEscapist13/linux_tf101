@@ -7,7 +7,10 @@ subdir-$(CONFIG_SECURITY_SELINUX)	+= selinux
 subdir-$(CONFIG_SECURITY_SMACK)		+= smack
 subdir-$(CONFIG_SECURITY_TOMOYO)        += tomoyo
 subdir-$(CONFIG_SECURITY_APPARMOR)	+= apparmor
+<<<<<<< HEAD
 subdir-$(CONFIG_TRUSTED_FOUNDATIONS) += tf_driver
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 # always enable default capabilities
 obj-y					+= commoncap.o
@@ -23,7 +26,10 @@ obj-$(CONFIG_AUDIT)			+= lsm_audit.o
 obj-$(CONFIG_SECURITY_TOMOYO)		+= tomoyo/built-in.o
 obj-$(CONFIG_SECURITY_APPARMOR)		+= apparmor/built-in.o
 obj-$(CONFIG_CGROUP_DEVICE)		+= device_cgroup.o
+<<<<<<< HEAD
 obj-$(CONFIG_TRUSTED_FOUNDATIONS) += tf_driver/built-in.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 # Object integrity file lists
 subdir-$(CONFIG_IMA)			+= integrity/ima

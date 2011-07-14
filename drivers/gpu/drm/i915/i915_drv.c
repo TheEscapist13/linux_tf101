@@ -53,7 +53,11 @@ extern int intel_agp_enabled;
 
 #define INTEL_VGA_DEVICE(id, info) {		\
 	.class = PCI_CLASS_DISPLAY_VGA << 8,	\
+<<<<<<< HEAD
 	.class_mask = 0xffff00,			\
+=======
+	.class_mask = 0xff0000,			\
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.vendor = 0x8086,			\
 	.device = id,				\
 	.subvendor = PCI_ANY_ID,		\
@@ -414,6 +418,17 @@ int i965_reset(struct drm_device *dev, u8 flags)
 static int __devinit
 i915_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 {
+<<<<<<< HEAD
+=======
+	/* Only bind to function 0 of the device. Early generations
+	 * used function 1 as a placeholder for multi-head. This causes
+	 * us confusion instead, especially on the systems where both
+	 * functions have the same PCI-ID!
+	 */
+	if (PCI_FUNC(pdev->devfn))
+		return -ENODEV;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return drm_get_pci_dev(pdev, ent, &driver);
 }
 

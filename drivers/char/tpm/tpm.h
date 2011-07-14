@@ -56,6 +56,11 @@ extern ssize_t tpm_show_owned(struct device *, struct device_attribute *attr,
 				char *);
 extern ssize_t tpm_show_temp_deactivated(struct device *,
 					 struct device_attribute *attr, char *);
+<<<<<<< HEAD
+=======
+extern ssize_t tpm_show_timeouts(struct device *,
+				 struct device_attribute *attr, char *);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 struct tpm_chip;
 

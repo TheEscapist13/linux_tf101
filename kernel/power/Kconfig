@@ -134,6 +134,7 @@ config SUSPEND_FREEZER
 
 	  Turning OFF this setting is NOT recommended! If in doubt, say Y.
 
+<<<<<<< HEAD
 config HAS_WAKELOCK
 	bool
 
@@ -201,6 +202,8 @@ choice
 		  to the screen and notifies user-space when it should resume.
 endchoice
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config HIBERNATION
 	bool "Hibernation (aka 'suspend to disk')"
 	depends on PM && SWAP && ARCH_HIBERNATION_POSSIBLE

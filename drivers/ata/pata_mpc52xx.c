@@ -610,7 +610,11 @@ static struct scsi_host_template mpc52xx_ata_sht = {
 };
 
 static struct ata_port_operations mpc52xx_ata_port_ops = {
+<<<<<<< HEAD
 	.inherits		= &ata_sff_port_ops,
+=======
+	.inherits		= &ata_bmdma_port_ops,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.sff_dev_select		= mpc52xx_ata_dev_select,
 	.set_piomode		= mpc52xx_ata_set_piomode,
 	.set_dmamode		= mpc52xx_ata_set_dmamode,

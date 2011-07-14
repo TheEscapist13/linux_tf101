@@ -53,10 +53,13 @@ config AD525X_DPOT_SPI
 	  To compile this driver as a module, choose M here: the
 	  module will be called ad525x_dpot-spi.
 
+<<<<<<< HEAD
 config ANDROID_PMEM
 	bool "Android pmem allocator"
 	default y
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config ATMEL_PWM
 	tristate "Atmel AT32/AT91 PWM support"
 	depends on AVR32 || ARCH_AT91SAM9263 || ARCH_AT91SAM9RL || ARCH_AT91CAP9
@@ -203,6 +206,7 @@ config ENCLOSURE_SERVICES
 	  driver (SCSI/ATA) which supports enclosures
 	  or a SCSI enclosure device (SES) to use these services.
 
+<<<<<<< HEAD
 config KERNEL_DEBUGGER_CORE
 	bool "Kernel Debugger Core"
 	default n
@@ -210,6 +214,8 @@ config KERNEL_DEBUGGER_CORE
 	  Generic kernel debugging command processor used by low level
 	  (interrupt context) platform-specific debuggers.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config SGI_XP
 	tristate "Support communication between SGI SSIs"
 	depends on NET
@@ -332,6 +338,7 @@ config HMC6352
 	  This driver provides support for the Honeywell HMC6352 compass,
 	  providing configuration and heading data via sysfs.
 
+<<<<<<< HEAD
 config SENSORS_AK8975
 	tristate "AK8975 compass support"
 	default n
@@ -364,6 +371,8 @@ config SENSORS_NCT1008
 	 Say yes here if you wish to include the ON Semiconductor
 	 NCT1008 Temperature sensor.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config EP93XX_PWM
 	tristate "EP93xx PWM support"
 	depends on ARCH_EP93XX
@@ -397,10 +406,13 @@ config TI_DAC7512
 	  This driver can also be built as a module. If so, the module
 	  will be calles ti_dac7512.
 
+<<<<<<< HEAD
 config UID_STAT
 	bool "UID based statistics tracking exported to /proc/uid_stat"
 	default n
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config VMWARE_BALLOON
 	tristate "VMware Balloon Driver"
 	depends on X86
@@ -437,6 +449,7 @@ config BMP085
 	  To compile this driver as a module, choose M here: the
 	  module will be called bmp085.
 
+<<<<<<< HEAD
 config WL127X_RFKILL
 	tristate "Bluetooth power control driver for TI wl127x"
 	depends on RFKILL
@@ -483,10 +496,15 @@ config KERNEL_RAMDUMP
 	bool "kernel ramdump driver"
 	default y
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/eeprom/Kconfig"
 source "drivers/misc/cb710/Kconfig"
 source "drivers/misc/iwmc3200top/Kconfig"
+<<<<<<< HEAD
 source "drivers/misc/mpu3050/Kconfig"
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 endif # MISC_DEVICES

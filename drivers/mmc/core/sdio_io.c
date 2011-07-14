@@ -383,6 +383,7 @@ u8 sdio_readb(struct sdio_func *func, unsigned int addr, int *err_ret)
 EXPORT_SYMBOL_GPL(sdio_readb);
 
 /**
+<<<<<<< HEAD
  *	sdio_readb_ext - read a single byte from a SDIO function
  *	@func: SDIO function to access
  *	@addr: address to read
@@ -416,6 +417,8 @@ unsigned char sdio_readb_ext(struct sdio_func *func, unsigned int addr,
 EXPORT_SYMBOL_GPL(sdio_readb_ext);
 
 /**
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  *	sdio_writeb - write a single byte to a SDIO function
  *	@func: SDIO function to access
  *	@b: byte to write

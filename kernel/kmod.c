@@ -277,7 +277,10 @@ int usermodehelper_disable(void)
 
 	usermodehelper_disabled = 1;
 	smp_mb();
+<<<<<<< HEAD
 	 printk("u_d+\n");
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * From now on call_usermodehelper_exec() won't start any new
 	 * helpers, so it is sufficient if running_helpers turns out to
@@ -287,7 +290,10 @@ int usermodehelper_disable(void)
 	retval = wait_event_timeout(running_helpers_waitq,
 					atomic_read(&running_helpers) == 0,
 					RUNNING_HELPERS_TIMEOUT);
+<<<<<<< HEAD
 	 printk("u_d-\n");
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (retval)
 		return 0;
 

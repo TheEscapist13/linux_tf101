@@ -553,7 +553,10 @@ static int unmap_and_move(new_page_t get_new_page, unsigned long private,
 	int *result = NULL;
 	struct page *newpage = get_new_page(page, private, &result);
 	int remap_swapcache = 1;
+<<<<<<< HEAD
 	int rcu_locked = 0;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	int charge = 0;
 	struct mem_cgroup *mem = NULL;
 	struct anon_vma *anon_vma = NULL;
@@ -605,12 +608,17 @@ static int unmap_and_move(new_page_t get_new_page, unsigned long private,
 	/*
 	 * By try_to_unmap(), page->mapcount goes down to 0 here. In this case,
 	 * we cannot notice that anon_vma is freed while we migrates a page.
+<<<<<<< HEAD
 	 * This rcu_read_lock() delays freeing anon_vma pointer until the end
+=======
+	 * This get_anon_vma() delays freeing anon_vma pointer until the end
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	 * of migration. File cache pages are no problem because of page_lock()
 	 * File Caches may use write_page() or lock_page() in migration, then,
 	 * just care Anon page here.
 	 */
 	if (PageAnon(page)) {
+<<<<<<< HEAD
 		rcu_read_lock();
 		rcu_locked = 1;
 
@@ -619,6 +627,22 @@ static int unmap_and_move(new_page_t get_new_page, unsigned long private,
 			if (!PageSwapCache(page))
 				goto rcu_unlock;
 
+=======
+		/*
+		 * Only page_lock_anon_vma() understands the subtleties of
+		 * getting a hold on an anon_vma from outside one of its mms.
+		 */
+		anon_vma = page_lock_anon_vma(page);
+		if (anon_vma) {
+			/*
+			 * Take a reference count on the anon_vma if the
+			 * page is mapped so that it is guaranteed to
+			 * exist when the page is remapped later
+			 */
+			get_anon_vma(anon_vma);
+			page_unlock_anon_vma(anon_vma);
+		} else if (PageSwapCache(page)) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			/*
 			 * We cannot be sure that the anon_vma of an unmapped
 			 * swapcache page is safe to use because we don't
@@ -633,6 +657,7 @@ static int unmap_and_move(new_page_t get_new_page, unsigned long private,
 			 */
 			remap_swapcache = 0;
 		} else {
+<<<<<<< HEAD
 			/*
 			 * Take a reference count on the anon_vma if the
 			 * page is mapped so that it is guaranteed to
@@ -640,6 +665,9 @@ static int unmap_and_move(new_page_t get_new_page, unsigned long private,
 			 */
 			anon_vma = page_anon_vma(page);
 			get_anon_vma(anon_vma);
+=======
+			goto uncharge;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		}
 	}
 
@@ -656,6 +684,7 @@ static int unmap_and_move(new_page_t get_new_page, unsigned long private,
 	 * free the metadata, so the page can be freed.
 	 */
 	if (!page->mapping) {
+<<<<<<< HEAD
 		if (!PageAnon(page) && page_has_private(page)) {
 			/*
 			 * Go direct to try_to_free_buffers() here because
@@ -666,6 +695,12 @@ static int unmap_and_move(new_page_t get_new_page, unsigned long private,
 			 */
 			try_to_free_buffers(page);
 			goto rcu_unlock;
+=======
+		VM_BUG_ON(PageAnon(page));
+		if (page_has_private(page)) {
+			try_to_free_buffers(page);
+			goto uncharge;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		}
 		goto skip_unmap;
 	}
@@ -679,14 +714,20 @@ skip_unmap:
 
 	if (rc && remap_swapcache)
 		remove_migration_ptes(page, page);
+<<<<<<< HEAD
 rcu_unlock:
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* Drop an anon_vma reference if we took one */
 	if (anon_vma)
 		drop_anon_vma(anon_vma);
 
+<<<<<<< HEAD
 	if (rcu_locked)
 		rcu_read_unlock();
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 uncharge:
 	if (!charge)
 		mem_cgroup_end_migration(mem, page, newpage);

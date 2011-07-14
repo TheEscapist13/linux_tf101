@@ -7,8 +7,11 @@
  *  Copyright (C) 2009 Palm
  *  All Rights Reserved
  *
+<<<<<<< HEAD
  *  Copyright (C) 2010 NVIDIA Corporation
  *
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
@@ -20,15 +23,19 @@
 #include <linux/jiffies.h>
 #include <linux/smp.h>
 #include <linux/io.h>
+<<<<<<< HEAD
 #include <linux/completion.h>
 #include <linux/sched.h>
 #include <linux/cpu.h>
 #include <linux/slab.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm/cacheflush.h>
 #include <mach/hardware.h>
 #include <asm/mach-types.h>
 #include <asm/localtimer.h>
+<<<<<<< HEAD
 #include <asm/tlbflush.h>
 #include <asm/smp_scu.h>
 #include <asm/cpu.h>
@@ -38,11 +45,18 @@
 
 #include "power.h"
 
+=======
+#include <asm/smp_scu.h>
+
+#include <mach/iomap.h>
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 extern void tegra_secondary_startup(void);
 
 static DEFINE_SPINLOCK(boot_lock);
 static void __iomem *scu_base = IO_ADDRESS(TEGRA_ARM_PERIF_BASE);
 
+<<<<<<< HEAD
 #ifdef CONFIG_HOTPLUG_CPU
 static DEFINE_PER_CPU(struct completion, cpu_killed);
 extern void tegra_hotplug_startup(void);
@@ -52,23 +66,40 @@ static DECLARE_BITMAP(cpu_init_bits, CONFIG_NR_CPUS) __read_mostly;
 const struct cpumask *const cpu_init_mask = to_cpumask(cpu_init_bits);
 #define cpu_init_map (*(cpumask_t *)cpu_init_mask)
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define EVP_CPU_RESET_VECTOR \
 	(IO_ADDRESS(TEGRA_EXCEPTION_VECTORS_BASE) + 0x100)
 #define CLK_RST_CONTROLLER_CLK_CPU_CMPLX \
 	(IO_ADDRESS(TEGRA_CLK_RESET_BASE) + 0x4c)
+<<<<<<< HEAD
 #define CLK_RST_CONTROLLER_RST_CPU_CMPLX_SET \
 	(IO_ADDRESS(TEGRA_CLK_RESET_BASE) + 0x340)
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define CLK_RST_CONTROLLER_RST_CPU_CMPLX_CLR \
 	(IO_ADDRESS(TEGRA_CLK_RESET_BASE) + 0x344)
 
 void __cpuinit platform_secondary_init(unsigned int cpu)
 {
 	trace_hardirqs_off();
+<<<<<<< HEAD
 	gic_cpu_init(0, IO_ADDRESS(TEGRA_ARM_PERIF_BASE) + 0x100);
+=======
+
+	/*
+	 * if any interrupts are already enabled for the primary
+	 * core (e.g. timer irq), then they will not have been enabled
+	 * for us: do so
+	 */
+	gic_cpu_init(0, IO_ADDRESS(TEGRA_ARM_PERIF_BASE) + 0x100);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * Synchronise with the boot thread.
 	 */
 	spin_lock(&boot_lock);
+<<<<<<< HEAD
 #ifdef CONFIG_HOTPLUG_CPU
 	cpu_set(cpu, cpu_init_map);
 	INIT_COMPLETION(per_cpu(cpu_killed, cpu));
@@ -78,16 +109,24 @@ void __cpuinit platform_secondary_init(unsigned int cpu)
 #ifdef CONFIG_TRUSTED_FOUNDATIONS
 void callGenericSMC(u32 param0, u32 param1, u32 param2);
 #endif
+=======
+	spin_unlock(&boot_lock);
+}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 int __cpuinit boot_secondary(unsigned int cpu, struct task_struct *idle)
 {
 	unsigned long old_boot_vector;
 	unsigned long boot_vector;
 	unsigned long timeout;
+<<<<<<< HEAD
 #ifndef CONFIG_TRUSTED_FOUNDATIONS
 	u32 reg;
    static void __iomem *vector_base = (IO_ADDRESS(TEGRA_EXCEPTION_VECTORS_BASE) + 0x100);
 #endif
+=======
+	u32 reg;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/*
 	 * set synchronisation state between this boot processor
@@ -95,6 +134,7 @@ int __cpuinit boot_secondary(unsigned int cpu, struct task_struct *idle)
 	 */
 	spin_lock(&boot_lock);
 
+<<<<<<< HEAD
 	/* set the reset vector to point to the secondary_startup routine */
 #ifdef CONFIG_HOTPLUG_CPU
 	if (cpumask_test_cpu(cpu, cpu_init_mask))
@@ -124,13 +164,42 @@ int __cpuinit boot_secondary(unsigned int cpu, struct task_struct *idle)
 	timeout = jiffies + HZ;
 	while (time_before(jiffies, timeout)) {
 		if (readl(vector_base) != boot_vector)
+=======
+
+	/* set the reset vector to point to the secondary_startup routine */
+
+	boot_vector = virt_to_phys(tegra_secondary_startup);
+	old_boot_vector = readl(EVP_CPU_RESET_VECTOR);
+	writel(boot_vector, EVP_CPU_RESET_VECTOR);
+
+	/* enable cpu clock on cpu1 */
+	reg = readl(CLK_RST_CONTROLLER_CLK_CPU_CMPLX);
+	writel(reg & ~(1<<9), CLK_RST_CONTROLLER_CLK_CPU_CMPLX);
+
+	reg = (1<<13) | (1<<9) | (1<<5) | (1<<1);
+	writel(reg, CLK_RST_CONTROLLER_RST_CPU_CMPLX_CLR);
+
+	smp_wmb();
+	flush_cache_all();
+
+	/* unhalt the cpu */
+	writel(0, IO_ADDRESS(TEGRA_FLOW_CTRL_BASE) + 0x14);
+
+	timeout = jiffies + (1 * HZ);
+	while (time_before(jiffies, timeout)) {
+		if (readl(EVP_CPU_RESET_VECTOR) != boot_vector)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			break;
 		udelay(10);
 	}
 
 	/* put the old boot vector back */
+<<<<<<< HEAD
 	writel(old_boot_vector, vector_base);
 #endif
+=======
+	writel(old_boot_vector, EVP_CPU_RESET_VECTOR);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/*
 	 * now the secondary core is starting up let it run its
@@ -174,12 +243,15 @@ void __init smp_prepare_cpus(unsigned int max_cpus)
 	for (i = 0; i < max_cpus; i++)
 		set_cpu_present(i, true);
 
+<<<<<<< HEAD
 #ifdef CONFIG_HOTPLUG_CPU
 	for_each_present_cpu(i) {
 		init_completion(&per_cpu(cpu_killed, i));
 	}
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * Initialise the SCU if there are more than one CPU and let
 	 * them know where to start. Note that, on modern versions of
@@ -192,6 +264,7 @@ void __init smp_prepare_cpus(unsigned int max_cpus)
 		scu_enable(scu_base);
 	}
 }
+<<<<<<< HEAD
 
 #ifdef CONFIG_HOTPLUG_CPU
 
@@ -260,3 +333,5 @@ int platform_cpu_disable(unsigned int cpu)
 	return cpu == 0 ? -EPERM : 0;
 }
 #endif
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

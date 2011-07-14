@@ -17,7 +17,10 @@
 #include <asm/smp_plat.h>
 #include <asm/system.h>
 #include <asm/tlbflush.h>
+<<<<<<< HEAD
 #include <asm/smp_plat.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include "mm.h"
 
@@ -94,10 +97,18 @@ void flush_cache_page(struct vm_area_struct *vma, unsigned long user_addr, unsig
 #define flush_pfn_alias(pfn,vaddr)	do { } while (0)
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SMP
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static void flush_ptrace_access_other(void *args)
 {
 	__flush_icache_all();
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static
 void flush_ptrace_access(struct vm_area_struct *vma, struct page *page,
@@ -121,9 +132,17 @@ void flush_ptrace_access(struct vm_area_struct *vma, struct page *page,
 	if (vma->vm_flags & VM_EXEC) {
 		unsigned long addr = (unsigned long)kaddr;
 		__cpuc_coherent_kern_range(addr, addr + len);
+<<<<<<< HEAD
 		if (cache_ops_need_broadcast())
 			smp_call_function(flush_ptrace_access_other,
 					  NULL, 1);
+=======
+#ifdef CONFIG_SMP
+		if (cache_ops_need_broadcast())
+			smp_call_function(flush_ptrace_access_other,
+					  NULL, 1);
+#endif
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 }
 
@@ -212,6 +231,7 @@ static void __flush_dcache_aliases(struct address_space *mapping, struct page *p
 	flush_dcache_mmap_unlock(mapping);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_SMP
 void __sync_icache_dcache(pte_t pteval)
 {
@@ -227,6 +247,8 @@ void __sync_icache_dcache(pte_t pteval)
 }
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * Ensure cache coherency between kernel mapping and userspace mapping
  * of this page.
@@ -258,16 +280,28 @@ void flush_dcache_page(struct page *page)
 
 	mapping = page_mapping(page);
 
+<<<<<<< HEAD
 	if (!cache_ops_need_broadcast() &&
 	    mapping && !mapping_mapped(mapping))
 		clear_bit(PG_dcache_clean, &page->flags);
 	else {
+=======
+#ifndef CONFIG_SMP
+	if (!PageHighMem(page) && mapping && !mapping_mapped(mapping))
+		set_bit(PG_dcache_dirty, &page->flags);
+	else
+#endif
+	{
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		__flush_dcache_page(mapping, page);
 		if (mapping && cache_is_vivt())
 			__flush_dcache_aliases(mapping, page);
 		else if (mapping)
 			__flush_icache_all();
+<<<<<<< HEAD
 		set_bit(PG_dcache_clean, &page->flags);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 }
 EXPORT_SYMBOL(flush_dcache_page);

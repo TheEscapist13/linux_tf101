@@ -184,9 +184,12 @@
 struct otg_transceiver *otg_ulpi_create(struct otg_io_access_ops *ops,
 					unsigned int flags);
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ULPI_VIEWPORT
 /* access ops for controllers with a viewport register */
 extern struct otg_io_access_ops ulpi_viewport_access_ops;
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif /* __LINUX_USB_ULPI_H */

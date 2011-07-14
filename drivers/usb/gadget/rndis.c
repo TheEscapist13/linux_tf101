@@ -159,6 +159,7 @@ static const u32 oid_supported_list [] =
 #endif	/* RNDIS_PM */
 };
 
+<<<<<<< HEAD
 /* HACK: copied from net/core/dev.c to replace dev_get_stats since
  * dev_get_stats cannot be called from atomic context */
 static void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
@@ -178,6 +179,8 @@ static void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
 		dst[i] = src[i];
 #endif
 }
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* NDIS Functions */
 static int
@@ -191,7 +194,11 @@ gen_ndis_query_resp (int configNr, u32 OID, u8 *buf, unsigned buf_len,
 	rndis_query_cmplt_type	*resp;
 	struct net_device	*net;
 	struct rtnl_link_stats64 temp;
+<<<<<<< HEAD
 	struct rtnl_link_stats64 *stats = &temp;
+=======
+	const struct rtnl_link_stats64 *stats;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (!r) return -ENOMEM;
 	resp = (rndis_query_cmplt_type *) r->buf;
@@ -214,7 +221,11 @@ gen_ndis_query_resp (int configNr, u32 OID, u8 *buf, unsigned buf_len,
 	resp->InformationBufferOffset = cpu_to_le32 (16);
 
 	net = rndis_per_dev_params[configNr].dev;
+<<<<<<< HEAD
 	netdev_stats_to_stats64(stats, &net->stats);
+=======
+	stats = dev_get_stats(net, &temp);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	switch (OID) {
 

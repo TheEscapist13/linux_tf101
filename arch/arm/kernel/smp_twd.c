@@ -17,7 +17,10 @@
 #include <linux/clockchips.h>
 #include <linux/irq.h>
 #include <linux/io.h>
+<<<<<<< HEAD
 #include <linux/cpufreq.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm/smp_twd.h>
 #include <asm/hardware/gic.h>
@@ -26,29 +29,48 @@
 void __iomem *twd_base;
 
 static unsigned long twd_timer_rate;
+<<<<<<< HEAD
 static unsigned long twd_periphclk_prescaler;
 static unsigned long twd_cpu_rate;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static void twd_set_mode(enum clock_event_mode mode,
 			struct clock_event_device *clk)
 {
+<<<<<<< HEAD
 	unsigned long ctrl = __raw_readl(twd_base + TWD_TIMER_CONTROL);
 	ctrl &= TWD_TIMER_CONTROL_PRESCALE_MASK;
+=======
+	unsigned long ctrl;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	switch (mode) {
 	case CLOCK_EVT_MODE_PERIODIC:
 		/* timer load already set up */
+<<<<<<< HEAD
 		ctrl |= TWD_TIMER_CONTROL_ENABLE | TWD_TIMER_CONTROL_IT_ENABLE
+=======
+		ctrl = TWD_TIMER_CONTROL_ENABLE | TWD_TIMER_CONTROL_IT_ENABLE
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			| TWD_TIMER_CONTROL_PERIODIC;
 		break;
 	case CLOCK_EVT_MODE_ONESHOT:
 		/* period set, and timer enabled in 'next_event' hook */
+<<<<<<< HEAD
 		ctrl |= TWD_TIMER_CONTROL_IT_ENABLE | TWD_TIMER_CONTROL_ONESHOT;
+=======
+		ctrl = TWD_TIMER_CONTROL_IT_ENABLE | TWD_TIMER_CONTROL_ONESHOT;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		break;
 	case CLOCK_EVT_MODE_UNUSED:
 	case CLOCK_EVT_MODE_SHUTDOWN:
 	default:
+<<<<<<< HEAD
 		break;
+=======
+		ctrl = 0;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	__raw_writel(ctrl, twd_base + TWD_TIMER_CONTROL);
@@ -83,6 +105,7 @@ int twd_timer_ack(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 /*
  * Recalculate the twd prescaler value when the cpu frequency changes. To
  * prevent early timer interrupts, must be called before changing the cpu
@@ -140,6 +163,9 @@ core_initcall(twd_cpufreq_init);
 
 static void __cpuinit twd_calibrate_rate(unsigned long target_rate,
 	unsigned int periphclk_prescaler)
+=======
+static void __cpuinit twd_calibrate_rate(void)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	unsigned long load, count;
 	u64 waitjiffies;
@@ -173,6 +199,7 @@ static void __cpuinit twd_calibrate_rate(unsigned long target_rate,
 
 		twd_timer_rate = (0xFFFFFFFFU - count) * (HZ / 5);
 
+<<<<<<< HEAD
 		/*
 		 * If a target rate has been requested, adjust the TWD prescaler
 		 * to get the closest lower frequency.
@@ -195,6 +222,10 @@ static void __cpuinit twd_calibrate_rate(unsigned long target_rate,
 			BUG_ON(target_rate != twd_timer_rate);
 			twd_update_prescaler(NULL);
 		}
+=======
+		printk("%lu.%02luMHz.\n", twd_timer_rate / 1000000,
+			(twd_timer_rate / 100000) % 100);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	load = twd_timer_rate / HZ;
@@ -205,12 +236,20 @@ static void __cpuinit twd_calibrate_rate(unsigned long target_rate,
 /*
  * Setup the local clock events for a CPU.
  */
+<<<<<<< HEAD
 static void __cpuinit __twd_timer_setup(struct clock_event_device *clk,
 	unsigned long target_rate, unsigned int periphclk_prescaler)
 {
 	unsigned long flags;
 
 	twd_calibrate_rate(target_rate, periphclk_prescaler);
+=======
+void __cpuinit twd_timer_setup(struct clock_event_device *clk)
+{
+	unsigned long flags;
+
+	twd_calibrate_rate();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	clk->name = "local_timer";
 	clk->features = CLOCK_EVT_FEAT_PERIODIC | CLOCK_EVT_FEAT_ONESHOT |
@@ -232,6 +271,7 @@ static void __cpuinit __twd_timer_setup(struct clock_event_device *clk,
 	clockevents_register_device(clk);
 }
 
+<<<<<<< HEAD
 void __cpuinit twd_timer_setup_scalable(struct clock_event_device *clk,
 	unsigned long target_rate, unsigned int periphclk_prescaler)
 {
@@ -243,6 +283,8 @@ void __cpuinit twd_timer_setup(struct clock_event_device *clk)
 	__twd_timer_setup(clk, 0, 0);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #ifdef CONFIG_HOTPLUG_CPU
 /*
  * take a local timer down

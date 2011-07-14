@@ -21,7 +21,10 @@
 
 #include <asm/atomic.h>
 
+<<<<<<< HEAD
 extern int suspend_enter_flag;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * Structure to determine completion condition and record errors.  May
  * be shared by works on different cpus.
@@ -66,6 +69,10 @@ static void cpu_stop_queue_work(struct cpu_stopper *stopper,
 				struct cpu_stop_work *work)
 {
 	unsigned long flags;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	spin_lock_irqsave(&stopper->lock, flags);
 
 	if (stopper->enabled) {
@@ -76,6 +83,7 @@ static void cpu_stop_queue_work(struct cpu_stopper *stopper,
 
 	spin_unlock_irqrestore(&stopper->lock, flags);
 }
+<<<<<<< HEAD
 static void lock_stopper(struct cpu_stopper *stopper,struct cpu_stop_work *work)
 {
 	spin_lock_irq(&stopper->lock);
@@ -110,6 +118,9 @@ static int suspend_process_queue_cpu_stop_work(struct cpu_stopper *stopper,
 
 	return ret;
 }
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /**
  * stop_one_cpu - stop a cpu
  * @cpu: cpu to stop
@@ -168,6 +179,7 @@ void stop_one_cpu_nowait(unsigned int cpu, cpu_stop_fn_t fn, void *arg,
 /* static data for stop_cpus */
 static DEFINE_MUTEX(stop_cpus_mutex);
 static DEFINE_PER_CPU(struct cpu_stop_work, stop_cpus_work);
+<<<<<<< HEAD
 #define MAXIMAL_CPU_ID   (8)
 volatile unsigned int cpux_wake_up[MAXIMAL_CPU_ID]={0};
 volatile unsigned int cpux_wake_up_fail[MAXIMAL_CPU_ID]={0};
@@ -195,13 +207,21 @@ static void stop_cpu_timeout(unsigned long data)
 	}
 	printk(KERN_EMERG "**** stop_cpu_timeout-\n");
 }
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int __stop_cpus(const struct cpumask *cpumask, cpu_stop_fn_t fn, void *arg)
 {
 	struct cpu_stop_work *work;
 	struct cpu_stop_done done;
+<<<<<<< HEAD
 	unsigned int cpu,i;
        int ret=0;
 	struct timer_list timer;
+=======
+	unsigned int cpu;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* initialize works and done */
 	for_each_cpu(cpu, cpumask) {
 		work = &per_cpu(stop_cpus_work, cpu);
@@ -217,6 +237,7 @@ int __stop_cpus(const struct cpumask *cpumask, cpu_stop_fn_t fn, void *arg)
 	 * to enter @fn which can lead to deadlock.
 	 */
 	preempt_disable();
+<<<<<<< HEAD
 	if(suspend_enter_flag){
               init_timer_on_stack(&timer);
 	       timer.expires = jiffies + STOP_CPU_TIMEOUT;
@@ -259,6 +280,14 @@ int __stop_cpus(const struct cpumask *cpumask, cpu_stop_fn_t fn, void *arg)
 		destroy_timer_on_stack(&timer);
 		printk("__stop_cpus: smp=%u done.executed=%u done.ret =%u-\n",smp_processor_id(),done.executed , done.ret );
 	}
+=======
+	for_each_cpu(cpu, cpumask)
+		cpu_stop_queue_work(&per_cpu(cpu_stopper, cpu),
+				    &per_cpu(stop_cpus_work, cpu));
+	preempt_enable();
+
+	wait_for_completion(&done.completion);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return done.executed ? done.ret : -ENOENT;
 }
 
@@ -322,6 +351,10 @@ int stop_cpus(const struct cpumask *cpumask, cpu_stop_fn_t fn, void *arg)
 int try_stop_cpus(const struct cpumask *cpumask, cpu_stop_fn_t fn, void *arg)
 {
 	int ret;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* static works are used, process one request at a time */
 	if (!mutex_trylock(&stop_cpus_mutex))
 		return -EAGAIN;
@@ -335,6 +368,10 @@ static int cpu_stopper_thread(void *data)
 	struct cpu_stopper *stopper = data;
 	struct cpu_stop_work *work;
 	int ret;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 repeat:
 	set_current_state(TASK_INTERRUPTIBLE);	/* mb paired w/ kthread_stop */
 
@@ -359,6 +396,10 @@ repeat:
 		char ksym_buf[KSYM_NAME_LEN];
 
 		__set_current_state(TASK_RUNNING);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		/* cpu stop callbacks are not allowed to sleep */
 		preempt_disable();
 
@@ -377,7 +418,10 @@ repeat:
 	} else
 		schedule();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	goto repeat;
 }
 
@@ -389,6 +433,10 @@ static int __cpuinit cpu_stop_cpu_callback(struct notifier_block *nfb,
 	unsigned int cpu = (unsigned long)hcpu;
 	struct cpu_stopper *stopper = &per_cpu(cpu_stopper, cpu);
 	struct task_struct *p;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	switch (action & ~CPU_TASKS_FROZEN) {
 	case CPU_UP_PREPARE:
 		BUG_ON(stopper->thread || stopper->enabled ||
@@ -417,6 +465,10 @@ static int __cpuinit cpu_stop_cpu_callback(struct notifier_block *nfb,
 	case CPU_POST_DEAD:
 	{
 		struct cpu_stop_work *work;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		/* kill the stopper */
 		kthread_stop(stopper->thread);
 		/* drain remaining works */
@@ -451,6 +503,10 @@ static int __init cpu_stop_init(void)
 	void *bcpu = (void *)(long)smp_processor_id();
 	unsigned int cpu;
 	int err;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	for_each_possible_cpu(cpu) {
 		struct cpu_stopper *stopper = &per_cpu(cpu_stopper, cpu);
 
@@ -511,6 +567,7 @@ static void ack_state(struct stop_machine_data *smdata)
 	if (atomic_dec_and_test(&smdata->thread_ack))
 		set_state(smdata, smdata->state + 1);
 }
+<<<<<<< HEAD
 int check_cpu_wake(void )
 {
 	int i=0;
@@ -522,6 +579,9 @@ int check_cpu_wake(void )
 
   	return 0;
 }
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* This is the cpu_stop function which stops the CPU. */
 static int stop_machine_cpu_stop(void *data)
 {
@@ -529,10 +589,13 @@ static int stop_machine_cpu_stop(void *data)
 	enum stopmachine_state curstate = STOPMACHINE_NONE;
 	int cpu = smp_processor_id(), err = 0;
 	bool is_active;
+<<<<<<< HEAD
 	unsigned long end_time;
 
 	if ( suspend_enter_flag)
 		end_time=jiffies+2*STOP_CPU_TIMEOUT ;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (!smdata->active_cpus)
 		is_active = cpu == cpumask_first(cpu_online_mask);
@@ -540,7 +603,10 @@ static int stop_machine_cpu_stop(void *data)
 		is_active = cpumask_test_cpu(cpu, smdata->active_cpus);
 
 	/* Simple state machine */
+<<<<<<< HEAD
 	cpux_wake_up[cpu]=1;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	do {
 		/* Chill out and ensure we re-read stopmachine_state. */
 		cpu_relax();
@@ -560,6 +626,7 @@ static int stop_machine_cpu_stop(void *data)
 			}
 			ack_state(smdata);
 		}
+<<<<<<< HEAD
 
 		if ( suspend_enter_flag && time_after(jiffies,end_time )) {
 		       printk("Warning:stop_machine_cpu_stop cpu=%u curstate=%u: Stop cpu timeout, but timer not active!\n",cpu,(unsigned int)curstate);
@@ -570,6 +637,9 @@ static int stop_machine_cpu_stop(void *data)
 
 	if(curstate < STOPMACHINE_EXIT)
 		err=1;
+=======
+	} while (curstate != STOPMACHINE_EXIT);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	local_irq_enable();
 	return err;

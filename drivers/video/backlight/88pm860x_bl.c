@@ -21,7 +21,11 @@
 #define MAX_BRIGHTNESS		(0xFF)
 #define MIN_BRIGHTNESS		(0)
 
+<<<<<<< HEAD
 #define CURRENT_MASK		(0x1F << 1)
+=======
+#define CURRENT_BITMASK		(0x1F << 1)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 struct pm860x_backlight_data {
 	struct pm860x_chip *chip;
@@ -85,7 +89,11 @@ static int pm860x_backlight_set(struct backlight_device *bl, int brightness)
 	if ((data->current_brightness == 0) && brightness) {
 		if (data->iset) {
 			ret = pm860x_set_bits(data->i2c, wled_idc(data->port),
+<<<<<<< HEAD
 					      CURRENT_MASK, data->iset);
+=======
+					      CURRENT_BITMASK, data->iset);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			if (ret < 0)
 				goto out;
 		}

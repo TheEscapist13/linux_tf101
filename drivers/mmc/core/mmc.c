@@ -253,6 +253,7 @@ static int mmc_read_ext_csd(struct mmc_card *card)
 			ext_csd[EXT_CSD_SEC_CNT + 3] << 24;
 
 		/* Cards with density > 2GiB are sector addressed */
+<<<<<<< HEAD
 		if (card->ext_csd.sectors > (2u * 1024 * 1024 * 1024) / 512) {
 			unsigned boot_sectors;
 			/* size is in 256K chunks, i.e. 512 sectors each */
@@ -260,6 +261,10 @@ static int mmc_read_ext_csd(struct mmc_card *card)
 			card->ext_csd.sectors -= boot_sectors;
 			mmc_card_set_blockaddr(card);
 		}
+=======
+		if (card->ext_csd.sectors > (2u * 1024 * 1024 * 1024) / 512)
+			mmc_card_set_blockaddr(card);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	switch (ext_csd[EXT_CSD_CARD_TYPE] & EXT_CSD_CARD_TYPE_MASK) {
@@ -309,7 +314,10 @@ static int mmc_read_ext_csd(struct mmc_card *card)
 
 out:
 	kfree(ext_csd);
+<<<<<<< HEAD
 	ext_csd = NULL;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return err;
 }
@@ -597,7 +605,10 @@ static void mmc_detect(struct mmc_host *host)
  */
 static int mmc_suspend(struct mmc_host *host)
 {
+<<<<<<< HEAD
        #if 0
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	BUG_ON(!host);
 	BUG_ON(!host->card);
 
@@ -606,7 +617,11 @@ static int mmc_suspend(struct mmc_host *host)
 		mmc_deselect_cards(host);
 	host->card->state &= ~MMC_STATE_HIGHSPEED;
 	mmc_release_host(host);
+<<<<<<< HEAD
        #endif
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 
@@ -618,15 +633,24 @@ static int mmc_suspend(struct mmc_host *host)
  */
 static int mmc_resume(struct mmc_host *host)
 {
+<<<<<<< HEAD
 	int err=0;
         #if 0
+=======
+	int err;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	BUG_ON(!host);
 	BUG_ON(!host->card);
 
 	mmc_claim_host(host);
 	err = mmc_init_card(host, host->ocr, host->card);
 	mmc_release_host(host);
+<<<<<<< HEAD
        #endif
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return err;
 }
 

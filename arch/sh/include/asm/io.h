@@ -322,7 +322,19 @@ __ioremap_29bit(phys_addr_t offset, unsigned long size, pgprot_t prot)
 	 * mapping must be done by the PMB or by using page tables.
 	 */
 	if (likely(PXSEG(offset) < P3SEG && PXSEG(last_addr) < P3SEG)) {
+<<<<<<< HEAD
 		if (unlikely(pgprot_val(prot) & _PAGE_CACHABLE))
+=======
+		u64 flags = pgprot_val(prot);
+
+		/*
+		 * Anything using the legacy PTEA space attributes needs
+		 * to be kicked down to page table mappings.
+		 */
+		if (unlikely(flags & _PAGE_PCC_MASK))
+			return NULL;
+		if (unlikely(flags & _PAGE_CACHABLE))
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			return (void __iomem *)P1SEGADDR(offset);
 
 		return (void __iomem *)P2SEGADDR(offset);

@@ -22,8 +22,11 @@
 #include "sdio_cis.h"
 #include "bus.h"
 
+<<<<<<< HEAD
 #include "../debug_mmc.h"
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define dev_to_mmc_card(d)	container_of(d, struct mmc_card, dev)
 #define to_mmc_driver(d)	container_of(d, struct mmc_driver, drv)
 
@@ -196,6 +199,7 @@ static void mmc_release_card(struct device *dev)
 	sdio_free_common_cis(card);
 
 	if (card->info)
+<<<<<<< HEAD
 	{       
 		kfree(card->info);
 		card->info = NULL;
@@ -203,6 +207,11 @@ static void mmc_release_card(struct device *dev)
 
 	kfree(card);
 	card = NULL;
+=======
+		kfree(card->info);
+
+	kfree(card);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 /*
@@ -273,10 +282,14 @@ int mmc_add_card(struct mmc_card *card)
 
 	ret = device_add(&card->dev);
 	if (ret)
+<<<<<<< HEAD
 	{
 		MMC_printk("%s: error %d", mmc_hostname(card->host), ret);
 		return ret;
 	}
+=======
+		return ret;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #ifdef CONFIG_DEBUG_FS
 	mmc_add_card_debugfs(card);
@@ -284,6 +297,7 @@ int mmc_add_card(struct mmc_card *card)
 
 	mmc_card_set_present(card);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_BLOCK_DEFERRED_RESUME
 	if(card->type == MMC_TYPE_SD)
 	{
@@ -292,6 +306,8 @@ int mmc_add_card(struct mmc_card *card)
 	}
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 

@@ -109,6 +109,7 @@ config RTC_INTF_DEV_UIE_EMUL
 	  clock several times per second, please enable this option
 	  only if you know that you really need it.
 
+<<<<<<< HEAD
 config RTC_INTF_ALARM
 	bool "Android alarm driver"
 	depends on RTC_CLASS
@@ -127,6 +128,8 @@ config RTC_INTF_ALARM_DEV
 	  Exports the alarm interface to user-space.
 
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config RTC_DRV_TEST
 	tristate "Test driver/device"
 	help
@@ -213,6 +216,7 @@ config RTC_DRV_MAX8925
 	  This driver can also be built as a module. If so, the module
 	  will be called rtc-max8925.
 
+<<<<<<< HEAD
 config RTC_DRV_MAX8907C
 	tristate "Maxim MAX8907C"
 	depends on MFD_MAX8907C
@@ -223,6 +227,8 @@ config RTC_DRV_MAX8907C
 	  This driver can also be built as a module. If so, the module
 	  will be called rtc-max8907c.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config RTC_DRV_RS5C372
 	tristate "Ricoh R2025S/D, RS5C372A/B, RV5C386, RV5C387A"
 	help
@@ -259,6 +265,7 @@ config RTC_DRV_X1205
 	  This driver can also be built as a module. If so, the module
 	  will be called rtc-x1205.
 
+<<<<<<< HEAD
 config RTC_DRV_TEGRA
 	tristate "NVIDIA Tegra Internal RTC driver"
 	depends on ARCH_TEGRA
@@ -269,6 +276,8 @@ config RTC_DRV_TEGRA
 	  This drive can also be built as a module. If so, the module
 	  will be called rtc-tegra.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config RTC_DRV_PCF8563
 	tristate "Philips PCF8563/Epson RTC8564"
 	help
@@ -324,12 +333,15 @@ config RTC_DRV_DM355EVM
 	help
 	  Supports the RTC firmware in the MSP430 on the DM355 EVM.
 
+<<<<<<< HEAD
 config RTC_DRV_TPS6586X
 	tristate "TI TPS6586X RTC"
 	depends on MFD_TPS6586X
 	help
 	  This driver supports TPS6586X RTC
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config RTC_DRV_TWL92330
 	boolean "TI TWL92330/Menelaus"
 	depends on MENELAUS

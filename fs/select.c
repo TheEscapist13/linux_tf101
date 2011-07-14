@@ -67,7 +67,11 @@ static long __estimate_accuracy(struct timespec *tv)
 	return slack;
 }
 
+<<<<<<< HEAD
 long select_estimate_accuracy(struct timespec *tv)
+=======
+static long estimate_accuracy(struct timespec *tv)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	unsigned long ret;
 	struct timespec now;
@@ -417,7 +421,11 @@ int do_select(int n, fd_set_bits *fds, struct timespec *end_time)
 	}
 
 	if (end_time && !timed_out)
+<<<<<<< HEAD
 		slack = select_estimate_accuracy(end_time);
+=======
+		slack = estimate_accuracy(end_time);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	retval = 0;
 	for (;;) {
@@ -769,7 +777,11 @@ static int do_poll(unsigned int nfds,  struct poll_list *list,
 	}
 
 	if (end_time && !timed_out)
+<<<<<<< HEAD
 		slack = select_estimate_accuracy(end_time);
+=======
+		slack = estimate_accuracy(end_time);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	for (;;) {
 		struct poll_list *walk;

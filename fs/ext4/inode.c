@@ -4530,6 +4530,10 @@ static void ext4_free_branches(handle_t *handle, struct inode *inode,
 					(__le32 *) bh->b_data,
 					(__le32 *) bh->b_data + addr_per_block,
 					depth);
+<<<<<<< HEAD
+=======
+			brelse(bh);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 			/*
 			 * Everything below this this pointer has been

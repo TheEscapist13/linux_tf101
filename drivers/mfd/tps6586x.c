@@ -15,8 +15,11 @@
  * published by the Free Software Foundation.
  */
 
+<<<<<<< HEAD
 #include <linux/interrupt.h>
 #include <linux/irq.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
@@ -27,6 +30,7 @@
 #include <linux/mfd/core.h>
 #include <linux/mfd/tps6586x.h>
 
+<<<<<<< HEAD
 //=================stree test=================
 #include <linux/miscdevice.h>
 #include <linux/ioctl.h>
@@ -36,10 +40,13 @@
 #define EXITSLREQ_BIT       BIT(1) /* Exit sleep mode request */
 #define SLEEP_MODE_BIT      BIT(3) /* Sleep mode */
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* GPIO control registers */
 #define TPS6586X_GPIOSET1	0x5d
 #define TPS6586X_GPIOSET2	0x5e
 
+<<<<<<< HEAD
 /* interrupt control registers */
 #define TPS6586X_INT_ACK1	0xb5
 #define TPS6586X_INT_ACK2	0xb6
@@ -96,6 +103,11 @@ static const struct tps6586x_irq_data tps6586x_irqs[] = {
 	[TPS6586X_INT_LOW_SYS]	= TPS6586X_IRQ(TPS6586X_INT_MASK5, 1 << 6),
 	[TPS6586X_INT_RTC_ALM2] = TPS6586X_IRQ(TPS6586X_INT_MASK4, 1 << 1),
 };
+=======
+/* device id */
+#define TPS6586X_VERSIONCRC	0xcd
+#define TPS658621A_VERSIONCRC	0x15
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 struct tps6586x {
 	struct mutex		lock;
@@ -103,6 +115,7 @@ struct tps6586x {
 	struct i2c_client	*client;
 
 	struct gpio_chip	gpio;
+<<<<<<< HEAD
 	struct irq_chip		irq_chip;
 	struct mutex		irq_lock;
 	int			irq_base;
@@ -112,6 +125,8 @@ struct tps6586x {
 	int			i2c_status;
 	struct delayed_work stress_test;
 	struct miscdevice tps6586x_misc;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 static inline int __tps6586x_read(struct i2c_client *client,
@@ -162,12 +177,21 @@ static inline int __tps6586x_write(struct i2c_client *client,
 static inline int __tps6586x_writes(struct i2c_client *client, int reg,
 				  int len, uint8_t *val)
 {
+<<<<<<< HEAD
 	int ret, i;
 
 	for (i = 0; i < len; i++) {
 		ret = __tps6586x_write(client, reg + i, *(val + i));
 		if (ret < 0)
 			return ret;
+=======
+	int ret;
+
+	ret = i2c_smbus_write_i2c_block_data(client, reg, len, val);
+	if (ret < 0) {
+		dev_err(&client->dev, "failed writings to 0x%02x\n", reg);
+		return ret;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	return 0;
@@ -263,6 +287,7 @@ out:
 }
 EXPORT_SYMBOL_GPL(tps6586x_update);
 
+<<<<<<< HEAD
 static struct i2c_client *tps6586x_i2c_client = NULL;
 int tps6586x_power_off(void)
 {
@@ -298,6 +323,8 @@ int tps6586x_power_off(void)
 	return 0;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int tps6586x_gpio_get(struct gpio_chip *gc, unsigned offset)
 {
 	struct tps6586x *tps6586x = container_of(gc, struct tps6586x, gpio);
@@ -321,17 +348,21 @@ static void tps6586x_gpio_set(struct gpio_chip *chip, unsigned offset,
 			 value << offset);
 }
 
+<<<<<<< HEAD
 static int tps6586x_gpio_input(struct gpio_chip *gc, unsigned offset)
 {
 	/* FIXME: add handling of GPIOs as dedicated inputs */
 	return -ENOSYS;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int tps6586x_gpio_output(struct gpio_chip *gc, unsigned offset,
 				int value)
 {
 	struct tps6586x *tps6586x = container_of(gc, struct tps6586x, gpio);
 	uint8_t val, mask;
+<<<<<<< HEAD
 	int ret;
 
 	val = value << offset;
@@ -339,6 +370,10 @@ static int tps6586x_gpio_output(struct gpio_chip *gc, unsigned offset,
 	ret = tps6586x_update(tps6586x->dev, TPS6586X_GPIOSET2, val, mask);
 	if (ret)
 		return ret;
+=======
+
+	tps6586x_gpio_set(gc, offset, value);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	val = 0x1 << (offset * 2);
 	mask = 0x3 << (offset * 2);
@@ -360,7 +395,11 @@ static void tps6586x_gpio_init(struct tps6586x *tps6586x, int gpio_base)
 	tps6586x->gpio.ngpio		= 4;
 	tps6586x->gpio.can_sleep	= 1;
 
+<<<<<<< HEAD
 	tps6586x->gpio.direction_input	= tps6586x_gpio_input;
+=======
+	/* FIXME: add handling of GPIOs as dedicated inputs */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	tps6586x->gpio.direction_output	= tps6586x_gpio_output;
 	tps6586x->gpio.set		= tps6586x_gpio_set;
 	tps6586x->gpio.get		= tps6586x_gpio_get;
@@ -381,6 +420,7 @@ static int tps6586x_remove_subdevs(struct tps6586x *tps6586x)
 	return device_for_each_child(tps6586x->dev, NULL, __remove_subdev);
 }
 
+<<<<<<< HEAD
 static void tps6586x_irq_lock(unsigned int irq)
 {
 	struct tps6586x *tps6586x = get_irq_chip_data(irq);
@@ -504,6 +544,8 @@ static int __devinit tps6586x_irq_init(struct tps6586x *tps6586x, int irq,
 	return ret;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int __devinit tps6586x_add_subdevs(struct tps6586x *tps6586x,
 					  struct tps6586x_platform_data *pdata)
 {
@@ -529,6 +571,7 @@ failed:
 	tps6586x_remove_subdevs(tps6586x);
 	return ret;
 }
+<<<<<<< HEAD
 struct tps6586x *temp_tps6586x=NULL;
 
 static ssize_t show_tps6586x_i2c_status(struct device *dev, struct device_attribute *devattr, char *buf)
@@ -611,13 +654,19 @@ struct file_operations tps6586x_fops = {
 	.open =  tps6586x_open,
 };
 //========================================
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int __devinit tps6586x_i2c_probe(struct i2c_client *client,
 					const struct i2c_device_id *id)
 {
 	struct tps6586x_platform_data *pdata = client->dev.platform_data;
 	struct tps6586x *tps6586x;
 	int ret;
+<<<<<<< HEAD
 	int rc=0;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (!pdata) {
 		dev_err(&client->dev, "tps6586x requires platform data\n");
@@ -629,10 +678,20 @@ static int __devinit tps6586x_i2c_probe(struct i2c_client *client,
 		dev_err(&client->dev, "Chip ID read failed: %d\n", ret);
 		return -EIO;
 	}
+<<<<<<< HEAD
 	dev_info(&client->dev, "VERSIONCRC is %02x\n", ret);
 
 	tps6586x = kzalloc(sizeof(struct tps6586x), GFP_KERNEL);
 	
+=======
+
+	if (ret != TPS658621A_VERSIONCRC) {
+		dev_err(&client->dev, "Unsupported chip ID: %x\n", ret);
+		return -ENODEV;
+	}
+
+	tps6586x = kzalloc(sizeof(struct tps6586x), GFP_KERNEL);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (tps6586x == NULL)
 		return -ENOMEM;
 
@@ -641,6 +700,7 @@ static int __devinit tps6586x_i2c_probe(struct i2c_client *client,
 	i2c_set_clientdata(client, tps6586x);
 
 	mutex_init(&tps6586x->lock);
+<<<<<<< HEAD
 	if (client->irq) {
 		ret = tps6586x_irq_init(tps6586x, client->irq,
 					pdata->irq_base);
@@ -649,6 +709,8 @@ static int __devinit tps6586x_i2c_probe(struct i2c_client *client,
 			goto err_irq_init;
 		}
 	}
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	ret = tps6586x_add_subdevs(tps6586x, pdata);
 	if (ret) {
@@ -657,6 +719,7 @@ static int __devinit tps6586x_i2c_probe(struct i2c_client *client,
 	}
 
 	tps6586x_gpio_init(tps6586x, pdata->gpio_base);
+<<<<<<< HEAD
        tps6586x_i2c_client = client;
 	temp_tps6586x=tps6586x;
        temp_tps6586x->i2c_status=1;
@@ -677,17 +740,26 @@ err_add_devs:
 	if (client->irq)
 		free_irq(client->irq, tps6586x);
 err_irq_init:
+=======
+
+	return 0;
+
+err_add_devs:
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	kfree(tps6586x);
 	return ret;
 }
 
 static int __devexit tps6586x_i2c_remove(struct i2c_client *client)
 {
+<<<<<<< HEAD
 	struct tps6586x *tps6586x = i2c_get_clientdata(client);
 
 	if (client->irq)
 		free_irq(client->irq, tps6586x);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 
@@ -696,6 +768,7 @@ static const struct i2c_device_id tps6586x_id_table[] = {
 	{ },
 };
 MODULE_DEVICE_TABLE(i2c, tps6586x_id_table);
+<<<<<<< HEAD
 #ifdef CONFIG_PM
 #include <mach/irqs.h>
 static int tps6586x_suspend(struct i2c_client *client, pm_message_t state)
@@ -715,6 +788,9 @@ static int tps6586x_resume(struct i2c_client *client)
 #define tps6586x_suspend NULL
 #define tps6586x_resume NULL
 #endif
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct i2c_driver tps6586x_driver = {
 	.driver	= {
 		.name	= "tps6586x",
@@ -722,8 +798,11 @@ static struct i2c_driver tps6586x_driver = {
 	},
 	.probe		= tps6586x_i2c_probe,
 	.remove		= __devexit_p(tps6586x_i2c_remove),
+<<<<<<< HEAD
 	.suspend=tps6586x_suspend,
        .resume= tps6586x_resume,
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.id_table	= tps6586x_id_table,
 };
 
@@ -742,3 +821,7 @@ module_exit(tps6586x_exit);
 MODULE_DESCRIPTION("TPS6586X core driver");
 MODULE_AUTHOR("Mike Rapoport <mike@compulab.co.il>");
 MODULE_LICENSE("GPL");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

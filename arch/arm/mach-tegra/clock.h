@@ -21,14 +21,18 @@
 #define __MACH_TEGRA_CLOCK_H
 
 #include <linux/list.h>
+<<<<<<< HEAD
 #include <linux/mutex.h>
 #include <linux/spinlock.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include <asm/clkdev.h>
 
 #define DIV_BUS			(1 << 0)
 #define DIV_U71			(1 << 1)
 #define DIV_U71_FIXED		(1 << 2)
 #define DIV_2			(1 << 3)
+<<<<<<< HEAD
 #define DIV_U16			(1 << 4)
 #define PLL_FIXED		(1 << 5)
 #define PLL_HAS_CPCON		(1 << 6)
@@ -44,6 +48,19 @@
 
 #define MAX_SAME_LIMIT_SKU_IDS	16
 
+=======
+#define PLL_FIXED		(1 << 4)
+#define PLL_HAS_CPCON		(1 << 5)
+#define MUX			(1 << 6)
+#define PLLD			(1 << 7)
+#define PERIPH_NO_RESET		(1 << 8)
+#define PERIPH_NO_ENB		(1 << 9)
+#define PERIPH_EMC_ENB		(1 << 10)
+#define PERIPH_MANUAL_RESET	(1 << 11)
+#define PLL_ALT_MISC_REG	(1 << 12)
+#define ENABLE_ON_INIT		(1 << 28)
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct clk;
 
 struct clk_mux_sel {
@@ -51,7 +68,11 @@ struct clk_mux_sel {
 	u32		value;
 };
 
+<<<<<<< HEAD
 struct clk_pll_freq_table {
+=======
+struct clk_pll_table {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	unsigned long	input_rate;
 	unsigned long	output_rate;
 	u16		n;
@@ -64,10 +85,19 @@ struct clk_ops {
 	void		(*init)(struct clk *);
 	int		(*enable)(struct clk *);
 	void		(*disable)(struct clk *);
+<<<<<<< HEAD
 	int		(*set_parent)(struct clk *, struct clk *);
 	int		(*set_rate)(struct clk *, unsigned long);
 	long		(*round_rate)(struct clk *, unsigned long);
 	void		(*reset)(struct clk *, bool);
+=======
+	void		(*recalc)(struct clk *);
+	int		(*set_parent)(struct clk *, struct clk *);
+	int		(*set_rate)(struct clk *, unsigned long);
+	unsigned long	(*get_rate)(struct clk *);
+	long		(*round_rate)(struct clk *, unsigned long);
+	unsigned long	(*recalculate_rate)(struct clk *);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 enum clk_state {
@@ -78,6 +108,7 @@ enum clk_state {
 
 struct clk {
 	/* node for master clocks list */
+<<<<<<< HEAD
 	struct list_head	node;		/* node for list of all clocks */
 	struct dvfs 		*dvfs;
 	struct clk_lookup	lookup;
@@ -149,6 +180,54 @@ struct clk {
 	spinlock_t spinlock;
 };
 
+=======
+	struct list_head		node;
+	struct list_head		children;	/* list of children */
+	struct list_head		sibling;	/* node for children */
+#ifdef CONFIG_DEBUG_FS
+	struct dentry			*dent;
+	struct dentry			*parent_dent;
+#endif
+	struct clk_ops			*ops;
+	struct clk			*parent;
+	struct clk_lookup		lookup;
+	unsigned long			rate;
+	u32				flags;
+	u32				refcnt;
+	const char			*name;
+	u32				reg;
+	u32				reg_shift;
+	unsigned int			clk_num;
+	enum clk_state			state;
+#ifdef CONFIG_DEBUG_FS
+	bool				set;
+#endif
+
+	/* PLL */
+	unsigned long			input_min;
+	unsigned long			input_max;
+	unsigned long			cf_min;
+	unsigned long			cf_max;
+	unsigned long			vco_min;
+	unsigned long			vco_max;
+	u32				m;
+	u32				n;
+	u32				p;
+	u32				cpcon;
+	const struct clk_pll_table	*pll_table;
+
+	/* DIV */
+	u32				div;
+	u32				mul;
+
+	/* MUX */
+	const struct clk_mux_sel	*inputs;
+	u32				sel;
+	u32				reg_mask;
+};
+
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct clk_duplicate {
 	const char *name;
 	struct clk_lookup lookup;
@@ -161,18 +240,22 @@ struct tegra_clk_init_table {
 	bool enabled;
 };
 
+<<<<<<< HEAD
 struct tegra_sku_rate_limit {
 	const char *clk_name;
 	unsigned long max_rate;
 	int sku_ids[MAX_SAME_LIMIT_SKU_IDS];
 };
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 void tegra2_init_clocks(void);
 void tegra2_periph_reset_deassert(struct clk *c);
 void tegra2_periph_reset_assert(struct clk *c);
 void clk_init(struct clk *clk);
 struct clk *tegra_get_clock_by_name(const char *name);
 unsigned long clk_measure_input_freq(void);
+<<<<<<< HEAD
 int clk_reparent(struct clk *c, struct clk *parent);
 void tegra_clk_init_from_table(struct tegra_clk_init_table *table);
 void clk_set_cansleep(struct clk *c);
@@ -189,5 +272,12 @@ struct tegra_cpufreq_table_data {
 };
 struct tegra_cpufreq_table_data *tegra_cpufreq_table_get(void);
 #endif
+=======
+void clk_disable_locked(struct clk *c);
+int clk_enable_locked(struct clk *c);
+int clk_set_parent_locked(struct clk *c, struct clk *parent);
+int clk_reparent(struct clk *c, struct clk *parent);
+void tegra_clk_init_from_table(struct tegra_clk_init_table *table);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #endif

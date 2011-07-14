@@ -4,8 +4,11 @@
  * Author:
  *	Colin Cross <ccross@google.com>
  *
+<<<<<<< HEAD
  * Copyright (C) 2010, NVIDIA Corporation
  *
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
  * may be copied, distributed, and modified under those terms.
@@ -18,17 +21,24 @@
  */
 
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/delay.h>
 #include <linux/debugfs.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include <linux/init.h>
 #include <linux/interrupt.h>
 #include <linux/irq.h>
 #include <linux/io.h>
+<<<<<<< HEAD
 #include <linux/seq_file.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm/hardware/gic.h>
 
 #include <mach/iomap.h>
+<<<<<<< HEAD
 #include <mach/legacy_irq.h>
 #include <mach/suspend.h>
 
@@ -328,3 +338,13 @@ static int __init tegra_irq_debug_init(void)
 
 late_initcall(tegra_irq_debug_init);
 #endif
+=======
+
+#include "board.h"
+
+void __init tegra_init_irq(void)
+{
+	gic_dist_init(0, IO_ADDRESS(TEGRA_ARM_INT_DIST_BASE), 29);
+	gic_cpu_init(0, IO_ADDRESS(TEGRA_ARM_PERIF_BASE + 0x100));
+}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

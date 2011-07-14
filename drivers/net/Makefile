@@ -162,8 +162,11 @@ obj-$(CONFIG_PPP_BSDCOMP) += bsd_comp.o
 obj-$(CONFIG_PPP_MPPE) += ppp_mppe.o
 obj-$(CONFIG_PPPOE) += pppox.o pppoe.o
 obj-$(CONFIG_PPPOL2TP) += pppox.o
+<<<<<<< HEAD
 obj-$(CONFIG_PPPOLAC) += pppox.o pppolac.o
 obj-$(CONFIG_PPPOPNS) += pppox.o pppopns.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 obj-$(CONFIG_SLIP) += slip.o
 obj-$(CONFIG_SLHC) += slhc.o

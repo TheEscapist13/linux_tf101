@@ -97,7 +97,14 @@ config DRM_I830
 config DRM_I915
 	tristate "i915 driver"
 	depends on AGP_INTEL
+<<<<<<< HEAD
 	select SHMEM
+=======
+	# we need shmfs for the swappable backing store, and in particular
+	# the shmem_readpage() which depends upon tmpfs
+	select SHMEM
+	select TMPFS
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	select DRM_KMS_HELPER
 	select FB_CFB_FILLRECT
 	select FB_CFB_COPYAREA

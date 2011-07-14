@@ -25,7 +25,10 @@ obj-$(CONFIG_RTL8192U)		+= rtl8192u/
 obj-$(CONFIG_RTL8192E)		+= rtl8192e/
 obj-$(CONFIG_SPECTRA)		+= spectra/
 obj-$(CONFIG_TRANZPORT)		+= frontier/
+<<<<<<< HEAD
 obj-$(CONFIG_ANDROID)		+= android/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 obj-$(CONFIG_DREAM)		+= dream/
 obj-$(CONFIG_POHMELFS)		+= pohmelfs/
 obj-$(CONFIG_IDE_PHISON)	+= phison/

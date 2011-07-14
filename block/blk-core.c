@@ -1612,12 +1612,20 @@ void submit_bio(int rw, struct bio *bio)
 
 		if (unlikely(block_dump)) {
 			char b[BDEVNAME_SIZE];
+<<<<<<< HEAD
 			printk(KERN_DEBUG "%s(%d): %s block %Lu on %s (%u sectors)\n",
 			current->comm, task_pid_nr(current),
 				(rw & WRITE) ? "WRITE" : "READ",
 				(unsigned long long)bio->bi_sector,
 				bdevname(bio->bi_bdev, b),
 				count);
+=======
+			printk(KERN_DEBUG "%s(%d): %s block %Lu on %s\n",
+			current->comm, task_pid_nr(current),
+				(rw & WRITE) ? "WRITE" : "READ",
+				(unsigned long long)bio->bi_sector,
+				bdevname(bio->bi_bdev, b));
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		}
 	}
 

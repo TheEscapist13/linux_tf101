@@ -273,12 +273,16 @@ static unsigned int usb_stream_hwdep_poll(struct snd_hwdep *hw,
 					  struct file *file, poll_table *wait)
 {
 	struct us122l	*us122l = hw->private_data;
+<<<<<<< HEAD
 	struct usb_stream *s = us122l->sk.s;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	unsigned	*polled;
 	unsigned int	mask;
 
 	poll_wait(file, &us122l->sk.sleep, wait);
 
+<<<<<<< HEAD
 	switch (s->state) {
 	case usb_stream_ready:
 		if (us122l->first == file)
@@ -296,6 +300,23 @@ static unsigned int usb_stream_hwdep_poll(struct snd_hwdep *hw,
 	default:
 		mask = POLLIN | POLLOUT | POLLWRNORM | POLLERR;
 		break;
+=======
+	mask = POLLIN | POLLOUT | POLLWRNORM | POLLERR;
+	if (mutex_trylock(&us122l->mutex)) {
+		struct usb_stream *s = us122l->sk.s;
+		if (s && s->state == usb_stream_ready) {
+			if (us122l->first == file)
+				polled = &s->periods_polled;
+			else
+				polled = &us122l->second_periods_polled;
+			if (*polled != s->periods_done) {
+				*polled = s->periods_done;
+				mask = POLLIN | POLLOUT | POLLWRNORM;
+			} else
+				mask = 0;
+		}
+		mutex_unlock(&us122l->mutex);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 	return mask;
 }
@@ -381,6 +402,10 @@ static int usb_stream_hwdep_ioctl(struct snd_hwdep *hw, struct file *file,
 {
 	struct usb_stream_config *cfg;
 	struct us122l *us122l = hw->private_data;
+<<<<<<< HEAD
+=======
+	struct usb_stream *s;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	unsigned min_period_frames;
 	int err = 0;
 	bool high_speed;
@@ -426,18 +451,31 @@ static int usb_stream_hwdep_ioctl(struct snd_hwdep *hw, struct file *file,
 	snd_power_wait(hw->card, SNDRV_CTL_POWER_D0);
 
 	mutex_lock(&us122l->mutex);
+<<<<<<< HEAD
 	if (!us122l->master)
 		us122l->master = file;
 	else if (us122l->master != file) {
 		if (memcmp(cfg, &us122l->sk.s->cfg, sizeof(*cfg))) {
+=======
+	s = us122l->sk.s;
+	if (!us122l->master)
+		us122l->master = file;
+	else if (us122l->master != file) {
+		if (!s || memcmp(cfg, &s->cfg, sizeof(*cfg))) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			err = -EIO;
 			goto unlock;
 		}
 		us122l->slave = file;
 	}
+<<<<<<< HEAD
 	if (!us122l->sk.s ||
 	    memcmp(cfg, &us122l->sk.s->cfg, sizeof(*cfg)) ||
 	    us122l->sk.s->state == usb_stream_xrun) {
+=======
+	if (!s || memcmp(cfg, &s->cfg, sizeof(*cfg)) ||
+	    s->state == usb_stream_xrun) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		us122l_stop(us122l);
 		if (!us122l_start(us122l, cfg->sample_rate, cfg->period_frames))
 			err = -EIO;
@@ -448,6 +486,10 @@ unlock:
 	mutex_unlock(&us122l->mutex);
 free:
 	kfree(cfg);
+<<<<<<< HEAD
+=======
+	wake_up_all(&us122l->sk.sleep);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return err;
 }
 

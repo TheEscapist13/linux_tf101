@@ -79,6 +79,7 @@ source "net/netlabel/Kconfig"
 
 endif # if INET
 
+<<<<<<< HEAD
 config ANDROID_PARANOID_NETWORK
 	bool "Only allow certain groups to create sockets"
 	default y
@@ -93,6 +94,8 @@ config NET_ACTIVITY_STATS
 	 modem activity on 2G, 3G, 4G wireless networks. Counts number of
 	 transmissions and groups them in specified time buckets.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config NETWORK_SECMARK
 	bool "Security Marking"
 	help
@@ -230,7 +233,11 @@ source "net/dcb/Kconfig"
 source "net/dns_resolver/Kconfig"
 
 config RPS
+<<<<<<< HEAD
 	boolean "RPS"
+=======
+	boolean
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	depends on SMP && SYSFS && USE_GENERIC_SMP_HELPERS
 	default y
 

@@ -369,6 +369,10 @@ static int blkvsc_probe(struct device *device)
 		blkdev->gd->first_minor = 0;
 	blkdev->gd->fops = &block_ops;
 	blkdev->gd->private_data = blkdev;
+<<<<<<< HEAD
+=======
+	blkdev->gd->driverfs_dev = &(blkdev->device_ctx->device);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	sprintf(blkdev->gd->disk_name, "hd%c", 'a' + devnum);
 
 	blkvsc_do_inquiry(blkdev);

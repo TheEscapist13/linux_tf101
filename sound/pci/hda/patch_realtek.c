@@ -18959,6 +18959,10 @@ static const struct alc_fixup alc662_fixups[] = {
 };
 
 static struct snd_pci_quirk alc662_fixup_tbl[] = {
+<<<<<<< HEAD
+=======
+	SND_PCI_QUIRK(0x1025, 0x0308, "Acer Aspire 8942G", ALC662_FIXUP_ASPIRE),
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	SND_PCI_QUIRK(0x1025, 0x038b, "Acer Aspire 8943G", ALC662_FIXUP_ASPIRE),
 	SND_PCI_QUIRK(0x144d, 0xc051, "Samsung R720", ALC662_FIXUP_IDEAPAD),
 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),

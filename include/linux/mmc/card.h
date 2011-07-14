@@ -11,7 +11,10 @@
 #define LINUX_MMC_CARD_H
 
 #include <linux/mmc/core.h>
+<<<<<<< HEAD
 #include <linux/mod_devicetable.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 struct mmc_cid {
 	unsigned int		manfid;
@@ -120,7 +123,10 @@ struct mmc_card {
 						/* for byte mode */
 #define MMC_QUIRK_NONSTD_SDIO	(1<<2)		/* non-standard SDIO card attached */
 						/* (missing CIA registers) */
+<<<<<<< HEAD
 #define MMC_QUIRK_INAND_CMD38	(1<<3)		/* iNAND devices have broken CMD38 */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	unsigned int		erase_size;	/* erase size in sectors */
  	unsigned int		erase_shift;	/* if erase unit is power 2 */
@@ -146,6 +152,7 @@ struct mmc_card {
 	struct sdio_func_tuple	*tuples;	/* unknown common tuples */
 
 	struct dentry		*debugfs_root;
+<<<<<<< HEAD
 
 };
 
@@ -237,6 +244,10 @@ static inline void __maybe_unused remove_quirk(struct mmc_card *card, int data)
 	card->quirks &= ~data;
 }
 
+=======
+};
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define mmc_card_mmc(c)		((c)->type == MMC_TYPE_MMC)
 #define mmc_card_sd(c)		((c)->type == MMC_TYPE_SD)
 #define mmc_card_sdio(c)	((c)->type == MMC_TYPE_SDIO)
@@ -282,7 +293,10 @@ struct mmc_driver {
 extern int mmc_register_driver(struct mmc_driver *);
 extern void mmc_unregister_driver(struct mmc_driver *);
 
+<<<<<<< HEAD
 extern void mmc_fixup_device(struct mmc_card *card,
 			     const struct mmc_fixup *table);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif

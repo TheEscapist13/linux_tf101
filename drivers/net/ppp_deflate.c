@@ -306,7 +306,11 @@ static void z_decomp_free(void *arg)
 
 	if (state) {
 		zlib_inflateEnd(&state->strm);
+<<<<<<< HEAD
 		vfree(state->strm.workspace);
+=======
+		kfree(state->strm.workspace);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		kfree(state);
 	}
 }
@@ -346,7 +350,12 @@ static void *z_decomp_alloc(unsigned char *options, int opt_len)
 
 	state->w_size         = w_size;
 	state->strm.next_out  = NULL;
+<<<<<<< HEAD
 	state->strm.workspace = vmalloc(zlib_inflate_workspacesize());
+=======
+	state->strm.workspace = kmalloc(zlib_inflate_workspacesize(),
+					GFP_KERNEL|__GFP_REPEAT);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (state->strm.workspace == NULL)
 		goto out_free;
 

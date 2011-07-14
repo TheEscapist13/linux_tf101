@@ -20,6 +20,7 @@
 #ifndef __MACH_CLK_H
 #define __MACH_CLK_H
 
+<<<<<<< HEAD
 struct dvfs;
 
 void tegra_periph_reset_deassert(struct clk *c);
@@ -29,4 +30,9 @@ int tegra_dvfs_set_rate(struct clk *c, unsigned long rate);
 unsigned long clk_get_rate_all_locked(struct clk *c);
 void tegra_sdmmc_tap_delay(struct clk *c, int delay);
 
+=======
+void tegra_periph_reset_deassert(struct clk *c);
+void tegra_periph_reset_assert(struct clk *c);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif

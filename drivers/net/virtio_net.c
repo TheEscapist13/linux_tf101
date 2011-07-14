@@ -446,6 +446,23 @@ static void skb_recv_done(struct virtqueue *rvq)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void virtnet_napi_enable(struct virtnet_info *vi)
+{
+	napi_enable(&vi->napi);
+
+	/* If all buffers were filled by other side before we napi_enabled, we
+	 * won't get another interrupt, so process any outstanding packets
+	 * now.  virtnet_poll wants re-enable the queue, so we disable here.
+	 * We synchronize against interrupts via NAPI_STATE_SCHED */
+	if (napi_schedule_prep(&vi->napi)) {
+		virtqueue_disable_cb(vi->rvq);
+		__napi_schedule(&vi->napi);
+	}
+}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static void refill_work(struct work_struct *work)
 {
 	struct virtnet_info *vi;
@@ -454,7 +471,11 @@ static void refill_work(struct work_struct *work)
 	vi = container_of(work, struct virtnet_info, refill.work);
 	napi_disable(&vi->napi);
 	still_empty = !try_fill_recv(vi, GFP_KERNEL);
+<<<<<<< HEAD
 	napi_enable(&vi->napi);
+=======
+	virtnet_napi_enable(vi);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/* In theory, this can happen: if we don't get any buffers in
 	 * we will *never* try to fill again. */
@@ -638,6 +659,7 @@ static int virtnet_open(struct net_device *dev)
 {
 	struct virtnet_info *vi = netdev_priv(dev);
 
+<<<<<<< HEAD
 	napi_enable(&vi->napi);
 
 	/* If all buffers were filled by other side before we napi_enabled, we
@@ -648,6 +670,9 @@ static int virtnet_open(struct net_device *dev)
 		virtqueue_disable_cb(vi->rvq);
 		__napi_schedule(&vi->napi);
 	}
+=======
+	virtnet_napi_enable(vi);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 

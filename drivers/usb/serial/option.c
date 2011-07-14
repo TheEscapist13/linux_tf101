@@ -28,6 +28,7 @@
   device features.
 */
 
+<<<<<<< HEAD
 /* This is removed due to the selective suspend support from HUAWEI.
 #define DRIVER_VERSION "v0.7.2"
 */
@@ -41,6 +42,11 @@
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 #define DRIVER_DESC "USB Driver for GSM modems with Selective Suspend"
 // ------- This is added due to the selective suspend support from HUAWEI. -------
+=======
+#define DRIVER_VERSION "v0.7.2"
+#define DRIVER_AUTHOR "Matthias Urlichs <smurf@smurf.noris.de>"
+#define DRIVER_DESC "USB Driver for GSM modems"
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <linux/kernel.h>
 #include <linux/jiffies.h>
@@ -52,16 +58,21 @@
 #include <linux/bitops.h>
 #include <linux/usb.h>
 #include <linux/usb/serial.h>
+<<<<<<< HEAD
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 #include <linux/version.h>
 // ------- This is added due to the selective suspend support from HUAWEI. -------
 /* This is removed out due to the selective suspend support from HUAWEI.
 #include "usb-wwan.h"
 */
+=======
+#include "usb-wwan.h"
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* Function prototypes */
 static int  option_probe(struct usb_serial *serial,
 			const struct usb_device_id *id);
+<<<<<<< HEAD
 
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 static int option_open(struct tty_struct *tty, struct usb_serial_port *port);
@@ -103,6 +114,11 @@ static int  option_resume(struct usb_serial *serial);
 #endif
 // ------- This is added due to the selective suspend support from HUAWEI. -------
 
+=======
+static int option_send_setup(struct usb_serial_port *port);
+static void option_instat_callback(struct urb *urb);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* Vendor and product IDs */
 #define OPTION_VENDOR_ID			0x0AF0
 #define OPTION_PRODUCT_COLT			0x5000
@@ -435,7 +451,20 @@ static int  option_resume(struct usb_serial *serial);
 #define HAIER_VENDOR_ID				0x201e
 #define HAIER_PRODUCT_CE100			0x2009
 
+<<<<<<< HEAD
 #define CINTERION_VENDOR_ID			0x0681
+=======
+/* Cinterion (formerly Siemens) products */
+#define SIEMENS_VENDOR_ID				0x0681
+#define CINTERION_VENDOR_ID				0x1e2d
+#define CINTERION_PRODUCT_HC25_MDM		0x0047
+#define CINTERION_PRODUCT_HC25_MDMNET	0x0040
+#define CINTERION_PRODUCT_HC28_MDM		0x004C
+#define CINTERION_PRODUCT_HC28_MDMNET	0x004A /* same for HC28J */
+#define CINTERION_PRODUCT_EU3_E			0x0051
+#define CINTERION_PRODUCT_EU3_P			0x0052
+#define CINTERION_PRODUCT_PH8			0x0053
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* Olivetti products */
 #define OLIVETTI_VENDOR_ID			0x0b3c
@@ -992,7 +1021,21 @@ static const struct usb_device_id option_ids[] = {
 	{ USB_DEVICE(PIRELLI_VENDOR_ID, PIRELLI_PRODUCT_100F) },
 	{ USB_DEVICE(PIRELLI_VENDOR_ID, PIRELLI_PRODUCT_1011)},
 	{ USB_DEVICE(PIRELLI_VENDOR_ID, PIRELLI_PRODUCT_1012)},
+<<<<<<< HEAD
 	{ USB_DEVICE(CINTERION_VENDOR_ID, 0x0047) },
+=======
+	/* Cinterion */
+	{ USB_DEVICE(CINTERION_VENDOR_ID, CINTERION_PRODUCT_EU3_E) },
+	{ USB_DEVICE(CINTERION_VENDOR_ID, CINTERION_PRODUCT_EU3_P) },
+	{ USB_DEVICE(CINTERION_VENDOR_ID, CINTERION_PRODUCT_PH8) },
+	{ USB_DEVICE(CINTERION_VENDOR_ID, CINTERION_PRODUCT_HC28_MDM) },
+	{ USB_DEVICE(CINTERION_VENDOR_ID, CINTERION_PRODUCT_HC28_MDMNET) },
+	{ USB_DEVICE(SIEMENS_VENDOR_ID, CINTERION_PRODUCT_HC25_MDM) },
+	{ USB_DEVICE(SIEMENS_VENDOR_ID, CINTERION_PRODUCT_HC25_MDMNET) },
+	{ USB_DEVICE(SIEMENS_VENDOR_ID, CINTERION_PRODUCT_HC28_MDM) }, /* HC28 enumerates with Siemens or Cinterion VID depending on FW revision */
+	{ USB_DEVICE(SIEMENS_VENDOR_ID, CINTERION_PRODUCT_HC28_MDMNET) },
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{ USB_DEVICE(OLIVETTI_VENDOR_ID, OLIVETTI_PRODUCT_OLICARD100) },
 	{ USB_DEVICE(CELOT_VENDOR_ID, CELOT_PRODUCT_CT680M) }, /* CT-650 CDMA 450 1xEVDO modem */
 	{ } /* Terminating entry */
@@ -1026,7 +1069,10 @@ static struct usb_serial_driver option_1port_device = {
 	.id_table          = option_ids,
 	.num_ports         = 1,
 	.probe             = option_probe,
+<<<<<<< HEAD
 /* This is removed out due to the selective suspend support from HUAWEI.
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.open              = usb_wwan_open,
 	.close             = usb_wwan_close,
 	.dtr_rts	   = usb_wwan_dtr_rts,
@@ -1039,6 +1085,7 @@ static struct usb_serial_driver option_1port_device = {
 	.attach            = usb_wwan_startup,
 	.disconnect        = usb_wwan_disconnect,
 	.release           = usb_wwan_release,
+<<<<<<< HEAD
 */
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 	.open              = option_open,
@@ -1069,6 +1116,12 @@ static struct usb_serial_driver option_1port_device = {
 	.suspend           = option_suspend,
 	.resume            = option_resume,
 // ------- This is added due to the selective suspend support from HUAWEI. -------
+=======
+	.read_int_callback = option_instat_callback,
+#ifdef CONFIG_PM
+	.suspend           = usb_wwan_suspend,
+	.resume            = usb_wwan_resume,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif
 };
 
@@ -1081,6 +1134,7 @@ static int debug;
 #define IN_BUFLEN 4096
 #define OUT_BUFLEN 4096
 
+<<<<<<< HEAD
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 struct option_intf_private {
 	spinlock_t susp_lock;
@@ -1089,6 +1143,8 @@ struct option_intf_private {
 };
 // ------- This is added due to the selective suspend support from HUAWEI. -------
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct option_port_private {
 	/* Input endpoints and buffer for this port */
 	struct urb *in_urbs[N_IN_URB];
@@ -1111,6 +1167,7 @@ struct option_port_private {
 	unsigned long tx_start_time[N_OUT_URB];
 };
 
+<<<<<<< HEAD
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 /*Begin: Declared the global variables for selective suspend feature by fangxiaozhi*/
 static struct delayed_work *hw_suspend_wq = NULL; 
@@ -1119,6 +1176,8 @@ static struct usb_device   *hw_udev = NULL;
 /*End: Declared the global variables for selective suspend feature by fangxiaozhi*/
 // ------- This is added due to the selective suspend support from HUAWEI. -------
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* Functions used by new usb-serial code. */
 static int __init option_init(void)
 {
@@ -1153,12 +1212,16 @@ module_exit(option_exit);
 static int option_probe(struct usb_serial *serial,
 			const struct usb_device_id *id)
 {
+<<<<<<< HEAD
 /* This is removed out due to the selective suspend support from HUAWEI.
 	struct usb_wwan_intf_private *data;
 */
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 	struct option_intf_private *data;
 // ------- This is added due to the selective suspend support from HUAWEI. -------
+=======
+	struct usb_wwan_intf_private *data;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* D-Link DWM 652 still exposes CD-Rom emulation interface in modem mode */
 	if (serial->dev->descriptor.idVendor == DLINK_VENDOR_ID &&
 		serial->dev->descriptor.idProduct == DLINK_PRODUCT_DWM_652 &&
@@ -1178,6 +1241,7 @@ static int option_probe(struct usb_serial *serial,
 		serial->interface->cur_altsetting->desc.bInterfaceNumber == 1)
 		return -ENODEV;
 
+<<<<<<< HEAD
 /* This is removed out due to the selective suspend support from HUAWEI.
 	data = serial->private = kzalloc(sizeof(struct usb_wwan_intf_private), GFP_KERNEL);
 */
@@ -1231,6 +1295,18 @@ static int option_probe(struct usb_serial *serial,
 }
 
 /* This is removed out due to the selective suspend support from HUAWEI.
+=======
+	data = serial->private = kzalloc(sizeof(struct usb_wwan_intf_private), GFP_KERNEL);
+
+	if (!data)
+		return -ENOMEM;
+	data->send_setup = option_send_setup;
+	spin_lock_init(&data->susp_lock);
+	data->private = (void *)id->driver_info;
+	return 0;
+}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static enum option_blacklist_reason is_blacklisted(const u8 ifnum,
 				const struct option_blacklist_info *blacklist)
 {
@@ -1247,6 +1323,7 @@ static enum option_blacklist_reason is_blacklisted(const u8 ifnum,
 	}
 	return OPTION_BLACKLIST_NONE;
 }
+<<<<<<< HEAD
 */
 
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
@@ -1471,6 +1548,8 @@ static void option_outdat_callback(struct urb *urb)
 	/*End: Added for selective suspend by fangxiaozhi*/
 }
 // ------- This is added due to the selective suspend support from HUAWEI. -------
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static void option_instat_callback(struct urb *urb)
 {
@@ -1487,12 +1566,16 @@ static void option_instat_callback(struct urb *urb)
 				(struct usb_ctrlrequest *)urb->transfer_buffer;
 
 		if (!req_pkt) {
+<<<<<<< HEAD
 /* This is removed out due to the selective suspend support from HUAWEI.
 			dbg("%s: NULL req_pkt", __func__);
 */
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 			dbg("%s: NULL req_pkt\n", __func__);
 // ------- This is added due to the selective suspend support from HUAWEI. -------
+=======
+			dbg("%s: NULL req_pkt", __func__);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			return;
 		}
 		if ((req_pkt->bRequestType == 0xA1) &&
@@ -1531,6 +1614,7 @@ static void option_instat_callback(struct urb *urb)
 			dbg("%s: resubmit intr urb failed. (%d)",
 				__func__, err);
 	}
+<<<<<<< HEAD
 
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 	/*Begin: Added for selective suspend by fangxiaozhi*/
@@ -1762,11 +1846,16 @@ static void option_setup_urbs(struct usb_serial *serial)
 
 // ------- This is added due to the selective suspend support from HUAWEI. -------
 
+=======
+}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /** send RTS/DTR state to the port.
  *
  * This is exactly the same as SET_CONTROL_LINE_STATE from the PSTN
  * CDC.
 */
+<<<<<<< HEAD
 /* This is removed out due to the selective suspend support from HUAWEI.
 static int option_send_setup(struct usb_serial_port *port)
 */
@@ -1783,11 +1872,19 @@ static int option_send_setup(struct usb_serial_port *port)
 	struct usb_wwan_intf_private *intfdata =
 		(struct usb_wwan_intf_private *) serial->private;
 */
+=======
+static int option_send_setup(struct usb_serial_port *port)
+{
+	struct usb_serial *serial = port->serial;
+	struct usb_wwan_intf_private *intfdata =
+		(struct usb_wwan_intf_private *) serial->private;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	struct option_port_private *portdata;
 	int ifNum = serial->interface->cur_altsetting->desc.bInterfaceNumber;
 	int val = 0;
 	dbg("%s", __func__);
 
+<<<<<<< HEAD
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 	/*Begin : Added for 29kernel selective suspend by lkf*/
 	#if (LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,29))
@@ -1799,13 +1896,18 @@ static int option_send_setup(struct usb_serial_port *port)
 // ------- This is added due to the selective suspend support from HUAWEI. -------
 
 /* This is removed out due to the selective suspend support from HUAWEI.
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (is_blacklisted(ifNum,
 			   (struct option_blacklist_info *) intfdata->private)
 	    == OPTION_BLACKLIST_SENDSETUP) {
 		dbg("No send_setup on blacklisted interface #%d\n", ifNum);
 		return -EIO;
 	}
+<<<<<<< HEAD
 */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	portdata = usb_get_serial_port_data(port);
 
@@ -1819,6 +1921,7 @@ static int option_send_setup(struct usb_serial_port *port)
 		0x22, 0x21, val, ifNum, NULL, 0, USB_CTRL_SET_TIMEOUT);
 }
 
+<<<<<<< HEAD
 // +++++++ This is added due to the selective suspend support from HUAWEI. +++++++
 static int option_startup(struct usb_serial *serial)
 {
@@ -2172,6 +2275,8 @@ static void option_shutdown(struct usb_serial *serial)
 /***************************************************************************************/
 // ------- This is added due to the selective suspend support from HUAWEI. -------
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 MODULE_AUTHOR(DRIVER_AUTHOR);
 MODULE_DESCRIPTION(DRIVER_DESC);
 MODULE_VERSION(DRIVER_VERSION);

@@ -18,6 +18,7 @@
 
 #include <linux/kernel.h>
 #include <linux/clk.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 #include <linux/delay.h>
 #include <linux/init.h>
@@ -119,18 +120,39 @@ static inline void clk_lock_init(struct clk *c)
 	mutex_init(&c->mutex);
 	spin_lock_init(&c->spinlock);
 }
+=======
+#include <linux/list.h>
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/debugfs.h>
+#include <linux/slab.h>
+#include <linux/seq_file.h>
+#include <asm/clkdev.h>
+
+#include "clock.h"
+
+static LIST_HEAD(clocks);
+
+static DEFINE_SPINLOCK(clock_lock);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 struct clk *tegra_get_clock_by_name(const char *name)
 {
 	struct clk *c;
 	struct clk *ret = NULL;
+<<<<<<< HEAD
 	mutex_lock(&clock_list_lock);
+=======
+	unsigned long flags;
+	spin_lock_irqsave(&clock_lock, flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	list_for_each_entry(c, &clocks, node) {
 		if (strcmp(c->name, name) == 0) {
 			ret = c;
 			break;
 		}
 	}
+<<<<<<< HEAD
 	mutex_unlock(&clock_list_lock);
 	return ret;
 }
@@ -218,10 +240,50 @@ int clk_reparent(struct clk *c, struct clk *parent)
 void clk_init(struct clk *c)
 {
 	clk_lock_init(c);
+=======
+	spin_unlock_irqrestore(&clock_lock, flags);
+	return ret;
+}
+
+int clk_reparent(struct clk *c, struct clk *parent)
+{
+	pr_debug("%s: %s\n", __func__, c->name);
+	if (c->refcnt && c->parent)
+		clk_disable_locked(c->parent);
+	c->parent = parent;
+	if (c->refcnt && c->parent)
+		clk_enable_locked(c->parent);
+	list_del(&c->sibling);
+	list_add_tail(&c->sibling, &parent->children);
+	return 0;
+}
+
+static void propagate_rate(struct clk *c)
+{
+	struct clk *clkp;
+	pr_debug("%s: %s\n", __func__, c->name);
+	list_for_each_entry(clkp, &c->children, sibling) {
+		pr_debug("   %s\n", clkp->name);
+		if (clkp->ops->recalculate_rate)
+			clkp->ops->recalculate_rate(clkp);
+		propagate_rate(clkp);
+	}
+}
+
+void clk_init(struct clk *c)
+{
+	unsigned long flags;
+
+	spin_lock_irqsave(&clock_lock, flags);
+
+	INIT_LIST_HEAD(&c->children);
+	INIT_LIST_HEAD(&c->sibling);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (c->ops && c->ops->init)
 		c->ops->init(c);
 
+<<<<<<< HEAD
 	if (!c->ops || !c->ops->enable) {
 		c->refcnt++;
 		c->set = true;
@@ -254,12 +316,32 @@ int clk_enable(struct clk *c)
 			ret = clk_enable(c->parent);
 			if (ret)
 				goto out;
+=======
+	list_add(&c->node, &clocks);
+
+	if (c->parent)
+		list_add_tail(&c->sibling, &c->parent->children);
+
+	spin_unlock_irqrestore(&clock_lock, flags);
+}
+
+int clk_enable_locked(struct clk *c)
+{
+	int ret;
+	pr_debug("%s: %s\n", __func__, c->name);
+	if (c->refcnt == 0) {
+		if (c->parent) {
+			ret = clk_enable_locked(c->parent);
+			if (ret)
+				return ret;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		}
 
 		if (c->ops && c->ops->enable) {
 			ret = c->ops->enable(c);
 			if (ret) {
 				if (c->parent)
+<<<<<<< HEAD
 					clk_disable(c->parent);
 				goto out;
 			}
@@ -283,6 +365,38 @@ void clk_disable(struct clk *c)
 	if (c->refcnt == 0) {
 		WARN(1, "Attempting to disable clock %s with refcnt 0", c->name);
 		clk_unlock_restore(c, flags);
+=======
+					clk_disable_locked(c->parent);
+				return ret;
+			}
+			c->state = ON;
+#ifdef CONFIG_DEBUG_FS
+			c->set = 1;
+#endif
+		}
+	}
+	c->refcnt++;
+
+	return 0;
+}
+
+int clk_enable(struct clk *c)
+{
+	int ret;
+	unsigned long flags;
+	spin_lock_irqsave(&clock_lock, flags);
+	ret = clk_enable_locked(c);
+	spin_unlock_irqrestore(&clock_lock, flags);
+	return ret;
+}
+EXPORT_SYMBOL(clk_enable);
+
+void clk_disable_locked(struct clk *c)
+{
+	pr_debug("%s: %s\n", __func__, c->name);
+	if (c->refcnt == 0) {
+		WARN(1, "Attempting to disable clock %s with refcnt 0", c->name);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		return;
 	}
 	if (c->refcnt == 1) {
@@ -290,11 +404,16 @@ void clk_disable(struct clk *c)
 			c->ops->disable(c);
 
 		if (c->parent)
+<<<<<<< HEAD
 			clk_disable(c->parent);
+=======
+			clk_disable_locked(c->parent);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		c->state = OFF;
 	}
 	c->refcnt--;
+<<<<<<< HEAD
 
 	if (clk_is_auto_dvfs(c) && c->refcnt == 0)
 		tegra_dvfs_set_rate(c, 0);
@@ -337,6 +456,45 @@ int clk_set_parent(struct clk *c, struct clk *parent)
 
 out:
 	clk_unlock_restore(c, flags);
+=======
+}
+
+void clk_disable(struct clk *c)
+{
+	unsigned long flags;
+	spin_lock_irqsave(&clock_lock, flags);
+	clk_disable_locked(c);
+	spin_unlock_irqrestore(&clock_lock, flags);
+}
+EXPORT_SYMBOL(clk_disable);
+
+int clk_set_parent_locked(struct clk *c, struct clk *parent)
+{
+	int ret;
+
+	pr_debug("%s: %s\n", __func__, c->name);
+
+	if (!c->ops || !c->ops->set_parent)
+		return -ENOSYS;
+
+	ret = c->ops->set_parent(c, parent);
+
+	if (ret)
+		return ret;
+
+	propagate_rate(c);
+
+	return 0;
+}
+
+int clk_set_parent(struct clk *c, struct clk *parent)
+{
+	int ret;
+	unsigned long flags;
+	spin_lock_irqsave(&clock_lock, flags);
+	ret = clk_set_parent_locked(c, parent);
+	spin_unlock_irqrestore(&clock_lock, flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return ret;
 }
 EXPORT_SYMBOL(clk_set_parent);
@@ -346,10 +504,15 @@ struct clk *clk_get_parent(struct clk *c)
 	return c->parent;
 }
 EXPORT_SYMBOL(clk_get_parent);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int clk_set_rate(struct clk *c, unsigned long rate)
 {
 	int ret = 0;
 	unsigned long flags;
+<<<<<<< HEAD
 	unsigned long old_rate;
 	long new_rate;
 	clk_lock_save(c, flags);
@@ -391,10 +554,27 @@ int clk_set_rate(struct clk *c, unsigned long rate)
 
 out:
 	clk_unlock_restore(c, flags);
+=======
+
+	spin_lock_irqsave(&clock_lock, flags);
+
+	pr_debug("%s: %s\n", __func__, c->name);
+
+	if (c->ops && c->ops->set_rate)
+		ret = c->ops->set_rate(c, rate);
+	else
+		ret = -ENOSYS;
+
+	propagate_rate(c);
+
+	spin_unlock_irqrestore(&clock_lock, flags);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return ret;
 }
 EXPORT_SYMBOL(clk_set_rate);
 
+<<<<<<< HEAD
 /* Must be called with clocks lock and all indvidual clock locks held */
 unsigned long clk_get_rate_all_locked(struct clk *c)
 {
@@ -441,6 +621,23 @@ out:
 	return ret;
 }
 EXPORT_SYMBOL(clk_round_rate);
+=======
+unsigned long clk_get_rate(struct clk *c)
+{
+	unsigned long flags;
+	unsigned long ret;
+
+	spin_lock_irqsave(&clock_lock, flags);
+
+	pr_debug("%s: %s\n", __func__, c->name);
+
+	ret = c->rate;
+
+	spin_unlock_irqrestore(&clock_lock, flags);
+	return ret;
+}
+EXPORT_SYMBOL(clk_get_rate);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static int tegra_clk_init_one_from_table(struct tegra_clk_init_table *table)
 {
@@ -515,6 +712,7 @@ void tegra_periph_reset_assert(struct clk *c)
 }
 EXPORT_SYMBOL(tegra_periph_reset_assert);
 
+<<<<<<< HEAD
 void __init tegra_init_clock(void)
 {
 	tegra2_init_clocks();
@@ -693,12 +891,30 @@ static void dvfs_show_one(struct seq_file *s, struct dvfs *d, int level)
 			"",
 			d->cur_millivolts);
 }
+=======
+int __init tegra_init_clock(void)
+{
+	tegra2_init_clocks();
+
+	return 0;
+}
+
+#ifdef CONFIG_DEBUG_FS
+static struct dentry *clk_debugfs_root;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 static void clock_tree_show_one(struct seq_file *s, struct clk *c, int level)
 {
 	struct clk *child;
+<<<<<<< HEAD
 	const char *state = "uninit";
 	char div[8] = {0};
+=======
+	struct clk *safe;
+	const char *state = "uninit";
+	char div[5] = {0};
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (c->state == ON)
 		state = "on";
@@ -706,6 +922,7 @@ static void clock_tree_show_one(struct seq_file *s, struct clk *c, int level)
 		state = "off";
 
 	if (c->mul != 0 && c->div != 0) {
+<<<<<<< HEAD
 		if (c->mul > c->div) {
 			int mul = c->mul / c->div;
 			int mul2 = (c->mul * 10 / c->div) % 10;
@@ -736,6 +953,21 @@ static void clock_tree_show_one(struct seq_file *s, struct clk *c, int level)
 		if (child->parent != c)
 			continue;
 
+=======
+		BUG_ON(c->mul > 2);
+		if (c->mul > c->div)
+			snprintf(div, sizeof(div), "x%d", c->mul / c->div);
+		else
+			snprintf(div, sizeof(div), "%d%s", c->div / c->mul,
+				(c->div % c->mul) ? ".5" : "");
+	}
+
+	seq_printf(s, "%*s%-*s %-6s %-3d %-5s %-10lu\n",
+		level * 3 + 1, c->set ? "" : "*",
+		30 - level * 3, c->name,
+		state, c->refcnt, div, c->rate);
+	list_for_each_entry_safe(child, safe, &c->children, sibling) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		clock_tree_show_one(s, child, level + 1);
 	}
 }
@@ -743,6 +975,7 @@ static void clock_tree_show_one(struct seq_file *s, struct clk *c, int level)
 static int clock_tree_show(struct seq_file *s, void *data)
 {
 	struct clk *c;
+<<<<<<< HEAD
 	seq_printf(s, "   clock                          state  ref div      rate\n");
 	seq_printf(s, "--------------------------------------------------------------\n");
 
@@ -757,6 +990,16 @@ static int clock_tree_show(struct seq_file *s, void *data)
 	clk_unlock_all();
 
 	mutex_unlock(&clock_list_lock);
+=======
+	unsigned long flags;
+	seq_printf(s, " clock                          state  ref div   rate      \n");
+	seq_printf(s, "-----------------------------------------------------------\n");
+	spin_lock_irqsave(&clock_lock, flags);
+	list_for_each_entry(c, &clocks, node)
+		if (c->parent == NULL)
+			clock_tree_show_one(s, c, 0);
+	spin_unlock_irqrestore(&clock_lock, flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 
@@ -797,6 +1040,7 @@ static const struct file_operations possible_parents_fops = {
 	.release	= single_release,
 };
 
+<<<<<<< HEAD
 static int parent_show(struct seq_file *s, void *data)
 {
 	struct clk *c = s->private;
@@ -879,6 +1123,8 @@ static const struct file_operations parent_fops = {
 DEFINE_SIMPLE_ATTRIBUTE(rate_fops, rate_get, NULL, "%llu\n");
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int clk_debugfs_register_one(struct clk *c)
 {
 	struct dentry *d, *child, *child_tmp;
@@ -892,6 +1138,7 @@ static int clk_debugfs_register_one(struct clk *c)
 	if (!d)
 		goto err_out;
 
+<<<<<<< HEAD
 	d = debugfs_create_x32("flags", S_IRUGO, c->dent, (u32 *)&c->flags);
 	if (!d)
 		goto err_out;
@@ -907,6 +1154,13 @@ static int clk_debugfs_register_one(struct clk *c)
 
 	d = debugfs_create_file(
 		"rate", parent_rate_mode, c->dent, c, &rate_fops);
+=======
+	d = debugfs_create_u32("rate", S_IRUGO, c->dent, (u32 *)&c->rate);
+	if (!d)
+		goto err_out;
+
+	d = debugfs_create_x32("flags", S_IRUGO, c->dent, (u32 *)&c->flags);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (!d)
 		goto err_out;
 
@@ -962,9 +1216,12 @@ static int __init clk_debugfs_init(void)
 	if (!d)
 		goto err_out;
 
+<<<<<<< HEAD
 	if (dvfs_debugfs_init(clk_debugfs_root))
 		goto err_out;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	list_for_each_entry(c, &clocks, node) {
 		err = clk_debugfs_register(c);
 		if (err)

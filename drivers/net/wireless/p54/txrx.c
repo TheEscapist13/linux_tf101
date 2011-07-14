@@ -618,7 +618,11 @@ static void p54_tx_80211_header(struct p54_common *priv, struct sk_buff *skb,
 	else
 		*burst_possible = false;
 
+<<<<<<< HEAD
 	if (info->flags & IEEE80211_TX_CTL_ASSIGN_SEQ)
+=======
+	if (!(info->flags & IEEE80211_TX_CTL_ASSIGN_SEQ))
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		*flags |= P54_HDR_FLAG_DATA_OUT_SEQNR;
 
 	if (info->flags & IEEE80211_TX_CTL_PSPOLL_RESPONSE)

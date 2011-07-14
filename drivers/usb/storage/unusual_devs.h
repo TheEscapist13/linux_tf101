@@ -1043,6 +1043,18 @@ UNUSUAL_DEV(  0x084d, 0x0011, 0x0110, 0x0110,
 		US_SC_DEVICE, US_PR_DEVICE, NULL,
 		US_FL_BULK32),
 
+<<<<<<< HEAD
+=======
+/* Reported by <ttkspam@free.fr>
+ * The device reports a vendor-specific device class, requiring an
+ * explicit vendor/product match.
+ */
+UNUSUAL_DEV(  0x0851, 0x1542, 0x0002, 0x0002,
+		"MagicPixel",
+		"FW_Omega2",
+		US_SC_DEVICE, US_PR_DEVICE, NULL, 0),
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* Andrew Lunn <andrew@lunn.ch>
  * PanDigital Digital Picture Frame. Does not like ALLOW_MEDIUM_REMOVAL
  * on LUN 4.
@@ -1313,12 +1325,15 @@ UNUSUAL_DEV( 0x0dd8, 0xd202, 0x0000, 0x9999,
 		US_SC_DEVICE, US_PR_DEVICE, NULL,
 		US_FL_IGNORE_RESIDUE ),
 
+<<<<<<< HEAD
 /* add ChipsBnk devices information by yi-hsin for sda1 partition don't appear */
 UNUSUAL_DEV(  0x1e3d, 0x4082, 0x0000, 0x9999,
 		"ChipsBnk",
 		"Flash Disk",
 		US_SC_DEVICE, US_PR_DEVICE, NULL,
 		US_FL_IGNORE_RESIDUE ),
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* Patch by Stephan Walter <stephan.walter@epfl.ch>
  * I don't know why, but it works... */
@@ -1393,6 +1408,16 @@ UNUSUAL_DEV(  0x0f19, 0x0105, 0x0100, 0x0100,
 		US_SC_DEVICE, US_PR_DEVICE, NULL,
 		US_FL_IGNORE_RESIDUE ),
 
+<<<<<<< HEAD
+=======
+/* Submitted by Nick Holloway */
+UNUSUAL_DEV( 0x0f88, 0x042e, 0x0100, 0x0100,
+		"VTech",
+		"Kidizoom",
+		US_SC_DEVICE, US_PR_DEVICE, NULL,
+		US_FL_FIX_CAPACITY ),
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /* Reported by Michael Stattmann <michael@stattmann.com> */
 UNUSUAL_DEV(  0x0fce, 0xd008, 0x0000, 0x0000,
 		"Sony Ericsson",
@@ -1818,6 +1843,7 @@ UNUSUAL_DEV(  0x12d1, 0x143F, 0x0000, 0x0000,
 		"Mass Storage",
 		US_SC_DEVICE, US_PR_DEVICE, usb_stor_huawei_e220_init,
 		0),
+<<<<<<< HEAD
 UNUSUAL_DEV(  0x12d1, 0x1446, 0x0000, 0x0000,
                "HUAWEI MOBILE",
                "Mass Storage",
@@ -1829,6 +1855,8 @@ UNUSUAL_DEV(  0x12d1, 0x1446, 0x0000, 0x0000,
 		"Mass Storage",
 		US_SC_DEVICE, US_PR_DEVICE, usb_stor_huawei_e220_init,
 		0),
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* Reported by Vilius Bilinkevicius <vilisas AT xxx DOT lt) */
 UNUSUAL_DEV(  0x132b, 0x000b, 0x0001, 0x0001,
@@ -1883,6 +1911,25 @@ UNUSUAL_DEV( 0x1908, 0x1320, 0x0000, 0x0000,
 		US_SC_DEVICE, US_PR_DEVICE, NULL,
 		US_FL_BAD_SENSE ),
 
+<<<<<<< HEAD
+=======
+/* Patch by Richard Schütz <r.schtz@t-online.de>
+ * This external hard drive enclosure uses a JMicron chip which
+ * needs the US_FL_IGNORE_RESIDUE flag to work properly. */
+UNUSUAL_DEV(  0x1e68, 0x001b, 0x0000, 0x0000,
+		"TrekStor GmbH & Co. KG",
+		"DataStation maxi g.u",
+		US_SC_DEVICE, US_PR_DEVICE, NULL,
+		US_FL_IGNORE_RESIDUE | US_FL_SANE_SENSE ),
+
+/* Reported by Jasper Mackenzie <scarletpimpernal@hotmail.com> */
+UNUSUAL_DEV( 0x1e74, 0x4621, 0x0000, 0x0000,
+		"Coby Electronics",
+		"MP3 Player",
+		US_SC_DEVICE, US_PR_DEVICE, NULL,
+		US_FL_BULK_IGNORE_TAG | US_FL_MAX_SECTORS_64 ),
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 UNUSUAL_DEV( 0x2116, 0x0320, 0x0001, 0x0001,
 		"ST",
 		"2A",

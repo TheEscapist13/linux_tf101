@@ -38,7 +38,11 @@ extern void show_ipi_list(struct seq_file *p);
 /*
  * Called from assembly code, this handles an IPI.
  */
+<<<<<<< HEAD
 asmlinkage void do_IPI(int ipinr, struct pt_regs *regs);
+=======
+asmlinkage void do_IPI(struct pt_regs *regs);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /*
  * Setup the set of possible CPUs (via set_cpu_possible)
@@ -53,7 +57,11 @@ extern void smp_store_cpu_info(unsigned int cpuid);
 /*
  * Raise an IPI cross call on CPUs in callmap.
  */
+<<<<<<< HEAD
 extern void smp_cross_call(const struct cpumask *mask, int ipi);
+=======
+extern void smp_cross_call(const struct cpumask *mask);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /*
  * Boot a secondary CPU, and assign it the specified idle task.

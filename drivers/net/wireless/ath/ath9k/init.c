@@ -574,7 +574,10 @@ static int ath9k_init_softc(u16 devid, struct ath_softc *sc, u16 subsysid,
 	common->debug_mask = ath9k_debug;
 
 	spin_lock_init(&sc->wiphy_lock);
+<<<<<<< HEAD
 	spin_lock_init(&sc->sc_resetlock);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	spin_lock_init(&sc->sc_serial_rw);
 	spin_lock_init(&sc->sc_pm_lock);
 	mutex_init(&sc->mutex);

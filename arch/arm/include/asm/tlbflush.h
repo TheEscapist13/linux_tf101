@@ -560,6 +560,7 @@ extern void flush_tlb_kernel_range(unsigned long start, unsigned long end);
 #endif
 
 /*
+<<<<<<< HEAD
  * If PG_dcache_clean is not set for the page, we need to ensure that any
  * cache entries for the kernels virtual memory range are written
  * back to the page. On SMP systems, the cache coherency is handled in the
@@ -574,6 +575,14 @@ static inline void update_mmu_cache(struct vm_area_struct *vma,
 {
 }
 #endif
+=======
+ * if PG_dcache_dirty is set for the page, we need to ensure that any
+ * cache entries for the kernels virtual memory range are written
+ * back to the page.
+ */
+extern void update_mmu_cache(struct vm_area_struct *vma, unsigned long addr,
+	pte_t *ptep);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #endif
 

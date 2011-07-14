@@ -1008,6 +1008,7 @@ static void disk_release(struct device *dev)
 	free_part_stats(&disk->part0);
 	kfree(disk);
 }
+<<<<<<< HEAD
 
 static int disk_uevent(struct device *dev, struct kobj_uevent_env *env)
 {
@@ -1024,6 +1025,8 @@ static int disk_uevent(struct device *dev, struct kobj_uevent_env *env)
 	return 0;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct class block_class = {
 	.name		= "block",
 };
@@ -1042,7 +1045,10 @@ static struct device_type disk_type = {
 	.groups		= disk_attr_groups,
 	.release	= disk_release,
 	.devnode	= block_devnode,
+<<<<<<< HEAD
 	.uevent		= disk_uevent,
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 #ifdef CONFIG_PROC_FS

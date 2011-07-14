@@ -33,9 +33,18 @@
 #include <linux/dw_dmac.h>
 
 #include <mach/cpu.h>
+<<<<<<< HEAD
 #include <mach/hardware.h>
 #include <mach/gpio.h>
 
+=======
+#include <mach/gpio.h>
+
+#ifdef CONFIG_ARCH_AT91
+#include <mach/hardware.h>
+#endif
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include "ac97c.h"
 
 enum {

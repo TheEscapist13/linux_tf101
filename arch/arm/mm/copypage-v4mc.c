@@ -73,7 +73,11 @@ void v4_mc_copy_user_highpage(struct page *to, struct page *from,
 {
 	void *kto = kmap_atomic(to, KM_USER1);
 
+<<<<<<< HEAD
 	if (!test_and_set_bit(PG_dcache_clean, &from->flags))
+=======
+	if (test_and_clear_bit(PG_dcache_dirty, &from->flags))
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		__flush_dcache_page(page_mapping(from), from);
 
 	spin_lock(&minicache_lock);

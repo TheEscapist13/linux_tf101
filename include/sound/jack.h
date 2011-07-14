@@ -35,7 +35,10 @@ struct input_dev;
  * sound/core/jack.c.
  */
 enum snd_jack_types {
+<<<<<<< HEAD
 	SND_JACK_NO_TYPE_SPECIFIED = 0x0000,
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	SND_JACK_HEADPHONE	= 0x0001,
 	SND_JACK_MICROPHONE	= 0x0002,
 	SND_JACK_HEADSET	= SND_JACK_HEADPHONE | SND_JACK_MICROPHONE,

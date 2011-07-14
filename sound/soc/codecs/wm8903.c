@@ -23,7 +23,10 @@
 #include <linux/i2c.h>
 #include <linux/platform_device.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/gpio.h>
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #include <sound/core.h>
 #include <sound/jack.h>
 #include <sound/pcm.h>
@@ -33,6 +36,7 @@
 #include <sound/soc-dapm.h>
 #include <sound/initval.h>
 #include <sound/wm8903.h>
+<<<<<<< HEAD
 #include <linux/device.h>
 #include <linux/workqueue.h>
 #include <linux/cdev.h>
@@ -43,6 +47,10 @@
 
 #include "wm8903.h"
 #include "codec_param.h"
+=======
+
+#include "wm8903.h"
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* Register defaults at reset */
 static u16 wm8903_reg_defaults[] = {
@@ -221,6 +229,7 @@ static u16 wm8903_reg_defaults[] = {
 	0x0000,     /* R172 - Analogue Output Bias 0 */
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_DEBUG_FS
 
 #include <linux/debugfs.h>
@@ -362,6 +371,8 @@ static void __init wm8903_debuginit(struct snd_soc_codec* codec)
 }
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct wm8903_priv {
 	struct snd_soc_codec codec;
 	u16 reg_cache[ARRAY_SIZE(wm8903_reg_defaults)];
@@ -383,6 +394,7 @@ struct wm8903_priv {
 
 	struct snd_pcm_substream *master_substream;
 	struct snd_pcm_substream *slave_substream;
+<<<<<<< HEAD
 
 #ifdef CONFIG_GPIOLIB
 	struct gpio_chip gpio_chip;
@@ -591,6 +603,10 @@ static void wm8903_free_gpio(struct snd_soc_codec* codec)
 #endif
 
 
+=======
+};
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int wm8903_volatile_register(unsigned int reg)
 {
 	switch (reg) {
@@ -605,6 +621,7 @@ static int wm8903_volatile_register(unsigned int reg)
 	}
 }
 
+<<<<<<< HEAD
 static void DumpWM8903(struct snd_soc_codec *codec)
 {
     int i = 0;
@@ -617,6 +634,8 @@ static void DumpWM8903(struct snd_soc_codec *codec)
     }
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int wm8903_run_sequence(struct snd_soc_codec *codec, unsigned int start)
 {
 	u16 reg[5];
@@ -1313,7 +1332,10 @@ static int wm8903_set_bias_level(struct snd_soc_codec *codec,
 		reg &= ~(WM8903_VMID_RES_MASK);
 		reg |= WM8903_VMID_RES_50K;
 		snd_soc_write(codec, WM8903_VMID_CONTROL_0, reg);
+<<<<<<< HEAD
 		snd_soc_write(codec, WM8903_BIAS_CONTROL_0, 0xB);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		break;
 
 	case SND_SOC_BIAS_STANDBY:
@@ -1356,11 +1378,14 @@ static int wm8903_set_bias_level(struct snd_soc_codec *codec,
 
 	case SND_SOC_BIAS_OFF:
 		wm8903_run_sequence(codec, 32);
+<<<<<<< HEAD
 
 		snd_soc_write(codec, WM8903_VMID_CONTROL_0, 0x0);
 
 		snd_soc_write(codec, WM8903_BIAS_CONTROL_0, 0x0);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		reg = snd_soc_read(codec, WM8903_CLOCK_RATES_2);
 		reg &= ~WM8903_CLK_SYS_ENA;
 		snd_soc_write(codec, WM8903_CLOCK_RATES_2, reg);
@@ -1986,8 +2011,12 @@ static int wm8903_suspend(struct platform_device *pdev, pm_message_t state)
 	struct snd_soc_device *socdev = platform_get_drvdata(pdev);
 	struct snd_soc_codec *codec = socdev->card->codec;
 
+<<<<<<< HEAD
 	printk("wm8903_suspend+\n");
 	printk("wm8903_suspend-\n");
+=======
+	wm8903_set_bias_level(codec, SND_SOC_BIAS_OFF);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	return 0;
 }
@@ -2002,7 +2031,13 @@ static int wm8903_resume(struct platform_device *pdev)
 	u16 *tmp_cache = kmemdup(reg_cache, sizeof(wm8903_reg_defaults),
 				 GFP_KERNEL);
 
+<<<<<<< HEAD
 	printk("wm8903_resume+\n");
+=======
+	/* Bring the codec back up to standby first to minimise pop/clicks */
+	wm8903_set_bias_level(codec, SND_SOC_BIAS_STANDBY);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* Sync back everything else */
 	if (tmp_cache) {
 		for (i = 2; i < ARRAY_SIZE(wm8903_reg_defaults); i++)
@@ -2013,8 +2048,11 @@ static int wm8903_resume(struct platform_device *pdev)
 		dev_err(&i2c->dev, "Failed to allocate temporary cache\n");
 	}
 
+<<<<<<< HEAD
 	printk("wm8903_resume-\n");
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 
@@ -2034,12 +2072,16 @@ static __devinit int wm8903_i2c_probe(struct i2c_client *i2c,
 	if (wm8903 == NULL)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	audio_data = kzalloc(sizeof(struct audio_codec_data), GFP_KERNEL);
 	i2c_set_clientdata(i2c,audio_data);
 	audio_data->codec_status = 0;
 
 	codec = &wm8903->codec;
 	global_codec = codec;
+=======
+	codec = &wm8903->codec;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	mutex_init(&codec->mutex);
 	INIT_LIST_HEAD(&codec->dapm_widgets);
@@ -2072,8 +2114,12 @@ static __devinit int wm8903_i2c_probe(struct i2c_client *i2c,
 		dev_err(&i2c->dev,
 			"Device with ID register %x is not a WM8903\n", val);
 		return -ENODEV;
+<<<<<<< HEAD
 	}else
 		audio_data->codec_status = 1;
+=======
+	}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	val = snd_soc_read(codec, WM8903_REVISION_NUMBER);
 	dev_info(&i2c->dev, "WM8903 revision %d\n",
@@ -2081,6 +2127,7 @@ static __devinit int wm8903_i2c_probe(struct i2c_client *i2c,
 
 	wm8903_reset(codec);
 
+<<<<<<< HEAD
 	cdev_add(audio_codec_cdev,audio_codec_dev,1);
 
 	/* Register sysfs hooks */
@@ -2094,6 +2141,12 @@ static __devinit int wm8903_i2c_probe(struct i2c_client *i2c,
 	if (pdata) {
 		for (i = 0; i < ARRAY_SIZE(pdata->gpio_cfg); i++) {
 			if (pdata->gpio_cfg[i] == WM8903_GPIO_NO_CONFIG)
+=======
+	/* Set up GPIOs and microphone detection */
+	if (pdata) {
+		for (i = 0; i < ARRAY_SIZE(pdata->gpio_cfg); i++) {
+			if (!pdata->gpio_cfg[i])
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 				continue;
 
 			snd_soc_write(codec, WM8903_GPIO_CONTROL_1 + i,
@@ -2174,8 +2227,11 @@ static __devinit int wm8903_i2c_probe(struct i2c_client *i2c,
 	wm8903_dai.dev = &i2c->dev;
 	wm8903_codec = codec;
 
+<<<<<<< HEAD
 	wm8903_debuginit(codec);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	ret = snd_soc_register_codec(codec);
 	if (ret != 0) {
 		dev_err(&i2c->dev, "Failed to register codec: %d\n", ret);
@@ -2262,8 +2318,11 @@ static int wm8903_probe(struct platform_device *pdev)
 				ARRAY_SIZE(wm8903_snd_controls));
 	wm8903_add_widgets(socdev->card->codec);
 
+<<<<<<< HEAD
 	wm8903_init_gpio(socdev->card->codec);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return ret;
 
 err:
@@ -2282,6 +2341,7 @@ static int wm8903_remove(struct platform_device *pdev)
 	snd_soc_free_pcms(socdev);
 	snd_soc_dapm_free(socdev);
 
+<<<<<<< HEAD
 	wm8903_free_gpio(codec);
 
 	return 0;
@@ -2303,6 +2363,8 @@ static int audio_codec_stress()
 
 	schedule_delayed_work(&poll_audio_work, poll_rate);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 }
 
@@ -2314,6 +2376,7 @@ struct snd_soc_codec_device soc_codec_dev_wm8903 = {
 };
 EXPORT_SYMBOL_GPL(soc_codec_dev_wm8903);
 
+<<<<<<< HEAD
 int audio_codec_open(struct inode *inode, struct file *filp)
 {
 	return 0;
@@ -2426,6 +2489,10 @@ static int __init wm8903_modinit(void)
 		printk("WM8903: Project EP102\n");
 		PRJ_ID = EP_102;
 	}
+=======
+static int __init wm8903_modinit(void)
+{
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return i2c_add_driver(&wm8903_i2c_driver);
 }
 module_init(wm8903_modinit);
@@ -2433,9 +2500,12 @@ module_init(wm8903_modinit);
 static void __exit wm8903_exit(void)
 {
 	i2c_del_driver(&wm8903_i2c_driver);
+<<<<<<< HEAD
 	cdev_del(audio_codec_cdev);
 	unregister_chrdev_region(audio_codec_dev, 1);
 	class_destroy(audio_codec_class);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 module_exit(wm8903_exit);
 

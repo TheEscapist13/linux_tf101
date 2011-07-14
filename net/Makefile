@@ -68,4 +68,7 @@ obj-$(CONFIG_SYSCTL)		+= sysctl_net.o
 endif
 obj-$(CONFIG_WIMAX)		+= wimax/
 obj-$(CONFIG_DNS_RESOLVER)	+= dns_resolver/
+<<<<<<< HEAD
 obj-$(CONFIG_NET_ACTIVITY_STATS)		+= activity_stats.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

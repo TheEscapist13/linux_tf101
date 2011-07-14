@@ -18,28 +18,48 @@
 #include "proc-macros.S"
 
 /*
+<<<<<<< HEAD
  *	v7_op_dcache_all op
  *
  *	op=c14, Flush the whole D-cache.
  *	op=c10, Clean the whole D-cache.
+=======
+ *	v7_flush_dcache_all()
+ *
+ *	Flush the whole D-cache.
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  *
  *	Corrupted registers: r0-r7, r9-r11 (r6 only in Thumb mode)
  *
  *	- mm    - mm_struct describing address space
  */
+<<<<<<< HEAD
 .macro v7_op_dcache_all op			@ op=c10 clean, op=c14 flush
+=======
+ENTRY(v7_flush_dcache_all)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	dmb					@ ensure ordering with previous memory accesses
 	mrc	p15, 1, r0, c0, c0, 1		@ read clidr
 	ands	r3, r0, #0x7000000		@ extract loc from clidr
 	mov	r3, r3, lsr #23			@ left align loc bit field
+<<<<<<< HEAD
 	beq	1005f				@ if loc is 0, then no need to clean
 	mov	r10, #0				@ start clean at cache level 0
 1001:
+=======
+	beq	finished			@ if loc is 0, then no need to clean
+	mov	r10, #0				@ start clean at cache level 0
+loop1:
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	add	r2, r10, r10, lsr #1		@ work out 3x current cache level
 	mov	r1, r0, lsr r2			@ extract cache type bits from clidr
 	and	r1, r1, #7			@ mask of the bits for current cache only
 	cmp	r1, #2				@ see what cache we have at this level
+<<<<<<< HEAD
 	blt	1004f				@ skip if no cache, or just i-cache
+=======
+	blt	skip				@ skip if no cache, or just i-cache
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	mcr	p15, 2, r10, c0, c0, 0		@ select current cache level in cssr
 	isb					@ isb to sych the new cssr&csidr
 	mrc	p15, 1, r1, c0, c0, 0		@ read the new csidr
@@ -50,15 +70,22 @@
 	clz	r5, r4				@ find bit position of way size increment
 	ldr	r7, =0x7fff
 	ands	r7, r7, r1, lsr #13		@ extract max number of the index size
+<<<<<<< HEAD
 1002:
 	mov	r9, r4				@ create working copy of max way size
 1003:
+=======
+loop2:
+	mov	r9, r4				@ create working copy of max way size
+loop3:
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  ARM(	orr	r11, r10, r9, lsl r5	)	@ factor way and cache number into r11
  THUMB(	lsl	r6, r9, r5		)
  THUMB(	orr	r11, r10, r6		)	@ factor way and cache number into r11
  ARM(	orr	r11, r11, r7, lsl r2	)	@ factor index number into r11
  THUMB(	lsl	r6, r7, r2		)
  THUMB(	orr	r11, r11, r6		)	@ factor index number into r11
+<<<<<<< HEAD
 	mcr	p15, 0, r11, c7, \op, 2		@ op=c10/c14, clean/flush by set/way
 	subs	r9, r9, #1			@ decrement the way
 	bge	1003b
@@ -69,11 +96,24 @@
 	cmp	r3, r10
 	bgt	1001b
 1005:
+=======
+	mcr	p15, 0, r11, c7, c14, 2		@ clean & invalidate by set/way
+	subs	r9, r9, #1			@ decrement the way
+	bge	loop3
+	subs	r7, r7, #1			@ decrement the index
+	bge	loop2
+skip:
+	add	r10, r10, #2			@ increment cache number
+	cmp	r3, r10
+	bgt	loop1
+finished:
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	mov	r10, #0				@ swith back to cache level 0
 	mcr	p15, 2, r10, c0, c0, 0		@ select current cache level in cssr
 	dsb
 	isb
 	mov	pc, lr
+<<<<<<< HEAD
 .endm
 
 ENTRY(v7_flush_dcache_all)
@@ -84,6 +124,10 @@ ENTRY(v7_clean_dcache_all)
 	v7_op_dcache_all c10
 ENDPROC(v7_clean_dcache_all)
 
+=======
+ENDPROC(v7_flush_dcache_all)
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  *	v7_flush_cache_all()
  *
@@ -111,6 +155,7 @@ ENTRY(v7_flush_kern_cache_all)
 ENDPROC(v7_flush_kern_cache_all)
 
 /*
+<<<<<<< HEAD
  *       v7_clean_kern_cache_all()
  */
 ENTRY(v7_clean_kern_cache_all)
@@ -129,6 +174,8 @@ ENTRY(v7_clean_kern_cache_all)
 ENDPROC(v7_clean_kern_cache_all)
 
 /*
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  *	v7_flush_cache_all()
  *
  *	Flush all TLB entries in a particular address space

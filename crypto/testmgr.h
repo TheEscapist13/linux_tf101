@@ -2943,8 +2943,11 @@ static struct cipher_testvec cast6_dec_tv_template[] = {
 #define AES_XTS_DEC_TEST_VECTORS 4
 #define AES_CTR_ENC_TEST_VECTORS 3
 #define AES_CTR_DEC_TEST_VECTORS 3
+<<<<<<< HEAD
 #define AES_OFB_ENC_TEST_VECTORS 1
 #define AES_OFB_DEC_TEST_VECTORS 1
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define AES_CTR_3686_ENC_TEST_VECTORS 7
 #define AES_CTR_3686_DEC_TEST_VECTORS 6
 #define AES_GCM_ENC_TEST_VECTORS 9
@@ -4086,6 +4089,11 @@ static struct cipher_testvec aes_xts_dec_tv_template[] = {
 		.rlen   = 512,
 	}
 };
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct cipher_testvec aes_ctr_enc_tv_template[] = {
 	{ /* From NIST Special Publication 800-38A, Appendix F.5 */
 		.key	= "\x2b\x7e\x15\x16\x28\xae\xd2\xa6"
@@ -5467,6 +5475,7 @@ static struct cipher_testvec aes_ctr_rfc3686_dec_tv_template[] = {
 	},
 };
 
+<<<<<<< HEAD
 static struct cipher_testvec aes_ofb_enc_tv_template[] = {
 	 /* From NIST Special Publication 800-38A, Appendix F.5 */
 	{
@@ -5525,6 +5534,8 @@ static struct cipher_testvec aes_ofb_dec_tv_template[] = {
 	}
 };
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct aead_testvec aes_gcm_enc_tv_template[] = {
 	{ /* From McGrew & Viega - http://citeseer.ist.psu.edu/656989.html */
 		.key    = zeroed_string,

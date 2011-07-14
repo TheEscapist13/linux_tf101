@@ -328,6 +328,7 @@ config TOUCHSCREEN_MIGOR
 	  To compile this driver as a module, choose M here: the
 	  module will be called migor_ts.
 
+<<<<<<< HEAD
 config TOUCHSCREEN_PANJIT_I2C
 	tristate "PANJIT I2C touchscreen driver"
 	depends on I2C
@@ -347,6 +348,8 @@ config TOUCHSCREEN_SYNAPTICS_I2C_RMI
 	help
 	  This enables support for Synaptics RMI over I2C based touchscreens.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config TOUCHSCREEN_TOUCHRIGHT
 	tristate "Touchright serial touchscreen"
 	select SERIO
@@ -383,6 +386,7 @@ config TOUCHSCREEN_ATMEL_TSADCC
 	  To compile this driver as a module, choose M here: the
 	  module will be called atmel_tsadcc.
 
+<<<<<<< HEAD
 config TOUCHSCREEN_ATMEL_MT_T9
 	tristate "Atmel Touchscreen Interface"
 	depends on I2C
@@ -396,6 +400,8 @@ config TOUCHSCREEN_ATMEL_MT_T9_EP102
 	help
 	  To compile this driver as a module, choose M here: the
 	  module will be called atmel_tsadcc.
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config TOUCHSCREEN_UCB1400
 	tristate "Philips UCB1400 touchscreen"
 	depends on AC97_BUS
@@ -670,6 +676,7 @@ config TOUCHSCREEN_STMPE
 	  To compile this driver as a module, choose M here: the
 	  module will be called stmpe-ts.
 
+<<<<<<< HEAD
 config TOUCHSCREEN_CYTTSP_I2C
 	tristate "Cypress touchscreen i2c driver"
 	help
@@ -684,4 +691,6 @@ config TOUCHSCREEN_EETI_UART
 	  This is the i2c version of the driver.
 
 	  To compile this driver as a module, choose M here.
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 endif

@@ -19,6 +19,7 @@
 #include <linux/platform_device.h>
 #include <linux/serial_8250.h>
 #include <linux/clk.h>
+<<<<<<< HEAD
 #include <linux/mtd/mtd.h>
 #include <linux/mtd/partitions.h>
 #include <linux/dma-mapping.h>
@@ -28,12 +29,18 @@
 #include <linux/io.h>
 #include <linux/delay.h>
 #include <linux/platform_data/tegra_usb.h>
+=======
+#include <linux/dma-mapping.h>
+#include <linux/pda_power.h>
+#include <linux/io.h>
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm/mach-types.h>
 #include <asm/mach/arch.h>
 #include <asm/mach/time.h>
 #include <asm/setup.h>
 
+<<<<<<< HEAD
 #include <mach/audio.h>
 #include <mach/i2s.h>
 #include <mach/iomap.h>
@@ -47,6 +54,14 @@
 #include "board.h"
 #include "board-harmony.h"
 #include "devices.h"
+=======
+#include <mach/iomap.h>
+#include <mach/irqs.h>
+
+#include "board.h"
+#include "board-harmony.h"
+#include "clock.h"
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* NVidia bootloader tags */
 #define ATAG_NVIDIA		0x41000801
@@ -66,6 +81,7 @@ struct tag_tegra {
 	char bootarg[1];
 };
 
+<<<<<<< HEAD
 /* The flag is used for inidicating GPS function preemption.
  * GPS function is able to preempt UARTD interface already allocated to
  * debug console only if the flag is set to 1.
@@ -187,6 +203,15 @@ struct platform_device tegra_nand_device = {
 	},
 };
 
+=======
+static int __init parse_tag_nvidia(const struct tag *tag)
+{
+
+	return 0;
+}
+__tagtable(ATAG_NVIDIA, parse_tag_nvidia);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct plat_serial8250_port debug_uart_platform_data[] = {
 	{
 		.membase	= IO_ADDRESS(TEGRA_UARTD_BASE),
@@ -209,6 +234,7 @@ static struct platform_device debug_uart = {
 	},
 };
 
+<<<<<<< HEAD
 /* PDA power */
 static struct pda_power_pdata pda_power_pdata = {
 };
@@ -305,6 +331,10 @@ static struct platform_device *harmony_devices[] __initdata = {
 	&tegra_spi_device4,
 	&tegra_gart_device,
 	&tegra_i2s_device1,
+=======
+static struct platform_device *harmony_devices[] __initdata = {
+	&debug_uart,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 static void __init tegra_harmony_fixup(struct machine_desc *desc,
@@ -319,6 +349,7 @@ static void __init tegra_harmony_fixup(struct machine_desc *desc,
 
 static __initdata struct tegra_clk_init_table harmony_clk_init_table[] = {
 	/* name		parent		rate		enabled */
+<<<<<<< HEAD
 	{ "clk_dev1",	NULL,		26000000,	true},
 	{ "clk_m",	NULL,		12000000,	true},
 	{ "3d",		"pll_m",	266400000,	true},
@@ -418,16 +449,26 @@ static struct tegra_suspend_platform_data harmony_suspend = {
 	.suspend_mode = TEGRA_SUSPEND_LP0,
 };
 
+=======
+	{ "uartd",	"pll_p",	216000000,	true },
+	{ NULL,		NULL,		0,		0},
+};
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static void __init tegra_harmony_init(void)
 {
 	tegra_common_init();
 
+<<<<<<< HEAD
 	tegra_init_suspend(&harmony_suspend);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	tegra_clk_init_from_table(harmony_clk_init_table);
 
 	harmony_pinmux_init();
 
+<<<<<<< HEAD
 	tegra_ehci3_device.dev.platform_data = &tegra_ehci_pdata;
 
 	tegra_i2s_device1.dev.platform_data = &tegra_audio_pdata;
@@ -437,6 +478,9 @@ static void __init tegra_harmony_init(void)
 	harmony_panel_init();
 	harmony_sdhci_init();
 	harmony_i2c_init();
+=======
+	platform_add_devices(harmony_devices, ARRAY_SIZE(harmony_devices));
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 MACHINE_START(HARMONY, "harmony")

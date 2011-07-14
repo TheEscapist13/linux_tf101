@@ -233,6 +233,10 @@ static void netvsc_linkstatus_callback(struct hv_device *device_obj,
 	if (status == 1) {
 		netif_carrier_on(net);
 		netif_wake_queue(net);
+<<<<<<< HEAD
+=======
+		netif_notify_peers(net);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	} else {
 		netif_carrier_off(net);
 		netif_stop_queue(net);

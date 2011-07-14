@@ -455,7 +455,10 @@ static int digi_write_room(struct tty_struct *tty);
 static int digi_chars_in_buffer(struct tty_struct *tty);
 static int digi_open(struct tty_struct *tty, struct usb_serial_port *port);
 static void digi_close(struct usb_serial_port *port);
+<<<<<<< HEAD
 static int digi_carrier_raised(struct usb_serial_port *port);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static void digi_dtr_rts(struct usb_serial_port *port, int on);
 static int digi_startup_device(struct usb_serial *serial);
 static int digi_startup(struct usb_serial *serial);
@@ -511,7 +514,10 @@ static struct usb_serial_driver digi_acceleport_2_device = {
 	.open =				digi_open,
 	.close =			digi_close,
 	.dtr_rts =			digi_dtr_rts,
+<<<<<<< HEAD
 	.carrier_raised =		digi_carrier_raised,
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.write =			digi_write,
 	.write_room =			digi_write_room,
 	.write_bulk_callback = 		digi_write_bulk_callback,
@@ -1339,6 +1345,7 @@ static void digi_dtr_rts(struct usb_serial_port *port, int on)
 	digi_set_modem_signals(port, on * (TIOCM_DTR|TIOCM_RTS), 1);
 }
 
+<<<<<<< HEAD
 static int digi_carrier_raised(struct usb_serial_port *port)
 {
 	struct digi_port *priv = usb_get_serial_port_data(port);
@@ -1347,6 +1354,8 @@ static int digi_carrier_raised(struct usb_serial_port *port)
 	return 0;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int digi_open(struct tty_struct *tty, struct usb_serial_port *port)
 {
 	int ret;

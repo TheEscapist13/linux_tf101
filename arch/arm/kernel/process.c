@@ -37,8 +37,12 @@
 #include <asm/thread_notify.h>
 #include <asm/stacktrace.h>
 #include <asm/mach/time.h>
+<<<<<<< HEAD
 #include "../arch/arm/mach-tegra/gpio-names.h"
 #include <linux/gpio.h>
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #ifdef CONFIG_CC_STACKPROTECTOR
 #include <linux/stackprotector.h>
 unsigned long __stack_chk_guard __read_mostly;
@@ -93,12 +97,22 @@ __setup("hlt", hlt_setup);
 
 void arm_machine_restart(char mode, const char *cmd)
 {
+<<<<<<< HEAD
+=======
+	/* Disable interrupts first */
+	local_irq_disable();
+	local_fiq_disable();
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/*
 	 * Tell the mm system that we are going to reboot -
 	 * we may need it to insert some 1:1 mappings so that
 	 * soft boot works.
 	 */
+<<<<<<< HEAD
 	 printk("arm_machine_restart mode=%x cmd=%x\n",mode,cmd);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	setup_mm_for_reboot(mode);
 
 	/* Clean and invalidate caches */
@@ -138,13 +152,20 @@ EXPORT_SYMBOL_GPL(arm_pm_restart);
  * This is our default idle handler.  We need to disable
  * interrupts here to ensure we don't miss a wakeup call.
  */
+<<<<<<< HEAD
 void default_idle(void)
+=======
+static void default_idle(void)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	if (!need_resched())
 		arch_idle();
 	local_irq_enable();
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(default_idle);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 void (*pm_idle)(void) = default_idle;
 EXPORT_SYMBOL(pm_idle);
@@ -194,6 +215,7 @@ void cpu_idle(void)
 	}
 }
 
+<<<<<<< HEAD
 #if defined(CONFIG_ARCH_HAS_CPU_IDLE_WAIT)
 static void do_nothing(void *unused)
 {
@@ -207,6 +229,8 @@ void cpu_idle_wait(void)
 #endif
 
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static char reboot_mode = 'h';
 
 int __init reboot_setup(char *str)
@@ -229,6 +253,7 @@ void machine_halt(void)
 	machine_shutdown();
 	while (1);
 }
+<<<<<<< HEAD
 extern int reboot_test_tool_installed;
 extern int exit_charging_mode;
 void machine_power_off(void)
@@ -247,18 +272,30 @@ void machine_power_off(void)
 	   if (pm_power_off)
 		pm_power_off();
        }
+=======
+
+void machine_power_off(void)
+{
+	machine_shutdown();
+	if (pm_power_off)
+		pm_power_off();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 void machine_restart(char *cmd)
 {
+<<<<<<< HEAD
 	/* Disable interrupts first */
 	local_irq_disable();
 	local_fiq_disable();
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	machine_shutdown();
 	arm_pm_restart(reboot_mode, cmd);
 }
 
+<<<<<<< HEAD
 /*
  * dump a block of kernel memory from around the given address
  */
@@ -330,6 +367,8 @@ static void show_extra_register_data(struct pt_regs *regs, int nbytes)
 	set_fs(fs);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 void __show_regs(struct pt_regs *regs)
 {
 	unsigned long flags;
@@ -389,8 +428,11 @@ void __show_regs(struct pt_regs *regs)
 		printk("Control: %08x%s\n", ctrl, buf);
 	}
 #endif
+<<<<<<< HEAD
 
 	show_extra_register_data(regs, 128);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 void show_regs(struct pt_regs * regs)

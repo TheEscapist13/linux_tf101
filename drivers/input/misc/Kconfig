@@ -183,6 +183,7 @@ config INPUT_ATI_REMOTE2
 	  To compile this driver as a module, choose M here: the module will be
 	  called ati_remote2.
 
+<<<<<<< HEAD
 config INPUT_KEYCHORD
 	tristate "Key chord input driver support"
 	help
@@ -194,6 +195,8 @@ config INPUT_KEYCHORD
 	  To compile this driver as a module, choose M here: the
 	  module will be called keychord.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config INPUT_KEYSPAN_REMOTE
 	tristate "Keyspan DMR USB remote control (EXPERIMENTAL)"
 	depends on EXPERIMENTAL
@@ -313,11 +316,14 @@ config INPUT_WINBOND_CIR
 	  To compile this driver as a module, choose M here: the module will be
 	  called winbond_cir.
 
+<<<<<<< HEAD
 config INPUT_GPIO
 	tristate "GPIO driver support"
 	help
 	  Say Y here if you want to support gpio based keys, wheels etc...
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config HP_SDC_RTC
 	tristate "HP SDC Real Time Clock"
 	depends on (GSC || HP300) && SERIO
@@ -454,6 +460,7 @@ config INPUT_ADXL34X_SPI
 	  To compile this driver as a module, choose M here: the
 	  module will be called adxl34x-spi.
 
+<<<<<<< HEAD
 config INPUT_ALPS_GPIO_SCROLLWHEEL
 	tristate "Alps GPIO Scrollwheel"
 	depends on GENERIC_GPIO
@@ -470,4 +477,6 @@ config INPUT_ALPS_GPIO_SCROLLWHEEL
 	  To compile this driver as a module, choose M here: the
 	  module will be called alps_gpio_scrollwheel.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 endif

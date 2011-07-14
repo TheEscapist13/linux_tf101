@@ -21,6 +21,7 @@
 #include <linux/pwm_backlight.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 #include <linux/delay.h>
 #include <mach/dc.h>
 #include <linux/gpio.h>
@@ -36,10 +37,13 @@ static struct pwm_bl_data *pwm_bl_for_charge;
 static bool b_lcd_is_on = true;
 static struct timeval t_pnl_pwr_off;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 struct pwm_bl_data {
 	struct pwm_device	*pwm;
 	struct device		*dev;
 	unsigned int		period;
+<<<<<<< HEAD
 	unsigned int		lth_brightness;
 	int			(*notify)(struct device *,
 					  int brightness);
@@ -135,12 +139,19 @@ void PowerOffSeqForChargingMode()
 }
 EXPORT_SYMBOL(PowerOffSeqForChargingMode);
 
+=======
+	int			(*notify)(struct device *,
+					  int brightness);
+};
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int pwm_backlight_update_status(struct backlight_device *bl)
 {
 	struct pwm_bl_data *pb = dev_get_drvdata(&bl->dev);
 	int brightness = bl->props.brightness;
 	int max = bl->props.max_brightness;
 
+<<<<<<< HEAD
 	if (bl->props.power != FB_BLANK_UNBLANK) {
 		printk("Can't update brightness 'cause of \"bl->props.power != FB_BLANK_UNBLANK\"\n");
 		brightness = 0;
@@ -178,6 +189,23 @@ static int pwm_backlight_update_status(struct backlight_device *bl)
 				brightness = pb->notify(pb->dev, brightness);
 			}
 		}
+=======
+	if (bl->props.power != FB_BLANK_UNBLANK)
+		brightness = 0;
+
+	if (bl->props.fb_blank != FB_BLANK_UNBLANK)
+		brightness = 0;
+
+	if (pb->notify)
+		brightness = pb->notify(pb->dev, brightness);
+
+	if (brightness == 0) {
+		pwm_config(pb->pwm, 0, pb->period);
+		pwm_disable(pb->pwm);
+	} else {
+		pwm_config(pb->pwm, brightness * pb->period / max, pb->period);
+		pwm_enable(pb->pwm);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 	return 0;
 }
@@ -187,6 +215,7 @@ static int pwm_backlight_get_brightness(struct backlight_device *bl)
 	return bl->props.brightness;
 }
 
+<<<<<<< HEAD
 static int pwm_backlight_check_fb(struct backlight_device *bl,
 				  struct fb_info *info)
 {
@@ -199,6 +228,11 @@ static const struct backlight_ops pwm_backlight_ops = {
 	.update_status	= pwm_backlight_update_status,
 	.get_brightness	= pwm_backlight_get_brightness,
 	.check_fb	= pwm_backlight_check_fb,
+=======
+static const struct backlight_ops pwm_backlight_ops = {
+	.update_status	= pwm_backlight_update_status,
+	.get_brightness	= pwm_backlight_get_brightness,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 static int pwm_backlight_probe(struct platform_device *pdev)
@@ -229,9 +263,12 @@ static int pwm_backlight_probe(struct platform_device *pdev)
 
 	pb->period = data->pwm_period_ns;
 	pb->notify = data->notify;
+<<<<<<< HEAD
 	pb->check_fb = data->check_fb;
 	pb->lth_brightness = data->lth_brightness *
 		(data->pwm_period_ns / data->max_brightness);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	pb->dev = &pdev->dev;
 
 	pb->pwm = pwm_request(data->pwm_id, "backlight");
@@ -256,8 +293,11 @@ static int pwm_backlight_probe(struct platform_device *pdev)
 	backlight_update_status(bl);
 
 	platform_set_drvdata(pdev, bl);
+<<<<<<< HEAD
 
 	pwm_bl_for_charge = pb;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return 0;
 
 err_bl:

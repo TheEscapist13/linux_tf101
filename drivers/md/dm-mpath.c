@@ -33,7 +33,10 @@ struct pgpath {
 	unsigned fail_count;		/* Cumulative failure count */
 
 	struct dm_path path;
+<<<<<<< HEAD
 	struct work_struct deactivate_path;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	struct work_struct activate_path;
 };
 
@@ -116,7 +119,10 @@ static struct workqueue_struct *kmultipathd, *kmpath_handlerd;
 static void process_queued_ios(struct work_struct *work);
 static void trigger_event(struct work_struct *work);
 static void activate_path(struct work_struct *work);
+<<<<<<< HEAD
 static void deactivate_path(struct work_struct *work);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 
 /*-----------------------------------------------
@@ -129,7 +135,10 @@ static struct pgpath *alloc_pgpath(void)
 
 	if (pgpath) {
 		pgpath->is_active = 1;
+<<<<<<< HEAD
 		INIT_WORK(&pgpath->deactivate_path, deactivate_path);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		INIT_WORK(&pgpath->activate_path, activate_path);
 	}
 
@@ -141,6 +150,7 @@ static void free_pgpath(struct pgpath *pgpath)
 	kfree(pgpath);
 }
 
+<<<<<<< HEAD
 static void deactivate_path(struct work_struct *work)
 {
 	struct pgpath *pgpath =
@@ -149,6 +159,8 @@ static void deactivate_path(struct work_struct *work)
 	blk_abort_queue(pgpath->path.dev->bdev->bd_disk->queue);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static struct priority_group *alloc_priority_group(void)
 {
 	struct priority_group *pg;
@@ -995,7 +1007,10 @@ static int fail_path(struct pgpath *pgpath)
 		      pgpath->path.dev->name, m->nr_valid_paths);
 
 	schedule_work(&m->trigger_event);
+<<<<<<< HEAD
 	queue_work(kmultipathd, &pgpath->deactivate_path);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 out:
 	spin_unlock_irqrestore(&m->lock, flags);

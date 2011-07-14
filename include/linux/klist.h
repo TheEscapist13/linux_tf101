@@ -22,7 +22,11 @@ struct klist {
 	struct list_head	k_list;
 	void			(*get)(struct klist_node *);
 	void			(*put)(struct klist_node *);
+<<<<<<< HEAD
 } __attribute__ ((aligned (4)));
+=======
+} __attribute__ ((aligned (sizeof(void *))));
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #define KLIST_INIT(_name, _get, _put)					\
 	{ .k_lock	= __SPIN_LOCK_UNLOCKED(_name.k_lock),		\

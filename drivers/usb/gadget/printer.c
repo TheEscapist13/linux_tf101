@@ -131,6 +131,7 @@ static struct printer_dev usb_printer_gadget;
  * parameters are in UTF-8 (superset of ASCII's 7 bit characters).
  */
 
+<<<<<<< HEAD
 static ushort __initdata idVendor;
 module_param(idVendor, ushort, S_IRUGO);
 MODULE_PARM_DESC(idVendor, "USB Vendor ID");
@@ -156,6 +157,33 @@ module_param(iSerialNum, charp, S_IRUGO);
 MODULE_PARM_DESC(iSerialNum, "1");
 
 static char *__initdata iPNPstring;
+=======
+static ushort idVendor;
+module_param(idVendor, ushort, S_IRUGO);
+MODULE_PARM_DESC(idVendor, "USB Vendor ID");
+
+static ushort idProduct;
+module_param(idProduct, ushort, S_IRUGO);
+MODULE_PARM_DESC(idProduct, "USB Product ID");
+
+static ushort bcdDevice;
+module_param(bcdDevice, ushort, S_IRUGO);
+MODULE_PARM_DESC(bcdDevice, "USB Device version (BCD)");
+
+static char *iManufacturer;
+module_param(iManufacturer, charp, S_IRUGO);
+MODULE_PARM_DESC(iManufacturer, "USB Manufacturer string");
+
+static char *iProduct;
+module_param(iProduct, charp, S_IRUGO);
+MODULE_PARM_DESC(iProduct, "USB Product string");
+
+static char *iSerialNum;
+module_param(iSerialNum, charp, S_IRUGO);
+MODULE_PARM_DESC(iSerialNum, "1");
+
+static char *iPNPstring;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 module_param(iPNPstring, charp, S_IRUGO);
 MODULE_PARM_DESC(iPNPstring, "MFG:linux;MDL:g_printer;CLS:PRINTER;SN:1;");
 
@@ -1596,13 +1624,21 @@ cleanup(void)
 	int status;
 
 	mutex_lock(&usb_printer_gadget.lock_printer_io);
+<<<<<<< HEAD
 	class_destroy(usb_gadget_class);
 	unregister_chrdev_region(g_printer_devno, 2);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	status = usb_gadget_unregister_driver(&printer_driver);
 	if (status)
 		ERROR(dev, "usb_gadget_unregister_driver %x\n", status);
 
+<<<<<<< HEAD
+=======
+	unregister_chrdev_region(g_printer_devno, 2);
+	class_destroy(usb_gadget_class);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	mutex_unlock(&usb_printer_gadget.lock_printer_io);
 }
 module_exit(cleanup);

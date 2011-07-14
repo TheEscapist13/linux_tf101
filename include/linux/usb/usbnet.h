@@ -43,7 +43,11 @@ struct usbnet {
 	/* protocol/interface state */
 	struct net_device	*net;
 	int			msg_enable;
+<<<<<<< HEAD
 	unsigned long		data[6];
+=======
+	unsigned long		data[5];
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	u32			xid;
 	u32			hard_mtu;	/* count any extra framing */
 	size_t			rx_urb_size;	/* size for rx urbs */
@@ -161,14 +165,20 @@ struct cdc_state {
 	struct usb_cdc_header_desc	*header;
 	struct usb_cdc_union_desc	*u;
 	struct usb_cdc_ether_desc	*ether;
+<<<<<<< HEAD
 	struct usb_cdc_ncm_desc		*ncm;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	struct usb_interface		*control;
 	struct usb_interface		*data;
 };
 
 extern int usbnet_generic_cdc_bind(struct usbnet *, struct usb_interface *);
 extern void usbnet_cdc_unbind(struct usbnet *, struct usb_interface *);
+<<<<<<< HEAD
 extern void usbnet_cdc_status(struct usbnet *dev, struct urb *urb);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /* CDC and RNDIS support the same host-chosen packet filters for IN transfers */
 #define	DEFAULT_FILTER	(USB_CDC_PACKET_TYPE_BROADCAST \

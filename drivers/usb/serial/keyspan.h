@@ -546,6 +546,10 @@ static struct usb_serial_driver keyspan_pre_device = {
 		.name		= "keyspan_no_firm",
 	},
 	.description		= "Keyspan - (without firmware)",
+<<<<<<< HEAD
+=======
+	.usb_driver		= &keyspan_driver,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.id_table		= keyspan_pre_ids,
 	.num_ports		= 1,
 	.attach			= keyspan_fake_startup,
@@ -557,6 +561,10 @@ static struct usb_serial_driver keyspan_1port_device = {
 		.name		= "keyspan_1",
 	},
 	.description		= "Keyspan 1 port adapter",
+<<<<<<< HEAD
+=======
+	.usb_driver		= &keyspan_driver,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.id_table		= keyspan_1port_ids,
 	.num_ports		= 1,
 	.open			= keyspan_open,
@@ -579,6 +587,10 @@ static struct usb_serial_driver keyspan_2port_device = {
 		.name		= "keyspan_2",
 	},
 	.description		= "Keyspan 2 port adapter",
+<<<<<<< HEAD
+=======
+	.usb_driver		= &keyspan_driver,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.id_table		= keyspan_2port_ids,
 	.num_ports		= 2,
 	.open			= keyspan_open,
@@ -601,6 +613,10 @@ static struct usb_serial_driver keyspan_4port_device = {
 		.name		= "keyspan_4",
 	},
 	.description		= "Keyspan 4 port adapter",
+<<<<<<< HEAD
+=======
+	.usb_driver		= &keyspan_driver,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.id_table		= keyspan_4port_ids,
 	.num_ports		= 4,
 	.open			= keyspan_open,

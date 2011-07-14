@@ -22,6 +22,7 @@
 #include <linux/mm.h>
 #include <linux/slab.h>
 #include <linux/suspend.h>
+<<<<<<< HEAD
 #include <linux/smp.h>
 #include "power.h"
 
@@ -29,6 +30,12 @@ const char *const pm_states[PM_SUSPEND_MAX] = {
 #ifdef CONFIG_EARLYSUSPEND
 	[PM_SUSPEND_ON]		= "on",
 #endif
+=======
+
+#include "power.h"
+
+const char *const pm_states[PM_SUSPEND_MAX] = {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	[PM_SUSPEND_STANDBY]	= "standby",
 	[PM_SUSPEND_MEM]	= "mem",
 };
@@ -85,7 +92,10 @@ static int suspend_test(int level)
  *	This is common code that is called for each state that we're entering.
  *	Run suspend notifiers, allocate a console and stop all processes.
  */
+<<<<<<< HEAD
 extern int pm_notifier_call_chain2(unsigned long val);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 static int suspend_prepare(void)
 {
 	int error;
@@ -94,11 +104,19 @@ static int suspend_prepare(void)
 		return -EPERM;
 
 	pm_prepare_console();
+<<<<<<< HEAD
 	error = pm_notifier_call_chain2(PM_SUSPEND_PREPARE);
 	if (error){
 		printk("suspend_prepare fail error=%d\n",error);
 		goto Finish;
 	}
+=======
+
+	error = pm_notifier_call_chain(PM_SUSPEND_PREPARE);
+	if (error)
+		goto Finish;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	error = usermodehelper_disable();
 	if (error)
 		goto Finish;
@@ -110,7 +128,11 @@ static int suspend_prepare(void)
 	suspend_thaw_processes();
 	usermodehelper_enable();
  Finish:
+<<<<<<< HEAD
 	pm_notifier_call_chain2(PM_POST_SUSPEND);
+=======
+	pm_notifier_call_chain(PM_POST_SUSPEND);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	pm_restore_console();
 	return error;
 }
@@ -133,6 +155,7 @@ void __attribute__ ((weak)) arch_suspend_enable_irqs(void)
  *
  *	This function should be called after devices have been suspended.
  */
+<<<<<<< HEAD
 
 #include <mach/iomap.h>
 
@@ -183,6 +206,11 @@ static int suspend_enter(suspend_state_t state)
 	init_timer_on_stack(&timer);
 	timer.expires = jiffies + HZ * 6;
 	timer.function = disable_nonboot_cpus_timeout;
+=======
+static int suspend_enter(suspend_state_t state)
+{
+	int error;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	if (suspend_ops->prepare) {
 		error = suspend_ops->prepare();
@@ -204,17 +232,26 @@ static int suspend_enter(suspend_state_t state)
 
 	if (suspend_test(TEST_PLATFORM))
 		goto Platform_wake;
+<<<<<<< HEAD
 	add_timer(&timer);
 	suspend_enter_flag=1;
 	error = disable_nonboot_cpus();
 	suspend_enter_flag=0;
 	del_timer_sync(&timer);
 	destroy_timer_on_stack(&timer);
+=======
+
+	error = disable_nonboot_cpus();
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (error || suspend_test(TEST_CPUS))
 		goto Enable_cpus;
 
 	arch_suspend_disable_irqs();
 	BUG_ON(!irqs_disabled());
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	error = sysdev_suspend(PMSG_SUSPEND);
 	if (!error) {
 		if (!suspend_test(TEST_CORE) && pm_check_wakeup_events()) {
@@ -228,6 +265,7 @@ static int suspend_enter(suspend_state_t state)
 	BUG_ON(irqs_disabled());
 
  Enable_cpus:
+<<<<<<< HEAD
 	init_timer_on_stack(&timer);
 	timer.expires = jiffies + HZ * 2;
 	timer.function = disable_nonboot_cpus_timeout;
@@ -235,6 +273,10 @@ static int suspend_enter(suspend_state_t state)
 	enable_nonboot_cpus();
       del_timer_sync(&timer);
       destroy_timer_on_stack(&timer);
+=======
+	enable_nonboot_cpus();
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  Platform_wake:
 	if (suspend_ops->wake)
 		suspend_ops->wake();
@@ -276,6 +318,10 @@ int suspend_devices_and_enter(suspend_state_t state)
 	suspend_test_finish("suspend devices");
 	if (suspend_test(TEST_DEVICES))
 		goto Recover_platform;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	suspend_enter(state);
 
  Resume_devices:
@@ -305,7 +351,11 @@ static void suspend_finish(void)
 {
 	suspend_thaw_processes();
 	usermodehelper_enable();
+<<<<<<< HEAD
 	pm_notifier_call_chain2(PM_POST_SUSPEND);
+=======
+	pm_notifier_call_chain(PM_POST_SUSPEND);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	pm_restore_console();
 }
 
@@ -329,9 +379,15 @@ int enter_state(suspend_state_t state)
 	if (!mutex_trylock(&pm_mutex))
 		return -EBUSY;
 
+<<<<<<< HEAD
 	printk(KERN_INFO "PM: Syncing filesystems ...cpu=%u ",smp_processor_id());
 	sys_sync();
 	printk("done. cpu=%u\n",smp_processor_id());
+=======
+	printk(KERN_INFO "PM: Syncing filesystems ... ");
+	sys_sync();
+	printk("done.\n");
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	pr_debug("PM: Preparing system for %s sleep\n", pm_states[state]);
 	error = suspend_prepare();

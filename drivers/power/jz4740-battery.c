@@ -47,6 +47,11 @@ struct jz_battery {
 
 	struct power_supply battery;
 	struct delayed_work work;
+<<<<<<< HEAD
+=======
+
+	struct mutex lock;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 static inline struct jz_battery *psy_to_jz_battery(struct power_supply *psy)
@@ -68,6 +73,11 @@ static long jz_battery_read_voltage(struct jz_battery *battery)
 	unsigned long val;
 	long voltage;
 
+<<<<<<< HEAD
+=======
+	mutex_lock(&battery->lock);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	INIT_COMPLETION(battery->read_completion);
 
 	enable_irq(battery->irq);
@@ -91,6 +101,11 @@ static long jz_battery_read_voltage(struct jz_battery *battery)
 	battery->cell->disable(battery->pdev);
 	disable_irq(battery->irq);
 
+<<<<<<< HEAD
+=======
+	mutex_unlock(&battery->lock);
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return voltage;
 }
 
@@ -291,6 +306,10 @@ static int __devinit jz_battery_probe(struct platform_device *pdev)
 	jz_battery->pdev = pdev;
 
 	init_completion(&jz_battery->read_completion);
+<<<<<<< HEAD
+=======
+	mutex_init(&jz_battery->lock);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	INIT_DELAYED_WORK(&jz_battery->work, jz_battery_work);
 

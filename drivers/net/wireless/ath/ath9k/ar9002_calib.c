@@ -710,10 +710,13 @@ static bool ar9002_hw_calibrate(struct ath_hw *ah,
 
 	/* Do NF cal only at longer intervals */
 	if (longcal || nfcal_pending) {
+<<<<<<< HEAD
 		/* Do periodic PAOffset Cal */
 		ar9002_hw_pa_cal(ah, false);
 		ar9002_hw_olc_temp_compensation(ah);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		/*
 		 * Get the value from the previous NF cal and update
 		 * history buffer.
@@ -728,8 +731,17 @@ static bool ar9002_hw_calibrate(struct ath_hw *ah,
 			ath9k_hw_loadnf(ah, ah->curchan);
 		}
 
+<<<<<<< HEAD
 		if (longcal)
 			ath9k_hw_start_nfcal(ah, false);
+=======
+		if (longcal) {
+			ath9k_hw_start_nfcal(ah, false);
+			/* Do periodic PAOffset Cal */
+			ar9002_hw_pa_cal(ah, false);
+			ar9002_hw_olc_temp_compensation(ah);
+		}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 
 	return iscaldone;

@@ -284,7 +284,11 @@ static __net_init int l2tp_eth_init_net(struct net *net)
 	return 0;
 }
 
+<<<<<<< HEAD
 static struct pernet_operations l2tp_eth_net_ops = {
+=======
+static __net_initdata struct pernet_operations l2tp_eth_net_ops = {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	.init = l2tp_eth_init_net,
 	.id   = &l2tp_eth_net_id,
 	.size = sizeof(struct l2tp_eth_net),

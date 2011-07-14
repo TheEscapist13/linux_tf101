@@ -196,6 +196,7 @@ config USB_NET_CDC_EEM
 	  IEEE 802 "local assignment" bit is set in the address, a "usbX"
 	  name is used instead.
 
+<<<<<<< HEAD
 config USB_NET_CDCNCM
 	tristate "CDC NCM support (smart devices such as HSDPA and LTE modems)"
 	depends on USB_USBNET
@@ -214,6 +215,8 @@ config USB_NET_CDCNCM
 	  This driver creates an interface named "ncmX", where X depends on
 	  what other networking devices you have in use.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config USB_NET_DM9601
 	tristate "Davicom DM9601 based USB 1.1 10/100 ethernet devices"
 	depends on USB_USBNET

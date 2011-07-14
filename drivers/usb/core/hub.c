@@ -677,6 +677,11 @@ static void hub_init_func3(struct work_struct *ws);
 static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 {
 	struct usb_device *hdev = hub->hdev;
+<<<<<<< HEAD
+=======
+	struct usb_hcd *hcd;
+	int ret;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	int port1;
 	int status;
 	bool need_debounce_delay = false;
@@ -715,6 +720,28 @@ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 			usb_autopm_get_interface_no_resume(
 					to_usb_interface(hub->intfdev));
 			return;		/* Continues at init2: below */
+<<<<<<< HEAD
+=======
+		} else if (type == HUB_RESET_RESUME) {
+			/* The internal host controller state for the hub device
+			 * may be gone after a host power loss on system resume.
+			 * Update the device's info so the HW knows it's a hub.
+			 */
+			hcd = bus_to_hcd(hdev->bus);
+			if (hcd->driver->update_hub_device) {
+				ret = hcd->driver->update_hub_device(hcd, hdev,
+						&hub->tt, GFP_NOIO);
+				if (ret < 0) {
+					dev_err(hub->intfdev, "Host not "
+							"accepting hub info "
+							"update.\n");
+					dev_err(hub->intfdev, "LS/FS devices "
+							"and hubs may not work "
+							"under this hub\n.");
+				}
+			}
+			hub_power_on(hub, true);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		} else {
 			hub_power_on(hub, true);
 		}
@@ -2599,7 +2626,11 @@ static int hub_set_address(struct usb_device *udev, int devnum)
 	} else {
 		retval = usb_control_msg(udev, usb_sndaddr0pipe(),
 				USB_REQ_SET_ADDRESS, 0, devnum, 0,
+<<<<<<< HEAD
 				NULL, 0, 1000);
+=======
+				NULL, 0, USB_CTRL_SET_TIMEOUT);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		if (retval == 0)
 			update_address(udev, devnum);
 	}
@@ -2722,6 +2753,14 @@ hub_port_init (struct usb_hub *hub, struct usb_device *udev, int port1,
 		udev->ttport = hdev->ttport;
 	} else if (udev->speed != USB_SPEED_HIGH
 			&& hdev->speed == USB_SPEED_HIGH) {
+<<<<<<< HEAD
+=======
+		if (!hub->tt.hub) {
+			dev_err(&udev->dev, "parent hub has no TT\n");
+			retval = -EINVAL;
+			goto fail;
+		}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		udev->tt = &hub->tt;
 		udev->ttport = port1;
 	}
@@ -3639,8 +3678,12 @@ static int usb_reset_and_verify_device(struct usb_device *udev)
 	parent_hub = hdev_to_hub(parent_hdev);
 
 	set_bit(port1, parent_hub->busy_bits);
+<<<<<<< HEAD
 //	for (i = 0; i < SET_CONFIG_TRIES; ++i) {
         for (i = 0; i < 1; ++i) {
+=======
+	for (i = 0; i < SET_CONFIG_TRIES; ++i) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		/* ep0 maxpacket size may change; let the HCD know about it.
 		 * Other endpoints will be handled by re-enumeration. */

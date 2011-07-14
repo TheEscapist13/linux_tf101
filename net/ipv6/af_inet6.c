@@ -63,6 +63,7 @@
 #include <asm/system.h>
 #include <linux/mroute6.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_ANDROID_PARANOID_NETWORK
 #include <linux/android_aid.h>
 
@@ -77,6 +78,8 @@ static inline int current_has_network(void)
 }
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 MODULE_AUTHOR("Cast of dozens");
 MODULE_DESCRIPTION("IPv6 protocol stack for Linux");
 MODULE_LICENSE("GPL");
@@ -123,9 +126,12 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
 	int try_loading_module = 0;
 	int err;
 
+<<<<<<< HEAD
 	if (!current_has_network())
 		return -EACCES;
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (sock->type != SOCK_RAW &&
 	    sock->type != SOCK_DGRAM &&
 	    !inet_ehash_secret)
@@ -489,6 +495,7 @@ int inet6_getname(struct socket *sock, struct sockaddr *uaddr,
 
 EXPORT_SYMBOL(inet6_getname);
 
+<<<<<<< HEAD
 int inet6_killaddr_ioctl(struct net *net, void __user *arg) {
 	struct in6_ifreq ireq;
 	struct sockaddr_in6 sin6;
@@ -504,6 +511,8 @@ int inet6_killaddr_ioctl(struct net *net, void __user *arg) {
 	return tcp_nuke_addr(net, (struct sockaddr *) &sin6);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 int inet6_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 {
 	struct sock *sk = sock->sk;
@@ -528,8 +537,11 @@ int inet6_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 		return addrconf_del_ifaddr(net, (void __user *) arg);
 	case SIOCSIFDSTADDR:
 		return addrconf_set_dstaddr(net, (void __user *) arg);
+<<<<<<< HEAD
 	case SIOCKILLADDR:
 		return inet6_killaddr_ioctl(net, (void __user *) arg);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	default:
 		if (!sk->sk_prot->ioctl)
 			return -ENOIOCTLCMD;

@@ -1,8 +1,11 @@
 #include <linux/pagemap.h>
 #include <linux/blkdev.h>
 
+<<<<<<< HEAD
 #define PART_NAME_SIZE 128
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * add_gd_partition adds a partitions details to the devices partition
  * description.
@@ -14,7 +17,10 @@ struct parsed_partitions {
 		sector_t from;
 		sector_t size;
 		int flags;
+<<<<<<< HEAD
 		char name[PART_NAME_SIZE];
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	} parts[DISK_MAX_PARTS];
 	int next;
 	int limit;
@@ -33,8 +39,12 @@ static inline void *read_part_sector(struct parsed_partitions *state,
 }
 
 static inline void
+<<<<<<< HEAD
 put_named_partition(struct parsed_partitions *p, int n, sector_t from,
 	sector_t size, const char *name, size_t name_size)
+=======
+put_partition(struct parsed_partitions *p, int n, sector_t from, sector_t size)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	if (n < p->limit) {
 		char tmp[1 + BDEVNAME_SIZE + 10 + 1];
@@ -43,6 +53,7 @@ put_named_partition(struct parsed_partitions *p, int n, sector_t from,
 		p->parts[n].size = size;
 		snprintf(tmp, sizeof(tmp), " %s%d", p->name, n);
 		strlcat(p->pp_buf, tmp, PAGE_SIZE);
+<<<<<<< HEAD
 		if (name) {
 			if (name_size > PART_NAME_SIZE - 1)
 				name_size = PART_NAME_SIZE - 1;
@@ -60,5 +71,10 @@ put_partition(struct parsed_partitions *p, int n, sector_t from, sector_t size)
 	put_named_partition(p, n, from, size, NULL, 0);
 }
 
+=======
+	}
+}
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 extern int warn_no_part;
 

@@ -445,9 +445,14 @@ static void ar9002_hw_configpcipowersave(struct ath_hw *ah,
 		}
 
 		/* WAR for ASPM system hang */
+<<<<<<< HEAD
 		if (AR_SREV_9280(ah) || AR_SREV_9285(ah) || AR_SREV_9287(ah)) {
 			val |= (AR_WA_BIT6 | AR_WA_BIT7);
 		}
+=======
+		if (AR_SREV_9285(ah) || AR_SREV_9287(ah))
+			val |= (AR_WA_BIT6 | AR_WA_BIT7);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		if (AR_SREV_9285E_20(ah))
 			val |= AR_WA_BIT23;

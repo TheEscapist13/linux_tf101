@@ -27,6 +27,7 @@ void __init tegra_common_init(void);
 void __init tegra_map_common_io(void);
 void __init tegra_init_irq(void);
 void __init tegra_init_clock(void);
+<<<<<<< HEAD
 void __init tegra_reserve(unsigned long carveout_size, unsigned long fb_size,
 	unsigned long fb2_size);
 void __init tegra_protected_aperture_init(unsigned long aperture);
@@ -66,4 +67,8 @@ struct board_info {
 
 void tegra_get_board_info(struct board_info *);
 
+=======
+
+extern struct sys_timer tegra_timer;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif

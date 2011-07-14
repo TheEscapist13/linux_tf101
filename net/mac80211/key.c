@@ -323,6 +323,15 @@ static void __ieee80211_key_destroy(struct ieee80211_key *key)
 	if (!key)
 		return;
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Synchronize so the TX path can no longer be using
+	 * this key before we free/remove it.
+	 */
+	synchronize_rcu();
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (key->local)
 		ieee80211_key_disable_hw_accel(key);
 

@@ -26,9 +26,14 @@
 
 #include <linux/slab.h>
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/platform_device.h>
 #include <linux/etherdevice.h>
 #include <linux/usb/android_composite.h>
+=======
+#include <linux/device.h>
+#include <linux/etherdevice.h>
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 #include <asm/atomic.h>
 
@@ -130,6 +135,7 @@ static struct usb_interface_descriptor rndis_control_intf = {
 	/* .bInterfaceNumber = DYNAMIC */
 	/* status endpoint is optional; this could be patched later */
 	.bNumEndpoints =	1,
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_RNDIS_WCEIS
 	/* "Wireless" RNDIS; auto-detected by Windows */
 	.bInterfaceClass =	USB_CLASS_WIRELESS_CONTROLLER,
@@ -140,6 +146,11 @@ static struct usb_interface_descriptor rndis_control_intf = {
 	.bInterfaceSubClass =   USB_CDC_SUBCLASS_ACM,
 	.bInterfaceProtocol =   USB_CDC_ACM_PROTO_VENDOR,
 #endif
+=======
+	.bInterfaceClass =	USB_CLASS_COMM,
+	.bInterfaceSubClass =   USB_CDC_SUBCLASS_ACM,
+	.bInterfaceProtocol =   USB_CDC_ACM_PROTO_VENDOR,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* .iInterface = DYNAMIC */
 };
 
@@ -198,6 +209,7 @@ rndis_iad_descriptor = {
 
 	.bFirstInterface =	0, /* XXX, hardcoded */
 	.bInterfaceCount = 	2,	// control + data
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_RNDIS_WCEIS
 	/* "Wireless" RNDIS; auto-detected by Windows */
 	.bFunctionClass =	USB_CLASS_WIRELESS_CONTROLLER,
@@ -208,6 +220,11 @@ rndis_iad_descriptor = {
 	.bFunctionSubClass =	USB_CDC_SUBCLASS_ETHERNET,
 	.bFunctionProtocol =	USB_CDC_ACM_PROTO_VENDOR,
 #endif
+=======
+	.bFunctionClass =	USB_CLASS_COMM,
+	.bFunctionSubClass =	USB_CDC_SUBCLASS_ETHERNET,
+	.bFunctionProtocol =	USB_CDC_PROTO_NONE,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* .iFunction = DYNAMIC */
 };
 
@@ -303,9 +320,15 @@ static struct usb_descriptor_header *eth_hs_function[] = {
 /* string descriptors: */
 
 static struct usb_string rndis_string_defs[] = {
+<<<<<<< HEAD
 	[0].s = "ASUS RNDIS Communications Control",
 	[1].s = "ASUS RNDIS Ethernet Data",
 	[2].s = "ASUS RNDIS",
+=======
+	[0].s = "RNDIS Communications Control",
+	[1].s = "RNDIS Ethernet Data",
+	[2].s = "RNDIS",
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	{  } /* end of list */
 };
 
@@ -319,10 +342,13 @@ static struct usb_gadget_strings *rndis_strings[] = {
 	NULL,
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_RNDIS
 static struct usb_ether_platform_data *rndis_pdata;
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*-------------------------------------------------------------------------*/
 
 static struct sk_buff *rndis_add_header(struct gether *port,
@@ -506,10 +532,17 @@ static int rndis_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
 			usb_ep_disable(rndis->notify);
 		} else {
 			VDBG(cdev, "init rndis ctrl %d\n", intf);
+<<<<<<< HEAD
 		}
 		rndis->notify_desc = ep_choose(cdev->gadget,
 				rndis->hs.notify,
 				rndis->fs.notify);
+=======
+			rndis->notify_desc = ep_choose(cdev->gadget,
+					rndis->hs.notify,
+					rndis->fs.notify);
+		}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		usb_ep_enable(rndis->notify, rndis->notify_desc);
 		rndis->notify->driver_data = rndis;
 
@@ -523,11 +556,19 @@ static int rndis_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
 
 		if (!rndis->port.in) {
 			DBG(cdev, "init rndis\n");
+<<<<<<< HEAD
 		}
 		rndis->port.in = ep_choose(cdev->gadget,
 				rndis->hs.in, rndis->fs.in);
 		rndis->port.out = ep_choose(cdev->gadget,
 				rndis->hs.out, rndis->fs.out);
+=======
+			rndis->port.in = ep_choose(cdev->gadget,
+					rndis->hs.in, rndis->fs.in);
+			rndis->port.out = ep_choose(cdev->gadget,
+					rndis->hs.out, rndis->fs.out);
+		}
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		/* Avoid ZLPs; they can be troublesome. */
 		rndis->port.is_zlp_ok = false;
@@ -726,12 +767,20 @@ rndis_bind(struct usb_configuration *c, struct usb_function *f)
 	rndis_set_param_medium(rndis->config, NDIS_MEDIUM_802_3, 0);
 	rndis_set_host_mac(rndis->config, rndis->ethaddr);
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_RNDIS
 	if (rndis_pdata) {
 		if (rndis_set_param_vendor(rndis->config, rndis_pdata->vendorID,
 					rndis_pdata->vendorDescr))
 			goto fail;
 	}
+=======
+#if 0
+// FIXME
+	if (rndis_set_param_vendor(rndis->config, vendorID,
+				manufacturer))
+		goto fail0;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif
 
 	/* NOTE:  all that is done without knowing or caring about
@@ -870,11 +919,14 @@ rndis_bind_config(struct usb_configuration *c, u8 ethaddr[ETH_ALEN])
 	rndis->port.func.setup = rndis_setup;
 	rndis->port.func.disable = rndis_disable;
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_ANDROID_RNDIS
 	/* start disabled */
 	rndis->port.func.disabled = 1;
 #endif
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	status = usb_add_function(c, &rndis->port.func);
 	if (status) {
 		kfree(rndis);
@@ -883,6 +935,7 @@ fail:
 	}
 	return status;
 }
+<<<<<<< HEAD
 
 #ifdef CONFIG_USB_ANDROID_RNDIS
 #include "rndis.c"
@@ -934,3 +987,5 @@ static int __init init(void)
 module_init(init);
 
 #endif /* CONFIG_USB_ANDROID_RNDIS */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

@@ -838,7 +838,10 @@ qh_make (
 				is_input, 0,
 				hb_mult(maxp) * max_packet(maxp)));
 		qh->start = NO_FRAME;
+<<<<<<< HEAD
 		qh->stamp = ehci->periodic_stamp;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		if (urb->dev->speed == USB_SPEED_HIGH) {
 			qh->c_usecs = 0;
@@ -1009,7 +1012,10 @@ static void qh_link_async (struct ehci_hcd *ehci, struct ehci_qh *qh)
 	qh_get(qh);
 	qh->xacterrs = 0;
 	qh->qh_state = QH_STATE_LINKED;
+<<<<<<< HEAD
 	wmb();
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	/* qtd completions reported later by interrupt */
 }
 

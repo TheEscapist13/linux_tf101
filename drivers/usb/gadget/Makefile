@@ -22,9 +22,12 @@ fsl_usb2_udc-objs		:= fsl_udc_core.o
 ifeq ($(CONFIG_ARCH_MXC),y)
 fsl_usb2_udc-objs		+= fsl_mxc_udc.o
 endif
+<<<<<<< HEAD
 ifeq ($(CONFIG_ARCH_TEGRA),y)
 fsl_usb2_udc-objs		+= fsl_tegra_udc.o
 endif
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 obj-$(CONFIG_USB_M66592)	+= m66592-udc.o
 obj-$(CONFIG_USB_R8A66597)	+= r8a66597-udc.o
 obj-$(CONFIG_USB_FSL_QE)	+= fsl_qe_udc.o
@@ -67,10 +70,13 @@ obj-$(CONFIG_USB_G_DBGP)	+= g_dbgp.o
 obj-$(CONFIG_USB_G_MULTI)	+= g_multi.o
 obj-$(CONFIG_USB_G_NOKIA)	+= g_nokia.o
 obj-$(CONFIG_USB_G_WEBCAM)	+= g_webcam.o
+<<<<<<< HEAD
 obj-$(CONFIG_USB_ANDROID)	+= android.o
 obj-$(CONFIG_USB_ANDROID_ACM)	+= f_acm.o u_serial.o
 obj-$(CONFIG_USB_ANDROID_ADB)	+= f_adb.o
 obj-$(CONFIG_USB_ANDROID_MASS_STORAGE)	+= f_mass_storage.o
 obj-$(CONFIG_USB_ANDROID_MTP)	+= f_mtp.o
 obj-$(CONFIG_USB_ANDROID_RNDIS)	+= f_rndis.o u_ether.o
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 

@@ -596,6 +596,7 @@ config I2C_STU300
 	  This driver can also be built as a module. If so, the module
 	  will be called i2c-stu300.
 
+<<<<<<< HEAD
 config I2C_TEGRA
 	tristate "NVIDIA Tegra internal I2C controller"
 	depends on ARCH_TEGRA
@@ -603,6 +604,8 @@ config I2C_TEGRA
 	  If you say yes to this option, support will be included for the
 	  I2C controller embedded in NVIDIA Tegra SOCs
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config I2C_VERSATILE
 	tristate "ARM Versatile/Realview I2C bus support"
 	depends on ARCH_VERSATILE || ARCH_REALVIEW || ARCH_VEXPRESS

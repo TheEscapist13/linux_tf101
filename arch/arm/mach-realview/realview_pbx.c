@@ -382,7 +382,11 @@ static void __init realview_pbx_init(void)
 	int i;
 
 #ifdef CONFIG_CACHE_L2X0
+<<<<<<< HEAD
 	if (!l2x0_disabled && core_tile_pbxa9mp()) {
+=======
+	if (core_tile_pbxa9mp()) {
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		void __iomem *l2x0_base =
 			__io_address(REALVIEW_PBX_TILE_L220_BASE);
 

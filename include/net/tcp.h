@@ -1403,8 +1403,11 @@ extern struct sk_buff **tcp4_gro_receive(struct sk_buff **head,
 extern int tcp_gro_complete(struct sk_buff *skb);
 extern int tcp4_gro_complete(struct sk_buff *skb);
 
+<<<<<<< HEAD
 extern int tcp_nuke_addr(struct net *net, struct sockaddr *addr);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #ifdef CONFIG_PROC_FS
 extern int tcp4_proc_init(void);
 extern void tcp4_proc_exit(void);

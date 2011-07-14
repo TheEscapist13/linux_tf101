@@ -462,7 +462,11 @@ static int __devinit sdh_probe(struct platform_device *pdev)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	mmc = mmc_alloc_host(sizeof(*mmc), &pdev->dev);
+=======
+	mmc = mmc_alloc_host(sizeof(struct sdh_host), &pdev->dev);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (!mmc) {
 		ret = -ENOMEM;
 		goto out;

@@ -856,7 +856,10 @@ static void __init sanity_check_meminfo(void)
 static inline void prepare_page_table(void)
 {
 	unsigned long addr;
+<<<<<<< HEAD
 	phys_addr_t end;
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/*
 	 * Clear out all the mappings below the kernel image.
@@ -872,6 +875,7 @@ static inline void prepare_page_table(void)
 		pmd_clear(pmd_off_k(addr));
 
 	/*
+<<<<<<< HEAD
 	 * Find the end of the first block of lowmem.  This is complicated
 	 * when we use memblock.
 	 */
@@ -884,6 +888,12 @@ static inline void prepare_page_table(void)
 	 * memory bank, up to the end of the vmalloc region.
 	 */
 	for (addr = __phys_to_virt(end);
+=======
+	 * Clear out all the kernel space mappings, except for the first
+	 * memory bank, up to the end of the vmalloc region.
+	 */
+	for (addr = __phys_to_virt(bank_phys_end(&meminfo.bank[0]));
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	     addr < VMALLOC_END; addr += PGDIR_SIZE)
 		pmd_clear(pmd_off_k(addr));
 }
@@ -1000,6 +1010,7 @@ static void __init kmap_init(void)
 #endif
 }
 
+<<<<<<< HEAD
 static void __init map_lowmem(void)
 {
 	int i;
@@ -1021,6 +1032,31 @@ static void __init map_lowmem(void)
 		map.type = MT_MEMORY;
 
 		create_mapping(&map);
+=======
+static inline void map_memory_bank(struct membank *bank)
+{
+	struct map_desc map;
+
+	map.pfn = bank_pfn_start(bank);
+	map.virtual = __phys_to_virt(bank_phys_start(bank));
+	map.length = bank_phys_size(bank);
+	map.type = MT_MEMORY;
+
+	create_mapping(&map);
+}
+
+static void __init map_lowmem(void)
+{
+	struct meminfo *mi = &meminfo;
+	int i;
+
+	/* Map all the lowmem memory banks. */
+	for (i = 0; i < mi->nr_banks; i++) {
+		struct membank *bank = &mi->bank[i];
+
+		if (!bank->highmem)
+			map_memory_bank(bank);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 }
 

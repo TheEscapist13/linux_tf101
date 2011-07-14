@@ -723,7 +723,13 @@ EXPORT_SYMBOL(freq_reg_info);
  * on the wiphy with the target_bw specified. Then we can simply use
  * that below for the desired_bw_khz below.
  */
+<<<<<<< HEAD
 static void handle_channel(struct wiphy *wiphy, enum ieee80211_band band,
+=======
+static void handle_channel(struct wiphy *wiphy,
+			   enum nl80211_reg_initiator initiator,
+			   enum ieee80211_band band,
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 			   unsigned int chan_idx)
 {
 	int r;
@@ -787,7 +793,13 @@ static void handle_channel(struct wiphy *wiphy, enum ieee80211_band band,
 		chan->max_power = (int) MBM_TO_DBM(power_rule->max_eirp);
 }
 
+<<<<<<< HEAD
 static void handle_band(struct wiphy *wiphy, enum ieee80211_band band)
+=======
+static void handle_band(struct wiphy *wiphy,
+			enum ieee80211_band band,
+			enum nl80211_reg_initiator initiator)
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 {
 	unsigned int i;
 	struct ieee80211_supported_band *sband;
@@ -796,7 +808,11 @@ static void handle_band(struct wiphy *wiphy, enum ieee80211_band band)
 	sband = wiphy->bands[band];
 
 	for (i = 0; i < sband->n_channels; i++)
+<<<<<<< HEAD
 		handle_channel(wiphy, band, i);
+=======
+		handle_channel(wiphy, initiator, band, i);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 }
 
 static bool ignore_reg_update(struct wiphy *wiphy,
@@ -812,6 +828,10 @@ static bool ignore_reg_update(struct wiphy *wiphy,
 	 * desired regulatory domain set
 	 */
 	if (wiphy->flags & WIPHY_FLAG_STRICT_REGULATORY && !wiphy->regd &&
+<<<<<<< HEAD
+=======
+	    initiator != NL80211_REGDOM_SET_BY_COUNTRY_IE &&
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	    !is_world_regdom(last_request->alpha2))
 		return true;
 	return false;
@@ -1033,7 +1053,11 @@ void wiphy_update_regulatory(struct wiphy *wiphy,
 		goto out;
 	for (band = 0; band < IEEE80211_NUM_BANDS; band++) {
 		if (wiphy->bands[band])
+<<<<<<< HEAD
 			handle_band(wiphy, band);
+=======
+			handle_band(wiphy, band, initiator);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	}
 out:
 	reg_process_beacons(wiphy);

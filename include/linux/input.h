@@ -736,7 +736,10 @@ struct input_absinfo {
 #define SW_CAMERA_LENS_COVER	0x09  /* set = lens covered */
 #define SW_KEYPAD_SLIDE		0x0a  /* set = keypad slide out */
 #define SW_FRONT_PROXIMITY	0x0b  /* set = front proximity sensor active */
+<<<<<<< HEAD
 #define SW_G_LOCK		0x0c	/* set = orientation lock*/
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #define SW_MAX			0x0f
 #define SW_CNT			(SW_MAX+1)
 

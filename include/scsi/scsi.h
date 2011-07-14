@@ -9,6 +9,10 @@
 #define _SCSI_SCSI_H
 
 #include <linux/types.h>
+<<<<<<< HEAD
+=======
+#include <linux/scatterlist.h>
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 struct scsi_cmnd;
 

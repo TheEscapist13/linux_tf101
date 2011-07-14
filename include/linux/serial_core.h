@@ -45,8 +45,12 @@
 #define PORT_OCTEON	17	/* Cavium OCTEON internal UART */
 #define PORT_AR7	18	/* Texas Instruments AR7 internal UART */
 #define PORT_U6_16550A	19	/* ST-Ericsson U6xxx internal UART */
+<<<<<<< HEAD
 #define PORT_TEGRA	20	/* NVIDIA Tegra internal UART */
 #define PORT_MAX_8250	20	/* max port ID */
+=======
+#define PORT_MAX_8250	19	/* max port ID */
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 /*
  * ARM specific type numbers.  These are not currently guaranteed
@@ -235,7 +239,10 @@ struct uart_ops {
 	void		(*pm)(struct uart_port *, unsigned int state,
 			      unsigned int oldstate);
 	int		(*set_wake)(struct uart_port *, unsigned int state);
+<<<<<<< HEAD
 	void		(*wake_peer)(struct uart_port *);
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	/*
 	 * Return a string describing the type of the port

@@ -78,11 +78,14 @@ static inline s64 percpu_counter_read_positive(struct percpu_counter *fbc)
 	return 1;
 }
 
+<<<<<<< HEAD
 static inline int percpu_counter_initialized(struct percpu_counter *fbc)
 {
 	return (fbc->counters != NULL);
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #else
 
 struct percpu_counter {
@@ -148,11 +151,14 @@ static inline s64 percpu_counter_sum(struct percpu_counter *fbc)
 	return percpu_counter_read(fbc);
 }
 
+<<<<<<< HEAD
 static inline int percpu_counter_initialized(struct percpu_counter *fbc)
 {
 	return 1;
 }
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #endif	/* CONFIG_SMP */
 
 static inline void percpu_counter_inc(struct percpu_counter *fbc)

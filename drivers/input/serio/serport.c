@@ -38,6 +38,7 @@ struct serport {
 	struct serio_device_id id;
 	spinlock_t lock;
 	unsigned long flags;
+<<<<<<< HEAD
 	// EETI Patch //
 	struct work_struct create_kthread_wq;
 };
@@ -120,6 +121,10 @@ static void serport_wq_handle(struct work_struct *work)
 	return;
 }
 
+=======
+};
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 /*
  * Callback functions from the serio code.
  */
@@ -191,6 +196,7 @@ static void serport_ldisc_close(struct tty_struct *tty)
 {
 	struct serport *serport = (struct serport *) tty->disc_data;
 
+<<<<<<< HEAD
 	// EETI Patch //
 	unsigned long flags;
 	if (test_bit(SERPORT_BUSY, &serport->flags))
@@ -205,6 +211,8 @@ static void serport_ldisc_close(struct tty_struct *tty)
 		}while(test_bit(SERPORT_BUSY, &serport->flags));
 	}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	kfree(serport);
 }
 
@@ -290,6 +298,7 @@ static int serport_ldisc_ioctl(struct tty_struct * tty, struct file * file, unsi
 		serport->id.id	  = (type & 0x0000ff00) >> 8;
 		serport->id.extra = (type & 0x00ff0000) >> 16;
 
+<<<<<<< HEAD
 		// EETI Patch //
 		if( serport->id.proto==SERIO_EGALAX )
 		{
@@ -297,6 +306,8 @@ static int serport_ldisc_ioctl(struct tty_struct * tty, struct file * file, unsi
 			schedule_work(&serport->create_kthread_wq);
 		}
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		return 0;
 	}
 

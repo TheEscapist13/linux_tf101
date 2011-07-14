@@ -79,7 +79,11 @@ static void v6_copy_user_highpage_aliasing(struct page *to,
 	unsigned int offset = CACHE_COLOUR(vaddr);
 	unsigned long kfrom, kto;
 
+<<<<<<< HEAD
 	if (!test_and_set_bit(PG_dcache_clean, &from->flags))
+=======
+	if (test_and_clear_bit(PG_dcache_dirty, &from->flags))
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		__flush_dcache_page(page_mapping(from), from);
 
 	/* FIXME: not highmem safe */

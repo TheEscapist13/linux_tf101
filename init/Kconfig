@@ -790,12 +790,15 @@ config SYSCTL
 config ANON_INODES
 	bool
 
+<<<<<<< HEAD
 config PANIC_TIMEOUT
 	int "Default panic timeout"
 	default 0
 	help
 	  Set default panic timeout.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 menuconfig EMBEDDED
 	bool "Configure standard kernel features (for small systems)"
 	help
@@ -968,6 +971,7 @@ config SHMEM
 	  option replaces shmem and tmpfs with the much simpler ramfs code,
 	  which may be appropriate on small systems without swap.
 
+<<<<<<< HEAD
 config ASHMEM
 	bool "Enable the Anonymous Shared Memory Subsystem"
 	default n
@@ -977,6 +981,8 @@ config ASHMEM
 	  POSIX SHM but with different behavior and sporting a simpler
 	  file-based API.
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 config AIO
 	bool "Enable AIO support" if EMBEDDED
 	default y

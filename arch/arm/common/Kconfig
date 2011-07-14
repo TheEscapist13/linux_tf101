@@ -41,6 +41,7 @@ config SHARP_SCOOP
 config COMMON_CLKDEV
 	bool
 	select HAVE_CLK
+<<<<<<< HEAD
 
 config FIQ_GLUE
 	bool
@@ -92,3 +93,5 @@ config FIQ_DEBUGGER_CONSOLE_DEFAULT_ENABLE
 	help
 	  If enabled, this puts the fiq debugger into console mode by default.
 	  Otherwise, the fiq debugger will start out in debug mode.
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581

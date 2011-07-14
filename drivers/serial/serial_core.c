@@ -94,9 +94,12 @@ static void __uart_start(struct tty_struct *tty)
 	struct uart_state *state = tty->driver_data;
 	struct uart_port *port = state->uart_port;
 
+<<<<<<< HEAD
 	if (port->ops->wake_peer)
 		port->ops->wake_peer(port);
 
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	if (!uart_circ_empty(&state->xmit) && state->xmit.buf &&
 	    !tty->stopped && !tty->hw_stopped)
 		port->ops->start_tx(port);
@@ -1987,8 +1990,15 @@ int uart_suspend_port(struct uart_driver *drv, struct uart_port *uport)
 	struct tty_struct *tty;
 
 	mutex_lock(&port->mutex);
+<<<<<<< HEAD
 	/* Must be inside the mutex lock until we convert to tty_port */
 	tty = port->tty;
+=======
+
+	/* Must be inside the mutex lock until we convert to tty_port */
+	tty = port->tty;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	tty_dev = device_find_child(uport->dev, &match, serial_match_port);
 	if (device_may_wakeup(tty_dev)) {
 		enable_irq_wake(uport->irq);
@@ -2066,6 +2076,7 @@ int uart_resume_port(struct uart_driver *drv, struct uart_port *uport)
 	/*
 	 * Re-enable the console device after suspending.
 	 */
+<<<<<<< HEAD
 	if (console_suspend_enabled && uart_console(uport)) {
 		/*
 		 * First try to use the console cflag setting.
@@ -2080,6 +2091,11 @@ int uart_resume_port(struct uart_driver *drv, struct uart_port *uport)
 
 		uart_change_pm(state, 0);
 		//uport->ops->set_termios(uport, &termios, NULL);
+=======
+	if (uart_console(uport)) {
+		uart_change_pm(state, 0);
+		uport->ops->set_termios(uport, &termios, NULL);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		console_start(uport->cons);
 	}
 

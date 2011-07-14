@@ -793,13 +793,28 @@ void set_mtrr_aps_delayed_init(void)
 }
 
 /*
+<<<<<<< HEAD
  * MTRR initialization for all AP's
+=======
+ * Delayed MTRR initialization for all AP's
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
  */
 void mtrr_aps_init(void)
 {
 	if (!use_intel())
 		return;
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Check if someone has requested the delay of AP MTRR initialization,
+	 * by doing set_mtrr_aps_delayed_init(), prior to this point. If not,
+	 * then we are done.
+	 */
+	if (!mtrr_aps_delayed_init)
+		return;
+
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	set_mtrr(~0U, 0, 0, 0);
 	mtrr_aps_delayed_init = false;
 }

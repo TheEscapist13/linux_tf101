@@ -51,7 +51,12 @@ void NICInitRT3090RFRegisters(struct rt_rtmp_adapter *pAd)
 	if (IS_RT3090(pAd)) {
 		/* Init RF calibration */
 		/* Driver should toggle RF R30 bit7 before init RF registers */
+<<<<<<< HEAD
 		u32 RfReg = 0, data;
+=======
+		u8 RfReg;
+		u32 data;
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 		RT30xxReadRFRegister(pAd, RF_R30, (u8 *)&RfReg);
 		RfReg |= 0x80;

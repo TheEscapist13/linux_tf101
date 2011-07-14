@@ -49,6 +49,7 @@ static struct map_desc tegra_io_desc[] __initdata = {
 		.length = IO_CPU_SIZE,
 		.type = MT_DEVICE,
 	},
+<<<<<<< HEAD
 	{
 		.virtual = IO_IRAM_VIRT,
 		.pfn = __phys_to_pfn(IO_IRAM_PHYS),
@@ -73,6 +74,8 @@ static struct map_desc tegra_io_desc[] __initdata = {
 		.length = IO_SDMMC_SIZE,
 		.type = MT_DEVICE,
 	},
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 };
 
 void __init tegra_map_common_io(void)
@@ -86,6 +89,7 @@ void __init tegra_map_common_io(void)
 void __iomem *tegra_ioremap(unsigned long p, size_t size, unsigned int type)
 {
 	void __iomem *v = IO_ADDRESS(p);
+<<<<<<< HEAD
 
 	/*
 	 * __arm_ioremap fails to set the domain of ioremapped memory
@@ -100,6 +104,10 @@ void __iomem *tegra_ioremap(unsigned long p, size_t size, unsigned int type)
 	 */
 	BUG_ON(v == NULL);
 
+=======
+	if (v == NULL)
+		v = __arm_ioremap(p, size, type);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	return v;
 }
 EXPORT_SYMBOL(tegra_ioremap);

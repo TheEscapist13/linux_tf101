@@ -2211,6 +2211,7 @@ static const struct alg_test_desc alg_test_descs[] = {
 			}
 		}
 	}, {
+<<<<<<< HEAD
 		.alg = "ofb(aes)",
 		.test = alg_test_skcipher,
 		.fips_allowed = 1,
@@ -2227,6 +2228,8 @@ static const struct alg_test_desc alg_test_descs[] = {
 			}
 		}
 	}, {
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		.alg = "pcbc(fcrypt)",
 		.test = alg_test_skcipher,
 		.suite = {

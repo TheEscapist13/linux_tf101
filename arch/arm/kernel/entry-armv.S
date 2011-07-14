@@ -47,7 +47,11 @@
 	 * preserved from get_irqnr_and_base above
 	 */
 	test_for_ipi r0, r6, r5, lr
+<<<<<<< HEAD
 	movne	r1, sp
+=======
+	movne	r0, sp
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 	adrne	lr, BSYM(1b)
 	bne	do_IPI
 
@@ -506,7 +510,11 @@ __und_usr:
 	blo	__und_usr_unknown
 3:	ldrht	r0, [r4]
 	add	r2, r2, #2			@ r2 is PC + 2, make it PC + 4
+<<<<<<< HEAD
 	orr    	r0, r0, r5, lsl #16
+=======
+	orr	r0, r0, r5, lsl #16
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 #else
 	b	__und_usr_unknown
 #endif

@@ -78,7 +78,10 @@ struct msdos_sb_info {
 	const void *dir_ops;		     /* Opaque; default directory operations */
 	int dir_per_block;	     /* dir entries per block */
 	int dir_per_block_bits;	     /* log2(dir_per_block) */
+<<<<<<< HEAD
 	unsigned long vol_id;        /* volume ID */
+=======
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 
 	int fatent_shift;
 	struct fatent_operations *fatent_ops;

@@ -1647,6 +1647,10 @@ static int __mem_cgroup_do_charge(struct mem_cgroup *mem, gfp_t gfp_mask,
 		if (likely(!ret))
 			return CHARGE_OK;
 
+<<<<<<< HEAD
+=======
+		res_counter_uncharge(&mem->res, csize);
+>>>>>>> 69ad303ab8321656d6144d13b2444a5595bb6581
 		mem_over_limit = mem_cgroup_from_res_counter(fail_res, memsw);
 		flags |= MEM_CGROUP_RECLAIM_NOSWAP;
 	} else
