@@ -1,0 +1,23 @@
+#!/bin/bash 
+
+make mrproper
+make tf101_defconfig
+make -j8
+if [ -e arch/arm/boot/zImage ]
+then
+	cp arch/arm/boot/zImage ../release/zImage
+else
+	echo "zImage not found, exiting..."
+	exit
+fi
+if [ -e drivers/net/wireless/bcm4329/bcm4329.ko ]
+then 
+	cp drivers/net/wireless/bcm4329/bcm4329.ko ../release/bcm4329.ko
+else
+	echo "bcm module not found, exiting..."
+	exit
+fi
+../release/mkbootimg --kernel ../release/zImage --ramdisk ../release/ramdisk.cpio.gz --output ../release/boot.img
+../release/blobpack ../release/kernelblob.HEADER ../release/kernel LNX ../release/boot.img
+
+	
